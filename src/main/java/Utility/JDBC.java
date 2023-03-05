@@ -18,6 +18,8 @@ public abstract class JDBC {
     private static String password = "Passw0rd!"; // Password
     public static Connection connection;  // Connection Interface
 
+
+
     public static void openConnection() {
         try {
             Class.forName(driver); // Locate Driver

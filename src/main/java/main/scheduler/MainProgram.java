@@ -26,4 +26,6 @@ public class MainProgram extends Application {
         System.out.println("Hello world from client");
         launch();
     }
+
+    // lets see how this works
 }
