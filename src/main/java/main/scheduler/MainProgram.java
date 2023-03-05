@@ -12,7 +12,7 @@ import java.util.Locale;
 public class MainProgram extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(MainProgram.class.getResource("/View/hello-view.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(MainProgram.class.getResource("/View/Reports.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 320, 240);
         stage.setTitle("Hello!");
         stage.setScene(scene);
