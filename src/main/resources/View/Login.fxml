@@ -7,3 +7,5 @@
 <?import javafx.scene.layout.*?>
 
 <!--        fx:controller="Controller.Login"-->
+
+<AnchorPane></AnchorPane>
