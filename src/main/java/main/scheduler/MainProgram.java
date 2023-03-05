@@ -26,7 +26,4 @@ public class MainProgram extends Application {
         System.out.println("Hello world from client");
         launch();
     }
-
-    // final version control test
-    // test branch
 }
