@@ -3,6 +3,7 @@ package Database;
 import Utility.JDBC;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
@@ -34,5 +35,32 @@ public abstract class FruitsQuery {
         ps.setInt(1, fruitId);
         int rowsAffected = ps.executeUpdate();
         return rowsAffected;
+    }
+
+    public static void select() throws SQLException {
+        String sql = "SELECT * FROM FRUITS";
+        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+        ResultSet rs = ps.executeQuery(); // creates a result set, two-dimensional list
+        System.out.println("Fruit ID | Fruit Name");
+        while (rs.next()) {
+            int fruitId = rs.getInt("Fruit_ID");
+            String fruitName = rs.getString("Fruit_Name");
+            System.out.println(fruitId + " | " + fruitName);
+        }
+    }
+
+
+    public static void select(int colorId) throws SQLException {
+        String sql = "SELECT * FROM FRUITS WHERE Color_ID = ?";
+        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+        ps.setInt(1, colorId);
+        ResultSet rs = ps.executeQuery(); // creates a result set, two-dimensional list
+        System.out.println("Fruit ID | Fruit Name | Color ID");
+        while (rs.next()) {
+            int fruitId = rs.getInt("Fruit_ID");
+            String fruitName = rs.getString("Fruit_Name");
+            int colorIdFK = rs.getInt("Color_ID"); // color id foreign key
+            System.out.println(fruitId + " | " + fruitName + " | " + colorIdFK);
+        }
     }
 }

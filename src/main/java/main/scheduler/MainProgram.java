@@ -26,13 +26,16 @@ public class MainProgram extends Application {
 
         // int rowsAffected = FruitsQuery.insert("Cherries", 1);
         // int rowsAffected = FruitsQuery.update(7, "Red Peppers");
-        int rowsAffected = FruitsQuery.delete(8);
+        // int rowsAffected = FruitsQuery.delete(8);
 
-        if (rowsAffected > 0) {
-            System.out.println("Query successful");
-        } else {
-            System.out.println("Query failed");
-        }
+        // if (rowsAffected > 0) {
+        //     System.out.println("Query successful");
+        // } else {
+        //     System.out.println("Query failed");
+        // }
+
+        // FruitsQuery.select();
+        // FruitsQuery.select(2);
 
         JDBC.closeConnection();
         // Locale.setDefault(new Locale("fr")); // set language to french
