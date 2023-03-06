@@ -14,7 +14,7 @@ import java.util.Locale;
 public class MainProgram extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(MainProgram.class.getResource("/View/MainMenu.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(MainProgram.class.getResource("/View/Login.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 1020, 840);
         stage.setTitle("Hello!");
         stage.setScene(scene);
@@ -36,9 +36,9 @@ public class MainProgram extends Application {
 
         // FruitsQuery.select();
         // FruitsQuery.select(2);
-
+        launch();
         JDBC.closeConnection();
         // Locale.setDefault(new Locale("fr")); // set language to french
-        // launch();
+
     }
 }
