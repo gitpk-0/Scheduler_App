@@ -24,12 +24,14 @@ public class MainProgram extends Application {
     public static void main(String[] args) throws SQLException {
         JDBC.openConnection();
 
-        int rowsAffected = FruitsQuery.insert("Cherries", 1);
+        // int rowsAffected = FruitsQuery.insert("Cherries", 1);
+        // int rowsAffected = FruitsQuery.update(7, "Red Peppers");
+        int rowsAffected = FruitsQuery.delete(8);
 
         if (rowsAffected > 0) {
-            System.out.println("Insert successful");
+            System.out.println("Query successful");
         } else {
-            System.out.println("Insert failed");
+            System.out.println("Query failed");
         }
 
         JDBC.closeConnection();
