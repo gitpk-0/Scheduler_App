@@ -17,7 +17,7 @@ public class DBUsers {
         ps.setString(1, username);
         ResultSet rs = ps.executeQuery();
 
-        
+
 
         return true;
     }

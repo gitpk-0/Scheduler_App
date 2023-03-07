@@ -9,7 +9,7 @@ import java.sql.SQLException;
 /**
  * @author Patrick Kell
  */
-public abstract class FruitsQuery {
+public abstract class FruitsQueryDELETE {
 
     public static int insert(String fruitName, int colodId) throws SQLException {
         String sql = "INSERT INTO FRUITS (Fruit_Name, Color_ID) VALUES (?, ?)";
