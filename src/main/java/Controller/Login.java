@@ -12,6 +12,7 @@ import javafx.scene.layout.AnchorPane;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.time.ZoneId;
 import java.util.ResourceBundle;
 
 /**
@@ -25,6 +26,7 @@ public class Login implements Initializable {
     public TextField password;
     public Label loginError;
     public AnchorPane anchor;
+    public Label zoneId;
 
 
     public void onLogin(ActionEvent actionEvent) throws IOException, SQLException {
@@ -42,5 +44,6 @@ public class Login implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         Platform.runLater(() -> anchor.requestFocus()); // prevents the TextFields from being in focus on start up
+        zoneId.setText(String.valueOf(ZoneId.systemDefault()));
     }
 }
