@@ -50,4 +50,12 @@ public class Country {
     public void setName(String name) {
         this.name = name;
     }
+
+    /**
+     * @return a string representation of the country's id and name
+     */
+    @Override
+    public String toString() {
+        return this.countryID + " " + this.name;
+    }
 }
