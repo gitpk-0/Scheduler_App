@@ -68,4 +68,5 @@ public class MainMenu {
 
     public void showAllAppts(ActionEvent actionEvent) {
     }
+
 }
