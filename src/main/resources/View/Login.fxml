@@ -3,19 +3,41 @@
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane fx:id="anchor" prefHeight="402.0" prefWidth="381.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.Login">
+<AnchorPane fx:id="anchor" prefHeight="420.0" prefWidth="380.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.Login">
     <children>
-        <VBox alignment="CENTER" layoutX="63.0" layoutY="35.0" prefHeight="337.0" prefWidth="259.0" spacing="20.0">
+        <VBox alignment="CENTER" layoutX="63.0" layoutY="12.0" prefHeight="404.0" prefWidth="261.0" spacing="20.0">
             <children>
-                <Label text="LOGIN" textFill="#009a0d">
+                <Label fx:id="logo" alignment="CENTER" contentDisplay="CENTER" text="LOGIN">
                     <font>
-                        <Font name="Comfortaa Bold" size="29.0" />
+                        <Font name="STIX Two Math" size="40.0" />
                     </font>
+               <textFill>
+                  <RadialGradient centerX="0.12777777777777774" centerY="0.5619047619047619" focusAngle="10.05" focusDistance="-0.06976744186046502" radius="1.0">
+                     <stops>
+                        <Stop>
+                           <color>
+                              <Color red="0.009259259328246117" green="0.5211419463157654" blue="1.0" />
+                           </color>
+                        </Stop>
+                        <Stop offset="0.015037593984962405">
+                           <color>
+                              <Color red="0.009259259328246117" green="0.5211419463157654" blue="1.0" />
+                           </color>
+                        </Stop>
+                        <Stop offset="1.0">
+                           <color>
+                              <Color />
+                           </color>
+                        </Stop>
+                     </stops>
+                  </RadialGradient>
+               </textFill>
                 </Label>
-                <Label text="Please enter your credentials" />
-                <TextField fx:id="username" alignment="CENTER" promptText="Username">
+                <Label fx:id="credentials" text="Please enter your credentials" textAlignment="CENTER" wrapText="true" />
+                <TextField fx:id="usernameTF" alignment="CENTER" promptText="Username">
                     <font>
                         <Font size="16.0" />
                     </font>
@@ -23,18 +45,18 @@
                         <Cursor fx:constant="DEFAULT" />
                     </cursor>
                 </TextField>
-            <PasswordField alignment="CENTER" promptText="Password">
+            <PasswordField fx:id="passwordPF" alignment="CENTER" promptText="Password">
                <font>
                   <Font name="System Bold" size="16.0" />
                </font>
             </PasswordField>
-                <Button alignment="CENTER" mnemonicParsing="false" onAction="#onLogin" style="-fx-background-color: GREEN;" text="LOGIN" textFill="WHITE">
+                <Button fx:id="loginBtn" alignment="CENTER" mnemonicParsing="false" onAction="#onLogin" style="-fx-background-color: #4682B4;" text="LOGIN" textFill="WHITE">
                     <font>
-                        <Font name="System Bold" size="19.0" />
+                        <Font name="Source Code Pro Black Italic" size="19.0" />
                     </font>
                 </Button>
-                <Label fx:id="loginError" text="error" textFill="#fc0101" />
-              <Label fx:id="zoneId" alignment="CENTER" contentDisplay="CENTER" text="zone" />
+                <Label fx:id="loginError" alignment="CENTER" focusTraversable="false" text="Your username/password combination was incorrect." textAlignment="CENTER" textFill="#fc0101" textOverrun="CLIP" visible="false" wrapText="true" />
+              <Label fx:id="zoneId" alignment="CENTER" contentDisplay="CENTER" focusTraversable="false" />
             </children>
         </VBox>
     </children>

@@ -15,7 +15,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 /**
- * The ChangeView class which manages the changing of views between screens,
+ * Utility class which manages the changing of views between screens
  */
 public class ChangeView {
 
