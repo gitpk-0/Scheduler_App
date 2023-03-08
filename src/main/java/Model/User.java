@@ -9,19 +9,19 @@ package Model;
  */
 public class User {
 
-    private int id;
+    private int userId;
     private String username;
     private String password;
 
     /**
      * Creates a new user object with the provided arguments
      *
-     * @param id       The id of the user
+     * @param userId       The id of the user
      * @param username The username of the user
      * @param password The password of the user
      */
-    public User(int id, String username, String password) {
-        this.id = id;
+    public User(int userId, String username, String password) {
+        this.userId = userId;
         this.username = username;
         this.password = password;
     }
@@ -29,15 +29,15 @@ public class User {
     /**
      * @return the user's id
      */
-    public int getId() {
-        return id;
+    public int getUserId() {
+        return userId;
     }
 
     /**
-     * @param id set the user's id
+     * @param userId set the user's id
      */
-    public void setId(int id) {
-        this.id = id;
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
     /**
@@ -73,6 +73,6 @@ public class User {
      */
     @Override
     public String toString() {
-        return this.id + " " + this.username;
+        return this.userId + " " + this.username;
     }
 }
