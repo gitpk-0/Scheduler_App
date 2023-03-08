@@ -122,6 +122,7 @@ public class Customer {
     /**
      * @return a string representation of the customer's id and name
      */
+    @Override
     public String toString() {
         return this.customerId + " " + this.name;
     }
