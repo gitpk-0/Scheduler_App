@@ -34,6 +34,7 @@ public class ChangeView {
         scene = FXMLLoader.load(getClass().getResource("/View/MainMenu.fxml"));
         stage.setScene(new Scene(scene));
         stage.setTitle("Inventory Management System");
+        stage.centerOnScreen(); // center the stage to the users screen
         stage.show();
     }
 
