@@ -79,7 +79,6 @@ public class MainMenu implements Initializable {
         custId_tc.setCellValueFactory(new PropertyValueFactory<>("customerId"));
         userId_tc.setCellValueFactory(new PropertyValueFactory<>("userId"));
 
-
         // assigning the AllCustomers Observable list to work with the customerTableView Table
         customerTableView.setItems(DBCustomers.getAllCustomers());
         /* assigning the values to populate each column with, each new PropertyValueFactory object calls the
@@ -103,10 +102,29 @@ public class MainMenu implements Initializable {
         viewController.changeViewToAdd(event, "Add Appointment ");
     }
 
-    public void toModifyApptView(ActionEvent event) {
+    public void toModifyApptView(ActionEvent event) throws IOException {
+        Appointment appt = apptTableView.getSelectionModel().getSelectedItem();
+        if (appt == null) { // no appointment selected
+            alerts.nullSelection("Appointment", "modify"); // alert the user
+            return;
+        }
+
+        // pass the event, view, and apptTableView to the changeViewModify method
+        viewController.changeViewToModify(event, "Modify Appointment ", apptTableView);
     }
 
-    public void onDeleteAppt(ActionEvent event) {
+    public void onDeleteAppt(ActionEvent event) throws SQLException {
+        Appointment appt = apptTableView.getSelectionModel().getSelectedItem();
+        if (appt == null) { // no appointment selected
+            alerts.nullSelection("Appointment", "modify"); // alert the user
+            return;
+        }
+
+        if (alerts.confirmDelete("Appointment")) {
+            if (DBAppointments.deleteAppointment(appt)) {
+                apptTableView.setItems(DBAppointments.getAllAppointments());
+            }
+        }
     }
 
     public void toAddCustomerView(ActionEvent event) {

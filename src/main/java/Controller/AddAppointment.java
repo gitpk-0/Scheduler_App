@@ -1,14 +1,21 @@
 package Controller;
 
+import Utility.Alerts;
+import Utility.ChangeView;
 import javafx.event.ActionEvent;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 
+import java.io.IOException;
+
 /**
  * @author Patrick Kell
  */
 public class AddAppointment {
+
+    private ChangeView viewController = new ChangeView(); // manages the changing of views
+    private Alerts alerts = new Alerts(); // manages the alerts to the user
 
     public TextField titleTF;
     public TextField descTF;
@@ -23,9 +30,10 @@ public class AddAppointment {
     public TextField typeTF;
 
 
-    public void onCancel(ActionEvent event) {
+    public void onSaveAppt(ActionEvent event) {
     }
 
-    public void onSaveAppt(ActionEvent event) {
+    public void onCancel(ActionEvent event) throws IOException {
+        viewController.changeViewToMain(event);
     }
 }

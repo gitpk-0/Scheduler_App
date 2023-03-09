@@ -50,4 +50,11 @@ public class DBAppointments {
     }
 
 
+    public static boolean deleteAppointment(Appointment appt) throws SQLException {
+        String sql = "DELETE FROM appointments WHERE Appointment_ID = ?";
+        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+        ps.setInt(1, appt.getApptId());
+        int rowsAffected = ps.executeUpdate();
+        return rowsAffected > 0;
+    }
 }

@@ -1,5 +1,7 @@
 package Controller;
 
+import Utility.Alerts;
+import Utility.ChangeView;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
@@ -7,7 +9,12 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 
+import java.io.IOException;
+
 public class Reports {
+
+    private ChangeView viewController = new ChangeView(); // manages the changing of views
+    private Alerts alerts = new Alerts(); // manages the alerts to the user
 
     public TableView apptTableView;
     public TableColumn apptId_tc;
@@ -36,7 +43,8 @@ public class Reports {
     public ComboBox typeCombo;
     public Label totalLbl;
 
-    public void toMainMenu(ActionEvent event) {
+    public void toMainMenu(ActionEvent event) throws IOException {
+        viewController.changeViewToMain(event);
     }
 
     @FXML
