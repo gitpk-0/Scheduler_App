@@ -21,6 +21,10 @@ public class Appointment {
     private int customerId;
     private int userId;
     private int contactId;
+    private String startDate;
+    private String startTime;
+    private String endDate;
+    private String endTime;
 
     /**
      * Creates a new appointment object with the provided arguments
@@ -48,6 +52,7 @@ public class Appointment {
         this.customerId = customerId;
         this.userId = userId;
         this.contactId = contactId;
+        this.startDate = getStartDate();
     }
 
     /**
@@ -189,4 +194,29 @@ public class Appointment {
     public void setContactId(int contactId) {
         this.contactId = contactId;
     }
+
+    public String getStartTime() {
+        String startDateTime = String.valueOf(getStart());
+        String[] parts = startDateTime.split("T");
+        return parts[1];
+    }
+
+    public String getStartDate() {
+        String startDateTime = String.valueOf(getStart());
+        String[] parts = startDateTime.split("T");
+        return parts[0];
+    }
+
+    public String getEndTime() {
+        String endDateTime = String.valueOf(getEnd());
+        String[] parts = endDateTime.split("T");
+        return parts[1];
+    }
+
+    public String getEndDate() {
+        String endDateTime = String.valueOf(getEnd());
+        String[] parts = endDateTime.split("T");
+        return parts[0];
+    }
+
 }

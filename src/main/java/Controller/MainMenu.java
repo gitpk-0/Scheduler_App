@@ -61,11 +61,22 @@ public class MainMenu implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         // assigning the Inventory.allAppointments Observable list to work with the apptsTableView Table
         apptTableView.setItems(DBAppointments.getAllAppointments());
+
+
         // assigning the values to populate each column with
-        // apptId_tc.setCellValueFactory(new PropertyValueFactory<>("apptId")); // calls the getApptId Appointment method
+        apptId_tc.setCellValueFactory(new PropertyValueFactory<>("apptId")); // calls the getApptId Appointment method
         title_tc.setCellValueFactory(new PropertyValueFactory<>("title")); // calls the getTitle Appointment method
         desc_tc.setCellValueFactory(new PropertyValueFactory<>("description")); // calls the getDescription Appointment method
         loc_tc.setCellValueFactory(new PropertyValueFactory<>("location")); // calls the getLocation Appointment method
+        contId_tc.setCellValueFactory(new PropertyValueFactory<>("contactId")); // calls the getLocation Appointment method
+        type_tc.setCellValueFactory(new PropertyValueFactory<>("type")); // calls the getLocation Appointment method
+        sDate_tc.setCellValueFactory(new PropertyValueFactory<>("startDate")); // calls the getLocation Appointment method
+        sTime_tc.setCellValueFactory(new PropertyValueFactory<>("startTime")); // calls the getLocation Appointment method
+        eTime_tc.setCellValueFactory(new PropertyValueFactory<>("endTime")); // calls the getLocation Appointment method
+        eDate_tc.setCellValueFactory(new PropertyValueFactory<>("endDate")); // calls the getLocation Appointment method
+        custId_tc.setCellValueFactory(new PropertyValueFactory<>("customerId")); // calls the getLocation Appointment method
+        userId_tc.setCellValueFactory(new PropertyValueFactory<>("userId")); // calls the getLocation Appointment method
+
 
         // // assigning the Inventory.allProducts Observable list to work with the productsTableView Table
         // customerTableView.setItems(null/* DATABASE QUERY */);
