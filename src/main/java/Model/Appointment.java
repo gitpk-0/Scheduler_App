@@ -5,6 +5,7 @@ package Model;
  */
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 /**
  * The Appointment class which defines and manages appointments
@@ -21,10 +22,13 @@ public class Appointment {
     private int customerId;
     private int userId;
     private int contactId;
+    private String contactName;
     private String startDate;
     private String startTime;
     private String endDate;
     private String endTime;
+    private DateTimeFormatter date = DateTimeFormatter.ofPattern("MM-dd-yyyy");
+    private DateTimeFormatter time = DateTimeFormatter.ofPattern("HH:mm");
 
     /**
      * Creates a new appointment object with the provided arguments
@@ -53,6 +57,38 @@ public class Appointment {
         this.userId = userId;
         this.contactId = contactId;
     }
+
+    /**
+     * Creates a new appointment object with the provided arguments
+     * <p>
+     * Overloaded Constructor
+     *
+     * @param apptId      The id of the appointment
+     * @param title       The title of the appointment
+     * @param description The description of the appointment
+     * @param location    The location of the appointment
+     * @param type        The type of the appointment
+     * @param start       The start time of the appointment
+     * @param end         The end time of the appointment
+     * @param customerId  The customer id of the appointment
+     * @param userId      The user id of the appointment
+     * @param contactName The contact name of the appointment
+     */
+    public Appointment(int apptId, String title, String description, String location, String type, LocalDateTime start,
+                       LocalDateTime end, int customerId, int userId, int contactId, String contactName) {
+        this.apptId = apptId;
+        this.title = title;
+        this.description = description;
+        this.location = location;
+        this.type = type;
+        this.start = start;
+        this.end = end;
+        this.customerId = customerId;
+        this.userId = userId;
+        this.contactId = contactId;
+        this.contactName = contactName;
+    }
+
 
     /**
      * @return the appointment's id
@@ -194,28 +230,46 @@ public class Appointment {
         this.contactId = contactId;
     }
 
+    /**
+     * @return the appointment's start time
+     */
     public String getStartTime() {
-        String startDateTime = String.valueOf(getStart());
-        String[] parts = startDateTime.split("T");
-        return parts[1];
+        return getStart().format(time);
     }
 
+    /**
+     * @return the appointment's start date
+     */
     public String getStartDate() {
-        String startDateTime = String.valueOf(getStart());
-        String[] parts = startDateTime.split("T");
-        return parts[0];
+        return getStart().format(date);
     }
 
+    /**
+     * @return the appointment's end time
+     */
     public String getEndTime() {
-        String endDateTime = String.valueOf(getEnd());
-        String[] parts = endDateTime.split("T");
-        return parts[1];
+        return getEnd().format(time);
     }
 
+    /**
+     * @return the appointment's end date
+     */
     public String getEndDate() {
-        String endDateTime = String.valueOf(getEnd());
-        String[] parts = endDateTime.split("T");
-        return parts[0];
+        return getEnd().format(date);
+    }
+
+    /**
+     * @return the appointment's contact name
+     */
+    public String getContactName() {
+        return contactName;
+    }
+
+    /**
+     * @param contactName set the appointments contact name
+     */
+    public void setContactName(String contactName) {
+        this.contactName = contactName;
     }
 
 }

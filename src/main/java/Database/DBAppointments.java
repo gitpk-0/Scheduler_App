@@ -20,7 +20,8 @@ public class DBAppointments {
         ObservableList<Appointment> appointments = FXCollections.observableArrayList();
 
         try {
-            String sql = "SELECT * FROM appointments";
+            String sql = "SELECT * FROM appointments " +
+                    "INNER JOIN contacts ON appointments.Contact_ID = contacts.Contact_ID";
             PreparedStatement ps = JDBC.connection.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
 
@@ -36,8 +37,9 @@ public class DBAppointments {
                 int customerId = rs.getInt("Customer_ID");
                 int userId = rs.getInt("User_ID");
                 int contactId = rs.getInt("Contact_ID");
+                String contactName = rs.getString("Contact_Name");
 
-                Appointment newAppt = new Appointment(apptId, title, desc, loca, type, start, end, customerId, userId, contactId);
+                Appointment newAppt = new Appointment(apptId, title, desc, loca, type, start, end, customerId, userId, contactId, contactName);
                 appointments.add(newAppt);
             }
         } catch (SQLException e) {
@@ -47,30 +49,5 @@ public class DBAppointments {
         return appointments;
     }
 
-    public static ObservableList<Customer> getAllCustomers() {
-        ObservableList<Customer> customers = FXCollections.observableArrayList();
 
-        try {
-            String sql = "SELECT * FROM customers";
-            PreparedStatement ps = JDBC.connection.prepareStatement(sql);
-            ResultSet rs = ps.executeQuery();
-
-
-            while (rs.next()) {
-                int customerId = rs.getInt("Customer_ID");
-                String name = rs.getString("Customer_Name");
-                String address = rs.getString("Address");
-                String postal = rs.getString("Postal_Code");
-                String phone = rs.getString("Phone");
-                int divisionId = rs.getInt("Division_ID");
-
-                Customer newCustomer = new Customer(customerId, name, address, postal, phone, divisionId);
-                customers.add(newCustomer);
-            }
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-
-        return customers;
-    }
 }

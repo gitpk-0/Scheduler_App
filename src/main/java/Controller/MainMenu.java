@@ -1,6 +1,7 @@
 package Controller;
 
 import Database.DBAppointments;
+import Database.DBCustomers;
 import Model.Appointment;
 import Model.Customer;
 import Utility.Alerts;
@@ -30,7 +31,7 @@ public class MainMenu implements Initializable {
     public TableColumn<Appointment, String> title_tc;
     public TableColumn<Appointment, String> desc_tc;
     public TableColumn<Appointment, String> loc_tc;
-    public TableColumn<Appointment, String> contId_tc;
+    public TableColumn<Appointment, String> contactName_tc;
     public TableColumn<Appointment, String> type_tc;
     public TableColumn<Appointment, String> sDate_tc;
     public TableColumn<Appointment, String> sTime_tc;
@@ -60,7 +61,7 @@ public class MainMenu implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        // assigning the Inventory.allAppointments Observable list to work with the apptsTableView Table
+        // assigning the allAppointments Observable list to work with the apptsTableView Table
         apptTableView.setItems(DBAppointments.getAllAppointments());
 
         /* assigning the values to populate each column with, each new PropertyValueFactory object calls the
@@ -69,7 +70,7 @@ public class MainMenu implements Initializable {
         title_tc.setCellValueFactory(new PropertyValueFactory<>("title"));
         desc_tc.setCellValueFactory(new PropertyValueFactory<>("description"));
         loc_tc.setCellValueFactory(new PropertyValueFactory<>("location"));
-        contId_tc.setCellValueFactory(new PropertyValueFactory<>("contactId")); // TODO
+        contactName_tc.setCellValueFactory(new PropertyValueFactory<>("contactName"));
         type_tc.setCellValueFactory(new PropertyValueFactory<>("type"));
         sDate_tc.setCellValueFactory(new PropertyValueFactory<>("startDate"));
         sTime_tc.setCellValueFactory(new PropertyValueFactory<>("startTime"));
@@ -79,8 +80,8 @@ public class MainMenu implements Initializable {
         userId_tc.setCellValueFactory(new PropertyValueFactory<>("userId"));
 
 
-        // assigning the Inventory.allProducts Observable list to work with the productsTableView Table
-        customerTableView.setItems(DBAppointments.getAllCustomers());
+        // assigning the AllCustomers Observable list to work with the customerTableView Table
+        customerTableView.setItems(DBCustomers.getAllCustomers());
         /* assigning the values to populate each column with, each new PropertyValueFactory object calls the
         getter method for the appropriate Customer object's variable */
         customerId_tc.setCellValueFactory(new PropertyValueFactory<>("customerId"));
@@ -88,8 +89,8 @@ public class MainMenu implements Initializable {
         address_tc.setCellValueFactory(new PropertyValueFactory<>("address"));
         postal_tc.setCellValueFactory(new PropertyValueFactory<>("postal"));
         phone_tc.setCellValueFactory(new PropertyValueFactory<>("phone"));
-        country_tc.setCellValueFactory(new PropertyValueFactory<>("divisionId")); // TODO
-        state_tc.setCellValueFactory(new PropertyValueFactory<>("divisionId"));
+        country_tc.setCellValueFactory(new PropertyValueFactory<>("country"));
+        state_tc.setCellValueFactory(new PropertyValueFactory<>("division"));
     }
 
     /**
