@@ -1,5 +1,6 @@
 package Database;
 
+import Model.Appointment;
 import Model.Customer;
 import Utility.JDBC;
 import javafx.collections.FXCollections;
@@ -16,13 +17,12 @@ public class DBCustomers {
 
     public static ObservableList<Customer> getAllCustomers() {
         ObservableList<Customer> customers = FXCollections.observableArrayList();
+        ObservableList<Appointment> appointments = FXCollections.observableArrayList();
 
         try {
-            String sql = "SELECT customers.Customer_ID, customers.Customer_Name, customers.Address, " +
-                    "customers.Postal_Code, customers.Phone, customers.Division_ID, countries.Country, first_level_divisions.Division  " +
-                    "FROM customers " +
+            String sql = "SELECT * FROM customers " +
                     "INNER JOIN first_level_divisions ON customers.Division_ID = first_level_divisions.Division_ID " +
-                    "INNER JOIN countries ON countries.Country_ID = first_level_divisions.Country_ID";
+                    "INNER JOIN countries ON countries.Country_ID = first_level_divisions.Country_ID ";
             PreparedStatement ps = JDBC.connection.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
 
@@ -38,6 +38,7 @@ public class DBCustomers {
                 String division = rs.getString("Division");
 
                 Customer newCustomer = new Customer(customerId, name, address, postal, phone, divisionId, country, division);
+
                 customers.add(newCustomer);
             }
         } catch (SQLException e) {

@@ -1,5 +1,9 @@
 package Controller;
 
+/**
+ * @author Patrick Kell
+ */
+
 import Database.DBAppointments;
 import Database.DBCustomers;
 import Model.Appointment;
@@ -18,9 +22,6 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
-/**
- * @author Patrick Kell
- */
 public class MainMenu implements Initializable {
 
     private ChangeView viewController = new ChangeView(); // manages the changing of views
@@ -102,8 +103,14 @@ public class MainMenu implements Initializable {
         viewController.changeViewToAdd(event, "Add Appointment ");
     }
 
+    /**
+     * Redirect the user to the ModifyAppointment screen
+     *
+     * @param event Modify Appointment button clicked
+     * @throws IOException Signals that an Input/Output exception has occurred
+     */
     public void toModifyApptView(ActionEvent event) throws IOException {
-        Appointment appt = apptTableView.getSelectionModel().getSelectedItem();
+        Appointment appt = apptTableView.getSelectionModel().getSelectedItem(); // get the selected appointment
         if (appt == null) { // no appointment selected
             alerts.nullSelection("Appointment", "modify"); // alert the user
             return;
@@ -113,26 +120,44 @@ public class MainMenu implements Initializable {
         viewController.changeViewToModify(event, "Modify Appointment ", apptTableView);
     }
 
+    /**
+     * Delete the selected Appointment or alert user no Appointment to be deleted is selected
+     *
+     * @param event Delete Appointment button clicked
+     * @throws SQLException Signals that a SQLException exception has occurred
+     */
     public void onDeleteAppt(ActionEvent event) throws SQLException {
-        Appointment appt = apptTableView.getSelectionModel().getSelectedItem();
+        Appointment appt = apptTableView.getSelectionModel().getSelectedItem(); // get the selected appointment
         if (appt == null) { // no appointment selected
             alerts.nullSelection("Appointment", "modify"); // alert the user
             return;
         }
 
-        if (alerts.confirmDelete("Appointment")) {
-            if (DBAppointments.deleteAppointment(appt)) {
-                apptTableView.setItems(DBAppointments.getAppointments("all"));
+        if (alerts.confirmDelete("Appointment")) { // if Ok button clicked
+            if (DBAppointments.deleteAppointment(appt)) { // if appointment was deleted
+                apptTableView.setItems(DBAppointments.getAppointments("all")); // reset the table view
             }
         }
     }
 
+    /**
+     * Redirect the user to the Add Customer screen
+     *
+     * @param event Add Customer button clicked
+     * @throws IOException Signals that an Input/Output exception has occurred
+     */
     public void toAddCustomerView(ActionEvent event) throws IOException {
         viewController.changeViewToAdd(event, "Add Customer ");
     }
 
+    /**
+     * Redirect the user to the Modify Customer screen
+     *
+     * @param event Modify Customer button clicked
+     * @throws IOException Signals that an Input/Output exception has occurred
+     */
     public void toModifyCustomerView(ActionEvent event) throws IOException {
-        Customer customer = customerTableView.getSelectionModel().getSelectedItem();
+        Customer customer = customerTableView.getSelectionModel().getSelectedItem(); // get the selected customer
         if (customer == null) { // no customer selected
             alerts.nullSelection("Customer", "modify"); // alert the user
             return;
@@ -142,10 +167,21 @@ public class MainMenu implements Initializable {
         viewController.changeViewToModify(event, "Modify Customer ", customerTableView);
     }
 
+    /**
+     * Delete the selected Customer or alert user no Customer to be deleted is selected
+     *
+     * @param event Delete Customer button clicked
+     * @throws SQLException Signals that a SQLException exception has occurred
+     */
     public void onDeleteCustomer(ActionEvent event) throws SQLException {
         Customer customer = customerTableView.getSelectionModel().getSelectedItem();
         if (customer == null) { // no customer selected
             alerts.nullSelection("Customer", "modify"); // alert the user
+            return;
+        }
+
+        if (DBAppointments.getApptsByCustomer(customer) > 0) { // Customer has appointments
+            alerts.associatedApptsError(); // alert the user
             return;
         }
 

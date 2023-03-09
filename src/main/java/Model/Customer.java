@@ -4,6 +4,9 @@ package Model;
  * @author Patrick Kell
  */
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
 /**
  * The Customer class which defines and manages customers
  */

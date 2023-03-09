@@ -1,6 +1,7 @@
 package Database;
 
 import Model.Appointment;
+import Model.Customer;
 import Utility.JDBC;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -30,7 +31,7 @@ public class DBAppointments {
                     sql = sql + " WHERE appointments.Start <= NOW() + INTERVAL 1 Week AND " +
                             "appointments.Start > NOW()";
                     break;
-                case "all":
+                default:
                     sql = sql;
                     break;
             }
@@ -68,5 +69,17 @@ public class DBAppointments {
         ps.setInt(1, appt.getApptId());
         int rowsAffected = ps.executeUpdate();
         return rowsAffected == 1;
+    }
+
+    public static int getApptsByCustomer(Customer customer) throws SQLException {
+        String sql = "SELECT COUNT(Appointment_ID) AS apptCount FROM appointments WHERE Customer_ID = ?";
+        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+        ps.setInt(1, customer.getCustomerId());
+        ResultSet rs = ps.executeQuery();
+        int totalAppts = 0;
+        while (rs.next()) {
+            totalAppts = rs.getInt("apptCount");
+        }
+        return totalAppts;
     }
 }

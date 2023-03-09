@@ -54,14 +54,15 @@ public class Alerts {
     }
 
     /**
-     * Associated Part error method which alerts the user of an associated part error
+     * Associated Appointment(s) error method which alerts the user if a customer attempting to be deleted has
+     * associated appointment(s)
      */
-    public void associatedPartError() {
+    public void associatedApptsError() {
         Alert alert = new Alert(Alert.AlertType.ERROR); // creation of Alert Object
-        alert.setTitle("Associated Parts Error"); // set the title
-        alert.setHeaderText("Associated Parts Error"); // set the header text
-        alert.setContentText("This product cannot be deleted because there are parts associated with it. To " +
-                "delete this product, remove all of it's associated parts."); // set the content text of the error message
+        alert.setTitle("Associated Appointment(s) Error"); // set the title
+        alert.setHeaderText("Associated Appointment(s) Error"); // set the header text
+        alert.setContentText("This Customer cannot be deleted because there are one or more appointments associated with it. To " +
+                "delete this Customer, remove all of it's associated appointments."); // set the content text of the error message
         alert.showAndWait(); // display the alert and wait for a response from the user
     }
 
