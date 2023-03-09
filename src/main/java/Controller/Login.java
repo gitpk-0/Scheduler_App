@@ -41,11 +41,11 @@ public class Login implements Initializable {
     public Label zoneId;
 
     /**
-     * @param actionEvent
+     * @param event
      * @throws IOException
      * @throws SQLException
      */
-    public void onLogin(ActionEvent actionEvent) throws IOException, SQLException {
+    public void onLogin(ActionEvent event) throws IOException, SQLException {
         String username = usernameTF.getText();
         String password = passwordPF.getText();
         ZonedDateTime dateTime = ZonedDateTime.now(ZoneId.systemDefault());
@@ -53,7 +53,7 @@ public class Login implements Initializable {
         if (DBUsers.login(username, password) && !username.isEmpty() && !password.isEmpty()) {
             // valid username & password entered
             loginTracker.log(username, dateTime, true);
-            viewHandler.changeViewToMain(actionEvent);
+            viewHandler.changeViewToMain(event);
         } else { // invalid username or password entered
             loginTracker.log(username, dateTime, false);
             usernameTF.clear();

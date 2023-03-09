@@ -36,18 +36,18 @@ public class Reports {
     public ComboBox typeCombo;
     public Label totalLbl;
 
-    public void toMainMenu(ActionEvent actionEvent) {
+    public void toMainMenu(ActionEvent event) {
     }
 
     @FXML
-    public void filterByContact(ActionEvent actionEvent) {
+    public void filterByContact(ActionEvent event) {
     }
 
     @FXML
-    public void filterByCountry(ActionEvent actionEvent) {
+    public void filterByCountry(ActionEvent event) {
     }
 
     @FXML
-    public void updateTotal(ActionEvent actionEvent) {
+    public void updateTotal(ActionEvent event) {
     }
 }

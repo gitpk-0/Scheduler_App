@@ -23,9 +23,9 @@ public class AddAppointment {
     public TextField typeTF;
 
 
-    public void onCancel(ActionEvent actionEvent) {
+    public void onCancel(ActionEvent event) {
     }
 
-    public void onSaveAppt(ActionEvent actionEvent) {
+    public void onSaveAppt(ActionEvent event) {
     }
 }

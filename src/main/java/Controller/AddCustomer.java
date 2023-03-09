@@ -17,9 +17,9 @@ public class AddCustomer {
     public TextField postalTF;
 
 
-    public void onSaveCustomer(ActionEvent actionEvent) {
+    public void onSaveCustomer(ActionEvent event) {
     }
 
-    public void onCancel(ActionEvent actionEvent) {
+    public void onCancel(ActionEvent event) {
     }
 }

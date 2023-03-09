@@ -1,5 +1,6 @@
 package Controller;
 
+import Model.Appointment;
 import javafx.event.ActionEvent;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
@@ -23,9 +24,12 @@ public class ModifyAppointment {
     public ComboBox startTimeCombo;
     public TextField typeTF;
 
-    public void onCancel(ActionEvent actionEvent) {
+    public void onCancel(ActionEvent event) {
     }
 
-    public void onSaveAppt(ActionEvent actionEvent) {
+    public void onSaveAppt(ActionEvent event) {
+    }
+
+    public void sendAppt(Appointment selectedItem, ActionEvent event) {
     }
 }
