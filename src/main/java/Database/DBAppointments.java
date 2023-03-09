@@ -1,6 +1,7 @@
 package Database;
 
 import Model.Appointment;
+import Model.Customer;
 import Utility.JDBC;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -46,4 +47,30 @@ public class DBAppointments {
         return appointments;
     }
 
+    public static ObservableList<Customer> getAllCustomers() {
+        ObservableList<Customer> customers = FXCollections.observableArrayList();
+
+        try {
+            String sql = "SELECT * FROM customers";
+            PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+
+
+            while (rs.next()) {
+                int customerId = rs.getInt("Customer_ID");
+                String name = rs.getString("Customer_Name");
+                String address = rs.getString("Address");
+                String postal = rs.getString("Postal_Code");
+                String phone = rs.getString("Phone");
+                int divisionId = rs.getInt("Division_ID");
+
+                Customer newCustomer = new Customer(customerId, name, address, postal, phone, divisionId);
+                customers.add(newCustomer);
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+        return customers;
+    }
 }

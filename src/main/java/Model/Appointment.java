@@ -52,7 +52,6 @@ public class Appointment {
         this.customerId = customerId;
         this.userId = userId;
         this.contactId = contactId;
-        this.startDate = getStartDate();
     }
 
     /**
