@@ -62,7 +62,7 @@ public class MainMenu implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         // assigning the allAppointments Observable list to work with the apptsTableView Table
-        apptTableView.setItems(DBAppointments.getAllAppointments());
+        apptTableView.setItems(DBAppointments.getAppointments("all"));
 
         /* assigning the values to populate each column with, each new PropertyValueFactory object calls the
         getter method for the appropriate Appointment object's variable */
@@ -122,30 +122,55 @@ public class MainMenu implements Initializable {
 
         if (alerts.confirmDelete("Appointment")) {
             if (DBAppointments.deleteAppointment(appt)) {
-                apptTableView.setItems(DBAppointments.getAllAppointments());
+                apptTableView.setItems(DBAppointments.getAppointments("all"));
             }
         }
     }
 
-    public void toAddCustomerView(ActionEvent event) {
+    public void toAddCustomerView(ActionEvent event) throws IOException {
+        viewController.changeViewToAdd(event, "Add Customer ");
     }
 
-    public void toModifyCustomerView(ActionEvent event) {
+    public void toModifyCustomerView(ActionEvent event) throws IOException {
+        Customer customer = customerTableView.getSelectionModel().getSelectedItem();
+        if (customer == null) { // no customer selected
+            alerts.nullSelection("Customer", "modify"); // alert the user
+            return;
+        }
+
+        // pas the event, view, and customerTableView to the changeViewModify method
+        viewController.changeViewToModify(event, "Modify Customer ", customerTableView);
     }
 
-    public void onDeleteCustomer(ActionEvent event) {
+    public void onDeleteCustomer(ActionEvent event) throws SQLException {
+        Customer customer = customerTableView.getSelectionModel().getSelectedItem();
+        if (customer == null) { // no customer selected
+            alerts.nullSelection("Customer", "modify"); // alert the user
+            return;
+        }
+
+        if (alerts.confirmDelete("Customer")) {
+            if (DBCustomers.deleteCustomer(customer)) {
+                customerTableView.setItems(DBCustomers.getAllCustomers());
+            }
+        }
+
     }
 
-    public void toReportsView(ActionEvent event) {
+    public void toReportsView(ActionEvent event) throws IOException {
+        viewController.changeViewToReports(event);
     }
 
     public void filterThisMonth(ActionEvent event) {
+        apptTableView.setItems(DBAppointments.getAppointments("month"));
     }
 
     public void filterThisWeek(ActionEvent event) {
+        apptTableView.setItems(DBAppointments.getAppointments("week"));
     }
 
     public void showAllAppts(ActionEvent event) {
+        apptTableView.setItems(DBAppointments.getAppointments("all"));
     }
 
     /**

@@ -46,4 +46,12 @@ public class DBCustomers {
 
         return customers;
     }
+
+    public static boolean deleteCustomer(Customer customer) throws SQLException {
+        String sql = "DELETE FROM customers WHERE Customer_ID = ?";
+        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+        ps.setInt(1, customer.getCustomerId());
+        int rowsAffected = ps.executeUpdate();
+        return rowsAffected == 1;
+    }
 }

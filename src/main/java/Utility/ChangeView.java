@@ -90,6 +90,7 @@ public class ChangeView {
         scene = loader.getRoot();
         stage.setScene(new Scene(scene));
         stage.setTitle(view);
+        stage.centerOnScreen(); // center the stage to the users screen
         stage.show();
     }
 

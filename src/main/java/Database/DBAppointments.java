@@ -1,7 +1,6 @@
 package Database;
 
 import Model.Appointment;
-import Model.Customer;
 import Utility.JDBC;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -16,12 +15,25 @@ import java.time.LocalDateTime;
  */
 public class DBAppointments {
 
-    public static ObservableList<Appointment> getAllAppointments() {
+    public static ObservableList<Appointment> getAppointments(String filter) {
         ObservableList<Appointment> appointments = FXCollections.observableArrayList();
+        String sql = "SELECT * FROM appointments " +
+                "INNER JOIN contacts ON appointments.Contact_ID = contacts.Contact_ID";
 
         try {
-            String sql = "SELECT * FROM appointments " +
-                    "INNER JOIN contacts ON appointments.Contact_ID = contacts.Contact_ID";
+            switch (filter) {
+                case "month":
+                    sql = sql + " WHERE appointments.Start <= NOW() + INTERVAL 1 Month AND " +
+                            "appointments.Start > NOW()";
+                    break;
+                case "week":
+                    sql = sql + " WHERE appointments.Start <= NOW() + INTERVAL 1 Week AND " +
+                            "appointments.Start > NOW()";
+                    break;
+                case "all":
+                    sql = sql;
+                    break;
+            }
             PreparedStatement ps = JDBC.connection.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
 
@@ -55,6 +67,6 @@ public class DBAppointments {
         PreparedStatement ps = JDBC.connection.prepareStatement(sql);
         ps.setInt(1, appt.getApptId());
         int rowsAffected = ps.executeUpdate();
-        return rowsAffected > 0;
+        return rowsAffected == 1;
     }
 }
