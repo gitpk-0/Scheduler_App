@@ -113,19 +113,22 @@ public class DBAppointments {
     public static void addAppointment(int apptId, String title, String desc, String loca, String type,
                                       LocalDateTime start, LocalDateTime end, int customerId, int userId,
                                       int contactId, String contactName) throws SQLException {
-        String sql = "INSERT INTO appointments VALUES (?,?,?,?,?,?,?,?,?,?,?)";
+        String sql = "INSERT INTO appointments VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
         PreparedStatement ps = JDBC.connection.prepareStatement(sql);
-        ps.setInt(1, apptId);
-        ps.setString(2, title);
-        ps.setString(3, desc);
-        ps.setString(4, loca);
-        ps.setString(5, type);
-        ps.setTimestamp(6, Timestamp.valueOf(start));
-        ps.setTimestamp(7, Timestamp.valueOf(end));
-        ps.setInt(8, customerId);
-        ps.setInt(9, userId);
-        ps.setInt(10, contactId);
-        ps.setString(11, contactName);
+        ps.setInt(1, apptId); // Appointment_ID
+        ps.setString(2, title); // Title
+        ps.setString(3, desc); // Description
+        ps.setString(4, loca); // Location
+        ps.setString(5, type); // Type
+        ps.setTimestamp(6, Timestamp.valueOf(start)); // Start
+        ps.setTimestamp(7, Timestamp.valueOf(end)); // End
+        ps.setTimestamp(8, Timestamp.valueOf(LocalDateTime.now())); // Create_Date
+        ps.setString(9, "user"); // Created_By  TODO******
+        ps.setTimestamp(10, Timestamp.valueOf(LocalDateTime.now())); // Last_Update
+        ps.setString(11, "user"); // Last_Updated_By
+        ps.setInt(12, customerId); // Customer_ID
+        ps.setInt(13, userId); // User_ID
+        ps.setInt(14, contactId); // Contact_ID
         ps.executeUpdate();
     }
 }

@@ -24,7 +24,9 @@ import javafx.scene.control.TextField;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -64,7 +66,7 @@ public class AddAppointment implements Initializable {
         // Initialize user id combo box options
         ObservableList<Integer> users = FXCollections.observableArrayList();
         DBUsers.getAllUserIDs().stream().forEach(userID -> users.add(userID)); // lambda
-        custIdCB.setItems(customers);
+        userIdCB.setItems(users);
 
         // Initialize start and end time combo box options
         ObservableList<String> times = FXCollections.observableArrayList();
@@ -90,6 +92,7 @@ public class AddAppointment implements Initializable {
 
         try {
             if (errors.isEmpty()) {
+                System.out.println("here");
                 int id = IDGenerator.appointmentIDGenerator();
                 String title = titleTF.getText();
                 String desc = descTF.getText();
@@ -103,25 +106,51 @@ public class AddAppointment implements Initializable {
 
                 // date selection, date format, date overlaps checks
                 errors = validator.dateChecks(startDP, startTimeCB, endDP, endTimeCB);
-                if (errors.isEmpty()) {
+                System.out.println(errors.size());
+                if (!errors.isEmpty()) {
+                    System.out.println("Made it here2");
+                    throw new Exception(); // redirect to the catch block below
+                } else {
+                    System.out.println("Made it here2");
                     if (validator.apptOverlapExists(custIdCB, startDP, startTimeCB, endDP, endTimeCB)) {
+                        System.out.println("Made it here3");
                         errors = validator.addOverlapError();
-                        throw new Exception();
+                        throw new Exception(); // redirect to the catch block below
                     }
-                    throw new Exception();
                 }
-
+                System.out.println("Made it here4");
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+                DateTimeFormatter time = DateTimeFormatter.ofPattern("HH:mm");
+                String[] startT = startTimeCB.getSelectionModel().getSelectedItem().split(":");
+                String[] endT = endTimeCB.getSelectionModel().getSelectedItem().split(":");
+                LocalTime startTime = LocalTime.of(Integer.valueOf(startT[0]), Integer.valueOf(startT[1]));
+                LocalTime endTime = LocalTime.of(Integer.valueOf(endT[0]), Integer.valueOf(endT[1]));
+                LocalDate startDate = startDP.getValue();
+                LocalDate endDate = endDP.getValue();
+
+                LocalDateTime start = LocalDateTime.of(startDate, startTime).withSecond(1);
+                LocalDateTime end = LocalDateTime.of(endDate, endTime);
                 /* TODO: may need to offset the start and end times by 1 sec to allow appts creation */
-                LocalDateTime start = LocalDateTime.parse(startDP.toString() + startTimeCB.toString(), formatter).withSecond(1);
-                LocalDateTime end = LocalDateTime.parse(endDP.toString() + endTimeCB.toString(), formatter);
+                // LocalDateTime start = LocalDateTime.parse(startDP.toString() + startTimeCB.toString(), formatter).withSecond(1);
+                // LocalDateTime end = LocalDateTime.parse(endDP.toString() + endTimeCB.toString(), formatter);
+
+                System.out.println("Made it here5");
 
 
                 DBAppointments.addAppointment(id, title, desc, loca, type, start, end, custId, uId, contId, contName);
                 viewController.changeViewToMain(event);
+            } else { // errors list is not empty
+                throw new Exception(); // redirect to the catch block below
             }
 
         } catch (Exception e) {
+            System.out.println(e.getMessage());
+            int len = e.getStackTrace().length -1;
+            e.printStackTrace();
+            System.out.println(len + " **len");
+            System.out.println(e.getStackTrace()[len - 1].getLineNumber());
+            System.out.println(e.getCause());
+            System.out.println(e.getClass());
             alerts.inputError(errors);
         }
 

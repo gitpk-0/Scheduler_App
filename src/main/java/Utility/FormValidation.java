@@ -17,6 +17,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Locale;
 
 /**
  * Form Validation class to validate data input by the user
@@ -143,9 +144,11 @@ public class FormValidation {
         }
 
         // validate Start Time before End Time
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
-        LocalTime startTime = LocalTime.parse(startTimeCombo.toString(), formatter);
-        LocalTime endTime = LocalTime.parse(endTimeCombo.toString(), formatter);
+        // DateTimeFormatter formatter = DateTimeFormatter.ofPattern("h[:mm]a", Locale.ENGLISH);
+        String[] start = startTimeCombo.getSelectionModel().getSelectedItem().split(":");
+        String[] end = endTimeCombo.getSelectionModel().getSelectedItem().split(":");;
+        LocalTime startTime = LocalTime.of(Integer.valueOf(start[0]), Integer.valueOf(start[1]));
+        LocalTime endTime = LocalTime.of(Integer.valueOf(end[0]), Integer.valueOf(end[1]));
         if (startTime.isAfter(endTime)) {
             outputErrorMessages.add(inputErrors.get(14));
         }
@@ -160,9 +163,20 @@ public class FormValidation {
         int customerId = custIdCombo.getSelectionModel().getSelectedItem(); // get the selected customer id
         Customer customerToCheck = null;
 
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        LocalDateTime startSelection = LocalDateTime.parse(startDatePick.toString() + startTimeCombo.toString(), formatter);
-        LocalDateTime endSelection = LocalDateTime.parse(endDatePick.toString() + endTimeCombo.toString(), formatter);
+        DateTimeFormatter time = DateTimeFormatter.ofPattern("HH:mm");
+        String[] startT = startTimeCombo.getSelectionModel().getSelectedItem().split(":");
+        String[] endT = endTimeCombo.getSelectionModel().getSelectedItem().split(":");;
+        LocalTime startTime = LocalTime.of(Integer.valueOf(startT[0]), Integer.valueOf(startT[1]));
+        LocalTime endTime = LocalTime.of(Integer.valueOf(endT[0]), Integer.valueOf(endT[1]));
+        LocalDate startDate = startDatePick.getValue();
+        LocalDate endDate = endDatePick.getValue();
+
+        LocalDateTime startSelection = LocalDateTime.of(startDate, startTime);
+        LocalDateTime endSelection = LocalDateTime.of(endDate, endTime);
+
+        // DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        // LocalDateTime startSelection = LocalDateTime.parse(startDatePick.toString() + startTimeCombo.toString(), formatter);
+        // LocalDateTime endSelection = LocalDateTime.parse(endDatePick.toString() + endTimeCombo.toString(), formatter);
 
         for (Customer customer : DBCustomers.getAllCustomers()) { // find the Customer object which id matches
             if (customer.getCustomerId() == customerId) {
