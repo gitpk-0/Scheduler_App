@@ -76,10 +76,12 @@ public class DBAppointments {
         PreparedStatement ps = JDBC.connection.prepareStatement(sql);
         ps.setInt(1, customer.getCustomerId());
         ResultSet rs = ps.executeQuery();
+
         int totalAppts = 0;
         while (rs.next()) {
             totalAppts = rs.getInt("apptCount");
         }
+
         return totalAppts;
     }
 }

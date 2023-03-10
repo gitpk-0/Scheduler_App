@@ -22,6 +22,10 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
+/**
+ * The MainMenu controller class which acts as the main page for the application. Allows users to view, Add, Modify,
+ * and Delete Appointments and Customers, redirects to the Reports screen and Exit the application.
+ */
 public class MainMenu implements Initializable {
 
     private ChangeView viewController = new ChangeView(); // manages the changing of views
@@ -51,7 +55,6 @@ public class MainMenu implements Initializable {
     public TableColumn<Customer, String> phone_tc;
     public TableColumn<Customer, String> country_tc;
     public TableColumn<Customer, String> state_tc;
-
 
     /**
      * Initialize method which initializes the MainMenu controller class once its root element has been
@@ -185,26 +188,48 @@ public class MainMenu implements Initializable {
             return;
         }
 
-        if (alerts.confirmDelete("Customer")) {
-            if (DBCustomers.deleteCustomer(customer)) {
-                customerTableView.setItems(DBCustomers.getAllCustomers());
+        if (alerts.confirmDelete("Customer")) { // if Ok button clicked
+            if (DBCustomers.deleteCustomer(customer)) { // if Customer was deleted
+                customerTableView.setItems(DBCustomers.getAllCustomers()); // reset the table view
             }
         }
 
     }
 
+    /**
+     * Redirect the user to the Reports screen
+     *
+     * @param event View Reports button clicked
+     * @throws IOException Signals that an Input/Output exception has occurred
+     */
     public void toReportsView(ActionEvent event) throws IOException {
         viewController.changeViewToReports(event);
     }
 
+    /**
+     * Filter the Appointments Table View by Appointments this month
+     *
+     * @param event This Month radio button clicked
+     */
     public void filterThisMonth(ActionEvent event) {
         apptTableView.setItems(DBAppointments.getAppointments("month"));
     }
 
+    /**
+     * Filter the Appointments Table View by Appointments this week
+     *
+     * @param event This Week radio button clicked
+     */
     public void filterThisWeek(ActionEvent event) {
         apptTableView.setItems(DBAppointments.getAppointments("week"));
     }
 
+
+    /**
+     * Show all Appointments in the Appointments Table View
+     *
+     * @param event All Appointments radio button clicked
+     */
     public void showAllAppts(ActionEvent event) {
         apptTableView.setItems(DBAppointments.getAppointments("all"));
     }
