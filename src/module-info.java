@@ -1,7 +1,7 @@
 /**
  * File and package permissions for the controller
  */
-module main.schedulerapp {
+module main.scheduler {
     requires javafx.controls;
     requires javafx.fxml;
     requires java.sql;

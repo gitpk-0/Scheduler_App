@@ -151,14 +151,6 @@ public class Customer {
     }
 
     /**
-     * @return a string representation of the customer's id and name
-     */
-    @Override
-    public String toString() {
-        return this.customerId + " " + this.name;
-    }
-
-    /**
      * @return a string representation of the customer's country
      */
     public String getCountry() {
@@ -184,5 +176,13 @@ public class Customer {
      */
     public void setDivision(String division) {
         this.division = division;
+    }
+
+    /**
+     * @return a string representation of the customer's id and name
+     */
+    @Override
+    public String toString() {
+        return this.customerId + ": " + this.name;
     }
 }

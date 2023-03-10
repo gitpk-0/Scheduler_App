@@ -52,7 +52,8 @@ public class DBAppointments {
                 int contactId = rs.getInt("Contact_ID");
                 String contactName = rs.getString("Contact_Name");
 
-                Appointment newAppt = new Appointment(apptId, title, desc, loca, type, start, end, customerId, userId, contactId, contactName);
+                Appointment newAppt = new Appointment(apptId, title, desc, loca, type, start, end, customerId, userId,
+                        contactId, contactName);
                 appointments.add(newAppt);
             }
         } catch (SQLException e) {
@@ -111,6 +112,20 @@ public class DBAppointments {
 
     public static void addAppointment(int apptId, String title, String desc, String loca, String type,
                                       LocalDateTime start, LocalDateTime end, int customerId, int userId,
-                                      int contactId, String contactName) {
+                                      int contactId, String contactName) throws SQLException {
+        String sql = "INSERT INTO appointments VALUES (?,?,?,?,?,?,?,?,?,?,?)";
+        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+        ps.setInt(1, apptId);
+        ps.setString(2, title);
+        ps.setString(3, desc);
+        ps.setString(4, loca);
+        ps.setString(5, type);
+        ps.setTimestamp(6, Timestamp.valueOf(start));
+        ps.setTimestamp(7, Timestamp.valueOf(end));
+        ps.setInt(8, customerId);
+        ps.setInt(9, userId);
+        ps.setInt(10, contactId);
+        ps.setString(11, contactName);
+        ps.executeUpdate();
     }
 }

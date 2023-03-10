@@ -4,7 +4,11 @@ package Database;
  * @author Patrick Kell
  */
 
+import Model.Appointment;
+import Model.Customer;
 import Utility.JDBC;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -36,6 +40,26 @@ public class DBUsers {
         }
 
         return false;
+    }
+
+    public static ObservableList<Integer> getAllUserIDs() {
+        ObservableList<Integer> users = FXCollections.observableArrayList();
+
+        try {
+            String sql = "SELECT * FROM users";
+            PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+
+
+            while (rs.next()) {
+                int userID = rs.getInt("User_ID");
+                users.add(userID);
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+        return users;
     }
 
 }

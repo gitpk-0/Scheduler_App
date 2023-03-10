@@ -4,7 +4,6 @@ package main.scheduler;
  * @author Patrick Kell
  */
 
-import Model.*;
 import Utility.JDBC;
 import Utility.LoginTracker;
 import javafx.application.Application;

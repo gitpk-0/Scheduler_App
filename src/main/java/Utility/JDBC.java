@@ -27,6 +27,7 @@ public abstract class JDBC {
             System.out.println("Connection successful!");
         } catch (Exception e) {
             System.out.println("Error:" + e.getMessage());
+            System.out.println(e.getCause());
         }
     }
 

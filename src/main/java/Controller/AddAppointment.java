@@ -2,6 +2,9 @@ package Controller;
 
 import Database.DBAppointments;
 import Database.DBContacts;
+import Database.DBCustomers;
+import Database.DBUsers;
+import Model.Customer;
 import Utility.Alerts;
 import Utility.ChangeView;
 import Utility.FormValidation;
@@ -48,10 +51,36 @@ public class AddAppointment implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        // Initialize contact combo box options
         ObservableList<String> contacts = FXCollections.observableArrayList();
         DBContacts.getAllContacts().stream().forEach(contact -> contacts.add(contact.toString())); // lambda
         contactCB.setItems(contacts);
 
+        // Initialize customer id combo box options
+        ObservableList<Integer> customers = FXCollections.observableArrayList();
+        DBCustomers.getAllCustomers().stream().forEach(customer -> customers.add(customer.getCustomerId())); // lambda
+        custIdCB.setItems(customers);
+
+        // Initialize user id combo box options
+        ObservableList<Integer> users = FXCollections.observableArrayList();
+        DBUsers.getAllUserIDs().stream().forEach(userID -> users.add(userID)); // lambda
+        custIdCB.setItems(customers);
+
+        // Initialize start and end time combo box options
+        ObservableList<String> times = FXCollections.observableArrayList();
+        int currentHour = 8;
+
+        while (currentHour < 22) {
+            StringBuilder time = new StringBuilder();
+            times.add(String.valueOf(currentHour) + ":00");
+            times.add(String.valueOf(currentHour) + ":15");
+            times.add(String.valueOf(currentHour) + ":30");
+            times.add(String.valueOf(currentHour) + ":45");
+            currentHour++;
+        }
+        times.add("22:00");
+        startTimeCB.setItems(times);
+        endTimeCB.setItems(times);
     }
 
     public void onSaveAppt(ActionEvent event) throws SQLException {
@@ -61,17 +90,16 @@ public class AddAppointment implements Initializable {
 
         try {
             if (errors.isEmpty()) {
-                int apptId = IDGenerator.appointmentIDGenerator();
+                int id = IDGenerator.appointmentIDGenerator();
                 String title = titleTF.getText();
                 String desc = descTF.getText();
                 String loca = locationTF.getText();
                 String type = typeTF.getText();
-                int customerId = custIdCB.getValue();
-                int userId = userIdCB.getValue();
-                String contact = contactCB.getSelectionModel().getSelectedItem();
-                String[] parts = contact.split(": ");
-                int contactId = Integer.valueOf(parts[0]);
-                String contactName = parts[1];
+                int custId = custIdCB.getValue();
+                int uId = userIdCB.getValue();
+                String[] contact = contactCB.getSelectionModel().getSelectedItem().split(": ");
+                int contId = Integer.valueOf(contact[0]);
+                String contName = contact[1];
 
                 // date selection, date format, date overlaps checks
                 errors = validator.dateChecks(startDP, startTimeCB, endDP, endTimeCB);
@@ -89,14 +117,14 @@ public class AddAppointment implements Initializable {
                 LocalDateTime end = LocalDateTime.parse(endDP.toString() + endTimeCB.toString(), formatter);
 
 
-                DBAppointments.addAppointment(apptId, title, desc, loca, type, start, end, customerId, userId, contactId, contactName);
+                DBAppointments.addAppointment(id, title, desc, loca, type, start, end, custId, uId, contId, contName);
+                viewController.changeViewToMain(event);
             }
 
         } catch (Exception e) {
             alerts.inputError(errors);
         }
 
-        String contactId = contactCB.getSelectionModel().getSelectedItem().substring(0, 0);
     }
 
     /**
