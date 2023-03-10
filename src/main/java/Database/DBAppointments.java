@@ -6,10 +6,10 @@ import Utility.JDBC;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 
 /**
  * @author Patrick Kell
@@ -71,7 +71,7 @@ public class DBAppointments {
         return rowsAffected == 1;
     }
 
-    public static int getApptsByCustomer(Customer customer) throws SQLException {
+    public static int getApptCountByCustomer(Customer customer) throws SQLException {
         String sql = "SELECT COUNT(Appointment_ID) AS apptCount FROM appointments WHERE Customer_ID = ?";
         PreparedStatement ps = JDBC.connection.prepareStatement(sql);
         ps.setInt(1, customer.getCustomerId());
@@ -83,5 +83,29 @@ public class DBAppointments {
         }
 
         return totalAppts;
+    }
+
+    public static ArrayList<LocalDateTime> getApptTimesByCustomer(Customer customer) throws SQLException {
+        ArrayList<LocalDateTime> apptTimes = new ArrayList<>();
+        String sql = "SELECT * FROM appointments WHERE Customer_ID = ?";
+        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+        ps.setInt(1, customer.getCustomerId());
+        ResultSet rs = ps.executeQuery();
+
+
+        int index = 0;
+        while (rs.next()) {
+            Timestamp startTimeStamp = rs.getTimestamp("Start");
+            Timestamp endTimeStamp = rs.getTimestamp("End");
+
+            LocalDateTime start = startTimeStamp.toLocalDateTime();
+            LocalDateTime end = endTimeStamp.toLocalDateTime();
+
+            apptTimes.add(index, start);
+            apptTimes.add(index + 1, end);
+            index += 2;
+        }
+
+        return apptTimes;
     }
 }

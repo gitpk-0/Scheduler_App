@@ -48,13 +48,13 @@
                         <Label text="Type" GridPane.columnIndex="3" />
                         <DatePicker fx:id="startDatePick" minWidth="200.0" prefHeight="26.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                         <DatePicker fx:id="endDatePick" minWidth="200.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="4" />
-                        <ComboBox fx:id="userIdCombo" minWidth="200.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="2" />
-                        <ComboBox fx:id="custIdCombo" minWidth="200.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="1" />
-                        <ComboBox fx:id="contactCombo" minWidth="200.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="3" />
-                        <ComboBox fx:id="endTimeCombo" minWidth="200.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="5" />
-                        <ComboBox fx:id="startTimeCombo" minWidth="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                        <ComboBox fx:id="userIdCombo" minWidth="200.0" onAction="#selectUserID" prefWidth="200.0" promptText="Select a User ID" GridPane.columnIndex="4" GridPane.rowIndex="2" />
+                        <ComboBox fx:id="custIdCombo" minWidth="200.0" onAction="#selectCustomerID" prefWidth="200.0" promptText="Select a Customer ID" GridPane.columnIndex="4" GridPane.rowIndex="1" />
+                        <ComboBox fx:id="contactCombo" minWidth="200.0" onAction="#selectContact" prefWidth="200.0" promptText="Select a Contact" GridPane.columnIndex="4" GridPane.rowIndex="3" />
+                        <ComboBox fx:id="endTimeCombo" minWidth="200.0" onAction="#selectEndTime" prefWidth="200.0" promptText="Select an End Time" GridPane.columnIndex="4" GridPane.rowIndex="5" />
+                        <ComboBox fx:id="startTimeCombo" minWidth="200.0" onAction="#selectStartTime" prefWidth="200.0" promptText="Select a Start Time" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                         <TextField fx:id="typeTF" GridPane.columnIndex="4" />
-                  <Label text="State Time" GridPane.rowIndex="5" />
+                        <Label text="Start Time" GridPane.rowIndex="5" />
                     </children>
                     <VBox.margin>
                         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />

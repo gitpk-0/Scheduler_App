@@ -183,7 +183,7 @@ public class MainMenu implements Initializable {
             return;
         }
 
-        if (DBAppointments.getApptsByCustomer(customer) > 0) { // Customer has appointments
+        if (DBAppointments.getApptCountByCustomer(customer) > 0) { // Customer has appointments
             alerts.associatedApptsError(); // alert the user
             return;
         }

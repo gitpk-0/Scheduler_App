@@ -1,5 +1,9 @@
 package Utility;
 
+/**
+ * @author Patrick Kell
+ */
+
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 
@@ -7,7 +11,7 @@ import java.util.ArrayList;
 import java.util.Optional;
 
 /**
- * @author Patrick Kell
+ * Alert class which manages the alert messages to the user
  */
 public class Alerts {
 
@@ -33,7 +37,7 @@ public class Alerts {
     /**
      * Confirm delete method which asks the user to confirm the deletion
      *
-     * @param type A Part or Product
+     * @param type An Appointment or Customer
      * @return Whether the OK was pressed or not
      */
     public boolean confirmDelete(String type) {
@@ -61,8 +65,8 @@ public class Alerts {
         Alert alert = new Alert(Alert.AlertType.ERROR); // creation of Alert Object
         alert.setTitle("Associated Appointment(s) Error"); // set the title
         alert.setHeaderText("Associated Appointment(s) Error"); // set the header text
-        alert.setContentText("This Customer cannot be deleted because there are one or more appointments associated with it. To " +
-                "delete this Customer, remove all of it's associated appointments."); // set the content text of the error message
+        alert.setContentText("This customer cannot be deleted because there are one or more appointments associated " +
+                "with them. To delete this customer, remove all of their associated appointments."); // error message
         alert.showAndWait(); // display the alert and wait for a response from the user
     }
 
