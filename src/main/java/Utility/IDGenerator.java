@@ -4,6 +4,9 @@ package Utility;
  * @author Patrick Kell
  */
 
+import Database.DBAppointments;
+import Model.Appointment;
+
 import java.util.List;
 import java.util.Random;
 
@@ -19,26 +22,25 @@ import java.util.Random;
  * List interface. This resolved the runtime error and prevented the need to cast the List object to an ArrayList
  * object.
  */
-public class IdGenerator {
+public class IDGenerator {
 
     /**
      * IdGenerator class for Parts
      *
      * @return A unique ID for the Part
      */
-    public static int partIdGenerator() {
-        // Random random = new Random(); // random number generator object
-        // List<Integer> partIDs = Inventory.getAllParts()
-        //         .stream() // stream through each part in the inventory
-        //         .map(Part::getId) // map out each part's ID
-        //         .toList();
-        //
-        // int uniqueID = 1; // initialize the id field to 1
-        // while (partIDs.contains(uniqueID)) { // if the previous id is already taken
-        //     uniqueID = random.nextInt(9999); // change it to a new random number
-        // }
-        // return uniqueID; // return the uniqueID of the part
-        return 1;
+    public static int appointmentIDGenerator() {
+        Random random = new Random(); // random number generator object
+        List<Integer> existingApptIDs = DBAppointments.getAppointments("all")
+                .stream() // stream through each part in the inventory
+                .map(appointment -> appointment.getApptId()) // map out each appointment's ID  **lambda
+                .toList();
+
+        int uniqueID = 1; // initialize the id field to 1
+        while (existingApptIDs.contains(uniqueID)) { // if the previous id is already taken
+            uniqueID = random.nextInt(9999); // change it to a new random number
+        }
+        return uniqueID; // return the uniqueID of the part
     }
 
     /**

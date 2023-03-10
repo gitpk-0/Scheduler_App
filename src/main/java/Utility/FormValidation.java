@@ -55,11 +55,11 @@ public class FormValidation {
     }
 
 
-    public ArrayList<String> mainCheck(TextField titleTF, TextField descTF, TextField locationTF,
-                                       DatePicker startDatePick, ComboBox<String> startTimeCombo, TextField typeTF,
-                                       ComboBox<Integer> custIdCombo, ComboBox<Integer> userIdCombo,
-                                       ComboBox<String> contactCombo, DatePicker endDatePick,
-                                       ComboBox<String> endTimeCombo) {
+    public ArrayList<String> nullValueCheck(TextField titleTF, TextField descTF, TextField locationTF,
+                                            DatePicker startDatePick, ComboBox<String> startTimeCombo, TextField typeTF,
+                                            ComboBox<Integer> custIdCombo, ComboBox<Integer> userIdCombo,
+                                            ComboBox<String> contactCombo, DatePicker endDatePick,
+                                            ComboBox<String> endTimeCombo) {
 
         // validate Title field
         if (titleTF.getText().isEmpty()) {
@@ -116,9 +116,7 @@ public class FormValidation {
             outputErrorMessages.add(inputErrors.get(10));
         }
 
-
         return outputErrorMessages;
-
     }
 
 
@@ -155,9 +153,9 @@ public class FormValidation {
         return outputErrorMessages;
     }
 
-    public boolean appointmentOverlapExists(ComboBox<Integer> custIdCombo, DatePicker startDatePick,
-                                            ComboBox<String> startTimeCombo,
-                                            DatePicker endDatePick, ComboBox<String> endTimeCombo) throws SQLException {
+    public boolean apptOverlapExists(ComboBox<Integer> custIdCombo, DatePicker startDatePick,
+                                     ComboBox<String> startTimeCombo,
+                                     DatePicker endDatePick, ComboBox<String> endTimeCombo) throws SQLException {
 
         int customerId = custIdCombo.getSelectionModel().getSelectedItem(); // get the selected customer id
         Customer customerToCheck = null;
@@ -194,4 +192,8 @@ public class FormValidation {
     }
 
 
+    public ArrayList<String> addOverlapError() {
+        outputErrorMessages.add(inputErrors.get(15));
+        return outputErrorMessages;
+    }
 }

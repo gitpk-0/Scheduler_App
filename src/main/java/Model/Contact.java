@@ -73,6 +73,6 @@ public class Contact {
      */
     @Override
     public String toString() {
-        return this.contactID + " " + this.name;
+        return this.contactID + ": " + this.name;
     }
 }

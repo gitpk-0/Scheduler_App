@@ -46,13 +46,13 @@
                         <Label text="End Date" GridPane.columnIndex="3" GridPane.rowIndex="4" />
                         <Label text="End Time" GridPane.columnIndex="3" GridPane.rowIndex="5" />
                         <Label text="Type" GridPane.columnIndex="3" />
-                        <DatePicker fx:id="startDatePick" minWidth="200.0" prefHeight="26.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                        <DatePicker fx:id="endDatePick" minWidth="200.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="4" />
-                        <ComboBox fx:id="userIdCombo" minWidth="200.0" onAction="#selectUserID" prefWidth="200.0" promptText="Select a User ID" GridPane.columnIndex="4" GridPane.rowIndex="2" />
-                        <ComboBox fx:id="custIdCombo" minWidth="200.0" onAction="#selectCustomerID" prefWidth="200.0" promptText="Select a Customer ID" GridPane.columnIndex="4" GridPane.rowIndex="1" />
-                        <ComboBox fx:id="contactCombo" minWidth="200.0" onAction="#selectContact" prefWidth="200.0" promptText="Select a Contact" GridPane.columnIndex="4" GridPane.rowIndex="3" />
-                        <ComboBox fx:id="endTimeCombo" minWidth="200.0" onAction="#selectEndTime" prefWidth="200.0" promptText="Select an End Time" GridPane.columnIndex="4" GridPane.rowIndex="5" />
-                        <ComboBox fx:id="startTimeCombo" minWidth="200.0" onAction="#selectStartTime" prefWidth="200.0" promptText="Select a Start Time" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                        <DatePicker fx:id="startDP" minWidth="200.0" prefHeight="26.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                        <DatePicker fx:id="endDP" minWidth="200.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="4" />
+                        <ComboBox fx:id="userIdCB" minWidth="200.0" onAction="#selectUserID" prefWidth="200.0" promptText="Select a User ID" GridPane.columnIndex="4" GridPane.rowIndex="2" />
+                        <ComboBox fx:id="custIdCB" minWidth="200.0" onAction="#selectCustomerID" prefWidth="200.0" promptText="Select a Customer ID" GridPane.columnIndex="4" GridPane.rowIndex="1" />
+                        <ComboBox fx:id="contactCB" minWidth="200.0" onAction="#selectContact" prefWidth="200.0" promptText="Select a Contact" GridPane.columnIndex="4" GridPane.rowIndex="3" />
+                        <ComboBox fx:id="endTimeCB" minWidth="200.0" onAction="#selectEndTime" prefWidth="200.0" promptText="Select an End Time" GridPane.columnIndex="4" GridPane.rowIndex="5" />
+                        <ComboBox fx:id="startTimeCB" minWidth="200.0" onAction="#selectStartTime" prefWidth="200.0" promptText="Select a Start Time" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                         <TextField fx:id="typeTF" GridPane.columnIndex="4" />
                         <Label text="Start Time" GridPane.rowIndex="5" />
                     </children>

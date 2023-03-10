@@ -108,4 +108,9 @@ public class DBAppointments {
 
         return apptTimes;
     }
+
+    public static void addAppointment(int apptId, String title, String desc, String loca, String type,
+                                      LocalDateTime start, LocalDateTime end, int customerId, int userId,
+                                      int contactId, String contactName) {
+    }
 }
