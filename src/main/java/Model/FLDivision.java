@@ -10,19 +10,19 @@ package Model;
 public class FLDivision {
 
     private int divisionId;
-    private String name;
+    private String divisionName;
     private int countryId;
 
     /**
      * Creates a new first-level division object with the provided arguments
      *
      * @param divisionId The division id of the first-level division
-     * @param name       The name of the first-level division
+     * @param divisionName       The name of the first-level division
      * @param countryId  The country id of the first-level division
      */
-    public FLDivision(int divisionId, String name, int countryId) {
+    public FLDivision(int divisionId, String divisionName, int countryId) {
         this.divisionId = divisionId;
-        this.name = name;
+        this.divisionName = divisionName;
         this.countryId = countryId;
     }
 
@@ -43,15 +43,15 @@ public class FLDivision {
     /**
      * @return the first-level division's name
      */
-    public String getName() {
-        return name;
+    public String getDivisionName() {
+        return divisionName;
     }
 
     /**
-     * @param name set the first-level division's name
+     * @param divisionName set the first-level division's name
      */
-    public void setName(String name) {
-        this.name = name;
+    public void setDivisionName(String divisionName) {
+        this.divisionName = divisionName;
     }
 
     /**
@@ -73,7 +73,7 @@ public class FLDivision {
      */
     @Override
     public String toString() {
-        return this.divisionId + " " + this.name;
+        return this.divisionId + " " + this.divisionName;
     }
 
 }

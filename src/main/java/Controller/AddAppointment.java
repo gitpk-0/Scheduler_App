@@ -153,7 +153,7 @@ public class AddAppointment implements Initializable {
                 throw new Exception(); // redirect to the catch block below
             }
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            System.out.println("AddAppointment Error: " + e.getMessage());
             alerts.inputError(errors); // display the errors to the user
         }
 

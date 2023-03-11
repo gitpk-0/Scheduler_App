@@ -53,6 +53,12 @@ public class FormValidation {
         inputErrors.add("Start Time must be before End Time"); // 14 - Time Selection Error
         inputErrors.add("This customer already has an appointment scheduled during the " +
                 "selected times."); // 15 - Time Selection Error
+        inputErrors.add("No data in Name field"); // 16 - Name Error
+        inputErrors.add("No data in Phone Number field"); // 17 - Phone Number Error
+        inputErrors.add("No data in Address field"); // 18 - Address Error
+        inputErrors.add("No data in Postal Code field"); // 19 - Postal Code Error
+        inputErrors.add("No Country selected"); // 20 - Country Error
+        inputErrors.add("No Division selected"); // 21 - Division Error
     }
 
 
@@ -178,7 +184,7 @@ public class FormValidation {
         DateTimeFormatter time = DateTimeFormatter.ofPattern("HH:mm");
         String[] startT = startTimeCombo.getSelectionModel().getSelectedItem().split(":");
         String[] endT = endTimeCombo.getSelectionModel().getSelectedItem().split(":");
-        ;
+
         LocalTime startTime = LocalTime.of(Integer.valueOf(startT[0]), Integer.valueOf(startT[1]));
         LocalTime endTime = LocalTime.of(Integer.valueOf(endT[0]), Integer.valueOf(endT[1]));
         LocalDate startDate = startDatePick.getValue();
@@ -222,6 +228,43 @@ public class FormValidation {
 
     public ArrayList<String> addOverlapError() {
         outputErrorMessages.add(inputErrors.get(15));
+        return outputErrorMessages;
+    }
+
+    public ArrayList<String> nullValueCheckCustomer(TextField nameTF, TextField phoneTF, TextField addressTF,
+                                                    TextField postalTF, ComboBox<String> countryCB,
+                                                    ComboBox<String> divisionCB) {
+
+        // validate Name field
+        if (nameTF.getText().isEmpty()) {
+            outputErrorMessages.add(inputErrors.get(16));
+        }
+
+        // validate Phone field
+        if (phoneTF.getText().isEmpty()) {
+            outputErrorMessages.add(inputErrors.get(17));
+        }
+
+        // validate Address field
+        if (addressTF.getText().isEmpty()) {
+            outputErrorMessages.add(inputErrors.get(18));
+        }
+
+        // validate Postal field
+        if (postalTF.getText().isEmpty()) {
+            outputErrorMessages.add(inputErrors.get(19));
+        }
+
+        // validate Country combo
+        if (countryCB.getSelectionModel().isEmpty()) {
+            outputErrorMessages.add(inputErrors.get(20));
+        }
+
+        // validate Division combo
+        if (divisionCB.getSelectionModel().isEmpty()) {
+            outputErrorMessages.add(inputErrors.get(21));
+        }
+
         return outputErrorMessages;
     }
 }

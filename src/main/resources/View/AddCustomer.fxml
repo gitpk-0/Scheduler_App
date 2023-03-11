@@ -39,11 +39,11 @@
                         <TextField fx:id="phoneTF" minWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                         <TextField fx:id="addressTF" minWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                         <Label alignment="CENTER" contentDisplay="CENTER" GridPane.columnIndex="2" GridPane.rowIndex="4" />
-                        <ComboBox fx:id="countryCombo" minWidth="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                        <ComboBox fx:id="countryCB" minWidth="200.0" onAction="#countrySelected" prefWidth="200.0" promptText="Select a Country" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                         <Label text="Postal Code" GridPane.rowIndex="4" />
                         <Label text="Country" GridPane.rowIndex="5" />
                         <Label text="State/Province" GridPane.rowIndex="6" />
-                        <ComboBox fx:id="divisionCombo" minWidth="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                        <ComboBox fx:id="divisionCB" disable="true" minWidth="200.0" prefWidth="200.0" promptText="Select a Country First" GridPane.columnIndex="1" GridPane.rowIndex="6" />
                         <TextField fx:id="postalTF" minWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                     </children>
                     <VBox.margin>

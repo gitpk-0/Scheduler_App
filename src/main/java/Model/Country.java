@@ -10,17 +10,17 @@ package Model;
 public class Country {
 
     private int countryID;
-    private String name;
+    private String countryName;
 
     /**
      * Creates a new country object with the provided arguments
      *
      * @param countryID The id of the country
-     * @param name      The name of the country
+     * @param countryName      The name of the country
      */
-    public Country(int countryID, String name) {
+    public Country(int countryID, String countryName) {
         this.countryID = countryID;
-        this.name = name;
+        this.countryName = countryName;
     }
 
     /**
@@ -40,15 +40,15 @@ public class Country {
     /**
      * @return the country's name
      */
-    public String getName() {
-        return name;
+    public String getCountryName() {
+        return countryName;
     }
 
     /**
-     * @param name set the country's name
+     * @param countryName set the country's name
      */
-    public void setName(String name) {
-        this.name = name;
+    public void setCountryName(String countryName) {
+        this.countryName = countryName;
     }
 
     /**
@@ -56,6 +56,6 @@ public class Country {
      */
     @Override
     public String toString() {
-        return this.countryID + " " + this.name;
+        return this.countryID + " " + this.countryName;
     }
 }
