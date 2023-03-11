@@ -51,8 +51,8 @@ public class FormValidation {
         inputErrors.add("Improper End Date format"); // 12 - End Date Format Error
         inputErrors.add("Start Date must be before End Date"); // 13 - Date Selection Error
         inputErrors.add("Start Time must be before End Time"); // 14 - Time Selection Error
-        inputErrors.add("Scheduling conflict: this customer already has an appointment scheduled during the " +
-                " selected times."); // 15 - Time Selection Error
+        inputErrors.add("This customer already has an appointment scheduled during the " +
+                "selected times."); // 15 - Time Selection Error
     }
 
 
@@ -133,23 +133,30 @@ public class FormValidation {
 
         // validate End Date picker format
         try {
-            LocalDate startDate = endDatePick.getValue();
+            LocalDate endDate = endDatePick.getValue();
         } catch (Exception e) {
             outputErrorMessages.add(inputErrors.get(12));
         }
 
         // validate Start Date before End Date
-        if (endDatePick.getChronology().compareTo(startDatePick.getChronology()) < 0) {
-            outputErrorMessages.add(inputErrors.get(13));
+        try {
+            LocalDate startDate = startDatePick.getValue();
+            LocalDate endDate = endDatePick.getValue();
+            if (startDate.isAfter(endDate)) {
+                outputErrorMessages.add(inputErrors.get(13));
+            }
+        } catch (Exception ignore) {
+            // already handled above
         }
 
         // validate Start Time before End Time
         // DateTimeFormatter formatter = DateTimeFormatter.ofPattern("h[:mm]a", Locale.ENGLISH);
         String[] start = startTimeCombo.getSelectionModel().getSelectedItem().split(":");
-        String[] end = endTimeCombo.getSelectionModel().getSelectedItem().split(":");;
+        String[] end = endTimeCombo.getSelectionModel().getSelectedItem().split(":");
+        ;
         LocalTime startTime = LocalTime.of(Integer.valueOf(start[0]), Integer.valueOf(start[1]));
         LocalTime endTime = LocalTime.of(Integer.valueOf(end[0]), Integer.valueOf(end[1]));
-        if (startTime.isAfter(endTime)) {
+        if (startTime.isAfter(endTime) || startTime.equals(endTime)) {
             outputErrorMessages.add(inputErrors.get(14));
         }
 
@@ -165,7 +172,8 @@ public class FormValidation {
 
         DateTimeFormatter time = DateTimeFormatter.ofPattern("HH:mm");
         String[] startT = startTimeCombo.getSelectionModel().getSelectedItem().split(":");
-        String[] endT = endTimeCombo.getSelectionModel().getSelectedItem().split(":");;
+        String[] endT = endTimeCombo.getSelectionModel().getSelectedItem().split(":");
+        ;
         LocalTime startTime = LocalTime.of(Integer.valueOf(startT[0]), Integer.valueOf(startT[1]));
         LocalTime endTime = LocalTime.of(Integer.valueOf(endT[0]), Integer.valueOf(endT[1]));
         LocalDate startDate = startDatePick.getValue();

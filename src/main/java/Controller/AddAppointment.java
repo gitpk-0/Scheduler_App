@@ -1,10 +1,13 @@
 package Controller;
 
+/**
+ * @author Patrick Kell
+ */
+
 import Database.DBAppointments;
 import Database.DBContacts;
 import Database.DBCustomers;
 import Database.DBUsers;
-import Model.Customer;
 import Utility.Alerts;
 import Utility.ChangeView;
 import Utility.FormValidation;
@@ -17,17 +20,12 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 
-/**
- * @author Patrick Kell
- */
-
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
@@ -51,6 +49,15 @@ public class AddAppointment implements Initializable {
     public DatePicker endDP;
     public ComboBox<String> endTimeCB;
 
+
+    /**
+     * Initialize method which initializes the AddAppointment controller class.
+     * <p>
+     * Each of the combo boxes is initialized based on the data received from the client_schedule database
+     *
+     * @param url            The FXML location used to resolve relative paths for the root object, or null if the location is not known.
+     * @param resourceBundle The resources used to localize the root object, or null if the root object was not localized.
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         // Initialize contact combo box options
@@ -85,14 +92,39 @@ public class AddAppointment implements Initializable {
         endTimeCB.setItems(times);
     }
 
+
+    /**
+     * The onSaveAppt method which manages the creation of a new appointment.
+     * <p>
+     * The user enters information about a new appointment, which is then compiled and added to the appointments
+     * table of the client_schedule database.
+     * <p>
+     * This function validates the data and alerts there are problems with the input data.
+     *
+     * @param event Save Appointment button clicked
+     * @throws SQLException Signals that a SQLException exception has occurred
+     */
     public void onSaveAppt(ActionEvent event) throws SQLException {
         FormValidation validator = new FormValidation(); // creates a new FormValidation object each time Save is clicked
+        // null value checks
         ArrayList<String> errors = validator.nullValueCheck(titleTF, descTF, locationTF, startDP, startTimeCB,
                 typeTF, custIdCB, userIdCB, contactCB, endDP, endTimeCB);
 
         try {
-            if (errors.isEmpty()) {
-                System.out.println("here");
+            if (errors.isEmpty()) { // no null value errors
+                // date and time checks
+                errors = validator.dateChecks(startDP, startTimeCB, endDP, endTimeCB);
+                if (errors.isEmpty()) { // no date/time value errors
+                    // date and time overlaps checks
+                    if (validator.apptOverlapExists(custIdCB, startDP, startTimeCB, endDP, endTimeCB)) {
+                        errors = validator.addOverlapError(); // an appointment overlap exists
+                        throw new Exception(); // redirect to the catch block below
+                    }
+                } else { // date/time value errors occurred
+                    throw new Exception(); // redirect to the catch block below
+                }
+
+                // all input data is valid
                 int id = IDGenerator.appointmentIDGenerator();
                 String title = titleTF.getText();
                 String desc = descTF.getText();
@@ -104,54 +136,25 @@ public class AddAppointment implements Initializable {
                 int contId = Integer.valueOf(contact[0]);
                 String contName = contact[1];
 
-                // date selection, date format, date overlaps checks
-                errors = validator.dateChecks(startDP, startTimeCB, endDP, endTimeCB);
-                System.out.println(errors.size());
-                if (!errors.isEmpty()) {
-                    System.out.println("Made it here2");
-                    throw new Exception(); // redirect to the catch block below
-                } else {
-                    System.out.println("Made it here2");
-                    if (validator.apptOverlapExists(custIdCB, startDP, startTimeCB, endDP, endTimeCB)) {
-                        System.out.println("Made it here3");
-                        errors = validator.addOverlapError();
-                        throw new Exception(); // redirect to the catch block below
-                    }
-                }
-                System.out.println("Made it here4");
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-                DateTimeFormatter time = DateTimeFormatter.ofPattern("HH:mm");
-                String[] startT = startTimeCB.getSelectionModel().getSelectedItem().split(":");
-                String[] endT = endTimeCB.getSelectionModel().getSelectedItem().split(":");
+                String[] startT = startTimeCB.getSelectionModel().getSelectedItem().split(":"); // split time between hour and minutes
+                String[] endT = endTimeCB.getSelectionModel().getSelectedItem().split(":"); // split time between hour and minutes
                 LocalTime startTime = LocalTime.of(Integer.valueOf(startT[0]), Integer.valueOf(startT[1]));
                 LocalTime endTime = LocalTime.of(Integer.valueOf(endT[0]), Integer.valueOf(endT[1]));
                 LocalDate startDate = startDP.getValue();
                 LocalDate endDate = endDP.getValue();
 
+                // offset the start times by 1 sec to allow appts to start when another appt ends
                 LocalDateTime start = LocalDateTime.of(startDate, startTime).withSecond(1);
                 LocalDateTime end = LocalDateTime.of(endDate, endTime);
-                /* TODO: may need to offset the start and end times by 1 sec to allow appts creation */
-                // LocalDateTime start = LocalDateTime.parse(startDP.toString() + startTimeCB.toString(), formatter).withSecond(1);
-                // LocalDateTime end = LocalDateTime.parse(endDP.toString() + endTimeCB.toString(), formatter);
 
-                System.out.println("Made it here5");
-
-
+                // add the appointment to the client_schedule database
                 DBAppointments.addAppointment(id, title, desc, loca, type, start, end, custId, uId, contId, contName);
-                viewController.changeViewToMain(event);
+                viewController.changeViewToMain(event); // redirect the user back to the main menu
             } else { // errors list is not empty
                 throw new Exception(); // redirect to the catch block below
             }
-
         } catch (Exception e) {
-            System.out.println(e.getMessage());
-            int len = e.getStackTrace().length -1;
-            e.printStackTrace();
-            System.out.println(len + " **len");
-            System.out.println(e.getStackTrace()[len - 1].getLineNumber());
-            System.out.println(e.getCause());
-            System.out.println(e.getClass());
-            alerts.inputError(errors);
+            alerts.inputError(errors); // display the errors to the user
         }
 
     }
@@ -164,22 +167,5 @@ public class AddAppointment implements Initializable {
      */
     public void onCancel(ActionEvent event) throws IOException {
         viewController.changeViewToMain(event);
-    }
-
-
-    public void selectUserID(ActionEvent event) {
-    }
-
-    public void selectCustomerID(ActionEvent event) {
-    }
-
-    public void selectContact(ActionEvent event) {
-
-    }
-
-    public void selectEndTime(ActionEvent event) {
-    }
-
-    public void selectStartTime(ActionEvent event) {
     }
 }
