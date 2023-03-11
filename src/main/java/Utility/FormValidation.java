@@ -149,69 +149,24 @@ public class FormValidation {
             // already handled above
         }
 
-        // validate Start Time before End Time
-        // DateTimeFormatter formatter = DateTimeFormatter.ofPattern("h[:mm]a", Locale.ENGLISH);
         String[] start = startTimeCombo.getSelectionModel().getSelectedItem().split(":");
         String[] end = endTimeCombo.getSelectionModel().getSelectedItem().split(":");
-        ;
+
         LocalTime startTime = LocalTime.of(Integer.valueOf(start[0]), Integer.valueOf(start[1]));
         LocalTime endTime = LocalTime.of(Integer.valueOf(end[0]), Integer.valueOf(end[1]));
-        if (startTime.isAfter(endTime) || startTime.equals(endTime)) {
+        LocalDate startDate = startDatePick.getValue();
+        LocalDate endDate = endDatePick.getValue();
+
+        LocalDateTime startDateTime = LocalDateTime.of(startDate, startTime);
+        LocalDateTime endDateTime = LocalDateTime.of(endDate, endTime);
+
+        // validate Start Date Time before End Date Time
+        if (startDateTime.isAfter(endDateTime) || startDateTime.equals(endDateTime)) {
             outputErrorMessages.add(inputErrors.get(14));
         }
 
         return outputErrorMessages;
     }
-
-    // public boolean apptOverlapExists(ComboBox<Integer> custIdCombo, DatePicker startDatePick,
-    //                                  ComboBox<String> startTimeCombo,
-    //                                  DatePicker endDatePick, ComboBox<String> endTimeCombo) throws SQLException {
-    //
-    //     int customerId = custIdCombo.getSelectionModel().getSelectedItem(); // get the selected customer id
-    //     Customer customerToCheck = null;
-    //
-    //     DateTimeFormatter time = DateTimeFormatter.ofPattern("HH:mm");
-    //     String[] startT = startTimeCombo.getSelectionModel().getSelectedItem().split(":");
-    //     String[] endT = endTimeCombo.getSelectionModel().getSelectedItem().split(":");
-    //     ;
-    //     LocalTime startTime = LocalTime.of(Integer.valueOf(startT[0]), Integer.valueOf(startT[1]));
-    //     LocalTime endTime = LocalTime.of(Integer.valueOf(endT[0]), Integer.valueOf(endT[1]));
-    //     LocalDate startDate = startDatePick.getValue();
-    //     LocalDate endDate = endDatePick.getValue();
-    //
-    //     LocalDateTime startSelection = LocalDateTime.of(startDate, startTime);
-    //     LocalDateTime endSelection = LocalDateTime.of(endDate, endTime);
-    //
-    //     // DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-    //     // LocalDateTime startSelection = LocalDateTime.parse(startDatePick.toString() + startTimeCombo.toString(), formatter);
-    //     // LocalDateTime endSelection = LocalDateTime.parse(endDatePick.toString() + endTimeCombo.toString(), formatter);
-    //
-    //     for (Customer customer : DBCustomers.getAllCustomers()) { // find the Customer object which id matches
-    //         if (customer.getCustomerId() == customerId) {
-    //             customerToCheck = customer; // assign it to customerToCheck
-    //         }
-    //     }
-    //
-    //     if (customerToCheck != null) {
-    //         // get all appointments times for the customer from database
-    //         ArrayList<LocalDateTime> apptTimes = DBAppointments.getApptTimesByCustomer(customerToCheck, null);
-    //
-    //         for (int i = 0; i < apptTimes.size(); i += 2) { // loop through the appointment times
-    //             LocalDateTime start = apptTimes.get(i); // existing appointment start time
-    //             LocalDateTime end = apptTimes.get(i + 1); // existing appointment end time
-    //
-    //             // An OVERLAP exists if start of the selected is before the end of the existing appointment
-    //             // AND the start of the existing appointment is before the end of the selected
-    //             boolean overlapExists = startSelection.isBefore(end) && start.isBefore(endSelection);
-    //
-    //             if (overlapExists) {
-    //                 return true; // an overlap exists (alert the user)
-    //             }
-    //         }
-    //         return false;
-    //     }
-    //     return false;
-    // }
 
     public boolean apptOverlapExists(TextField apptIdTF, ComboBox<Integer> custIdCombo, DatePicker startDatePick,
                                      ComboBox<String> startTimeCombo,
@@ -238,7 +193,10 @@ public class FormValidation {
             }
         }
 
-        String apptId = apptIdTF.getText();
+        String apptId = null;
+        if (apptIdTF != null) {
+            apptId = apptIdTF.getText();
+        }
 
         if (customerToCheck != null) {
             // get all appointments times for the customer from database

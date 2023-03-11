@@ -4,8 +4,7 @@ package Database;
  * @author Patrick Kell
  */
 
-import Model.Appointment;
-import Model.Customer;
+
 import Utility.JDBC;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -19,6 +18,8 @@ import java.sql.SQLException;
  * users table of the client_schedule database
  */
 public class DBUsers {
+
+    public static String currentUser;
 
     /**
      * Method for validating user login information
@@ -36,6 +37,8 @@ public class DBUsers {
 
         while (rs.next()) {
             String storedPassword = rs.getString("Password");
+            currentUser = rs.getString("User_Name");
+            System.out.println("User: " + currentUser);
             return password.equals(storedPassword);
         }
 
@@ -56,7 +59,7 @@ public class DBUsers {
                 users.add(userID);
             }
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            System.out.println("DBUsers.getAllUserIDs Error: " + e.getMessage());
         }
 
         return users;

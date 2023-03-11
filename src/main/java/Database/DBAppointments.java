@@ -64,7 +64,7 @@ public class DBAppointments {
                 appointments.add(newAppt);
             }
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            System.out.println("DBAppointments.getAppointments Error: " + e.getMessage());
         }
 
         return appointments;
@@ -159,7 +159,7 @@ public class DBAppointments {
         ps.setTimestamp(6, Timestamp.valueOf(start)); // Start
         ps.setTimestamp(7, Timestamp.valueOf(end)); // End
         ps.setTimestamp(8, Timestamp.valueOf(LocalDateTime.now())); // Create_Date
-        ps.setString(9, "user"); // Created_By  TODO******
+        ps.setString(9, DBUsers.currentUser); // Created_By
         ps.setTimestamp(10, Timestamp.valueOf(LocalDateTime.now())); // Last_Update
         ps.setString(11, "user"); // Last_Updated_By
         ps.setInt(12, customerId); // Customer_ID
@@ -183,7 +183,6 @@ public class DBAppointments {
                 "User_ID = ?, " +
                 "Contact_ID = ? WHERE Appointment_ID = ?";
         PreparedStatement ps = JDBC.connection.prepareStatement(sql);
-        ps.setInt(1, id); // Appointment_ID
         ps.setString(1, title); // Title
         ps.setString(2, desc); // Description
         ps.setString(3, loca); // Location
@@ -191,7 +190,7 @@ public class DBAppointments {
         ps.setTimestamp(5, Timestamp.valueOf(start)); // Start
         ps.setTimestamp(6, Timestamp.valueOf(end)); // End
         ps.setTimestamp(7, Timestamp.valueOf(LocalDateTime.now())); // Last_Update
-        ps.setString(8, "user"); // Last_Updated_By
+        ps.setString(8, DBUsers.currentUser); // Last_Updated_By
         ps.setInt(9, custId); // Customer_ID
         ps.setInt(10, uId); // User_ID
         ps.setInt(11, contId); // Contact_ID
