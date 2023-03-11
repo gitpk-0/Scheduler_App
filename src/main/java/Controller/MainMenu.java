@@ -111,8 +111,9 @@ public class MainMenu implements Initializable {
      *
      * @param event Modify Appointment button clicked
      * @throws IOException Signals that an Input/Output exception has occurred
+     * @throws IOException Signals that an SQLException exception has occurred
      */
-    public void toModifyApptView(ActionEvent event) throws IOException {
+    public void toModifyApptView(ActionEvent event) throws IOException, SQLException {
         Appointment appt = apptTableView.getSelectionModel().getSelectedItem(); // get the selected appointment
         if (appt == null) { // no appointment selected
             alerts.nullSelection("Appointment", "modify"); // alert the user
@@ -158,8 +159,9 @@ public class MainMenu implements Initializable {
      *
      * @param event Modify Customer button clicked
      * @throws IOException Signals that an Input/Output exception has occurred
+     * @throws SQLException Signals that an SQLException exception has occurred
      */
-    public void toModifyCustomerView(ActionEvent event) throws IOException {
+    public void toModifyCustomerView(ActionEvent event) throws IOException, SQLException {
         Customer customer = customerTableView.getSelectionModel().getSelectedItem(); // get the selected customer
         if (customer == null) { // no customer selected
             alerts.nullSelection("Customer", "modify"); // alert the user

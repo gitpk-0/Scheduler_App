@@ -80,11 +80,10 @@ public class AddAppointment implements Initializable {
         int currentHour = 8;
 
         while (currentHour < 22) {
-            StringBuilder time = new StringBuilder();
-            times.add(String.valueOf(currentHour) + ":00");
-            times.add(String.valueOf(currentHour) + ":15");
-            times.add(String.valueOf(currentHour) + ":30");
-            times.add(String.valueOf(currentHour) + ":45");
+            times.add(currentHour + ":00");
+            times.add(currentHour + ":15");
+            times.add(currentHour + ":30");
+            times.add(currentHour + ":45");
             currentHour++;
         }
         times.add("22:00");
@@ -116,7 +115,7 @@ public class AddAppointment implements Initializable {
                 errors = validator.dateChecks(startDP, startTimeCB, endDP, endTimeCB);
                 if (errors.isEmpty()) { // no date/time value errors
                     // date and time overlaps checks
-                    if (validator.apptOverlapExists(custIdCB, startDP, startTimeCB, endDP, endTimeCB)) {
+                    if (validator.apptOverlapExists(null, custIdCB, startDP, startTimeCB, endDP, endTimeCB)) {
                         errors = validator.addOverlapError(); // an appointment overlap exists
                         throw new Exception(); // redirect to the catch block below
                     }

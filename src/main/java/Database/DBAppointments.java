@@ -1,5 +1,9 @@
 package Database;
 
+/**
+ * @author Patrick Kell
+ */
+
 import Model.Appointment;
 import Model.Customer;
 import Utility.JDBC;
@@ -7,15 +11,18 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.sql.*;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 /**
- * @author Patrick Kell
+ *
  */
 public class DBAppointments {
 
+    /**
+     * @param filter
+     * @return
+     */
     public static ObservableList<Appointment> getAppointments(String filter) {
         ObservableList<Appointment> appointments = FXCollections.observableArrayList();
         String sql = "SELECT * FROM appointments " +
@@ -64,6 +71,11 @@ public class DBAppointments {
     }
 
 
+    /**
+     * @param appt
+     * @return
+     * @throws SQLException
+     */
     public static boolean deleteAppointment(Appointment appt) throws SQLException {
         String sql = "DELETE FROM appointments WHERE Appointment_ID = ?";
         PreparedStatement ps = JDBC.connection.prepareStatement(sql);
@@ -72,6 +84,11 @@ public class DBAppointments {
         return rowsAffected == 1;
     }
 
+    /**
+     * @param customer
+     * @return
+     * @throws SQLException
+     */
     public static int getApptCountByCustomer(Customer customer) throws SQLException {
         String sql = "SELECT COUNT(Appointment_ID) AS apptCount FROM appointments WHERE Customer_ID = ?";
         PreparedStatement ps = JDBC.connection.prepareStatement(sql);
@@ -86,11 +103,16 @@ public class DBAppointments {
         return totalAppts;
     }
 
-    public static ArrayList<LocalDateTime> getApptTimesByCustomer(Customer customer) throws SQLException {
+
+    public static ArrayList<LocalDateTime> getApptTimesByCustomer(Customer customer, String apptId) throws SQLException {
         ArrayList<LocalDateTime> apptTimes = new ArrayList<>();
-        String sql = "SELECT * FROM appointments WHERE Customer_ID = ?";
+        String sql = (apptId == null) ? "SELECT * FROM appointments WHERE Customer_ID = ?" :
+                "SELECT * FROM appointments WHERE Customer_ID = ? AND Appointment_ID != ?";
         PreparedStatement ps = JDBC.connection.prepareStatement(sql);
         ps.setInt(1, customer.getCustomerId());
+        if (apptId != null) { // exclude the following appointment id
+            ps.setInt(2, Integer.parseInt(apptId));
+        }
         ResultSet rs = ps.executeQuery();
 
 
@@ -110,6 +132,20 @@ public class DBAppointments {
         return apptTimes;
     }
 
+    /**
+     * @param apptId
+     * @param title
+     * @param desc
+     * @param loca
+     * @param type
+     * @param start
+     * @param end
+     * @param customerId
+     * @param userId
+     * @param contactId
+     * @param contactName
+     * @throws SQLException
+     */
     public static void addAppointment(int apptId, String title, String desc, String loca, String type,
                                       LocalDateTime start, LocalDateTime end, int customerId, int userId,
                                       int contactId, String contactName) throws SQLException {
@@ -131,4 +167,62 @@ public class DBAppointments {
         ps.setInt(14, contactId); // Contact_ID
         ps.executeUpdate();
     }
+
+    public static void updateAppointment(int id, String title, String desc, String loca, String type,
+                                         LocalDateTime start, LocalDateTime end, int custId, int uId,
+                                         int contId) throws SQLException {
+        String sql = "UPDATE appointments SET Title = ?, " +
+                "Description = ?, " + // 2
+                "Location = ?, " +
+                "Type = ?, " +
+                "Start = ?, " + // 5
+                "End = ?, " +
+                "Last_Update = ?, " +
+                "Last_Updated_By = ?, " +
+                "Customer_ID = ?, " + // 9
+                "User_ID = ?, " +
+                "Contact_ID = ? WHERE Appointment_ID = ?";
+        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+        ps.setInt(1, id); // Appointment_ID
+        ps.setString(1, title); // Title
+        ps.setString(2, desc); // Description
+        ps.setString(3, loca); // Location
+        ps.setString(4, type); // Type
+        ps.setTimestamp(5, Timestamp.valueOf(start)); // Start
+        ps.setTimestamp(6, Timestamp.valueOf(end)); // End
+        ps.setTimestamp(7, Timestamp.valueOf(LocalDateTime.now())); // Last_Update
+        ps.setString(8, "user"); // Last_Updated_By
+        ps.setInt(9, custId); // Customer_ID
+        ps.setInt(10, uId); // User_ID
+        ps.setInt(11, contId); // Contact_ID
+        ps.setInt(12, id); // Appointment_ID
+        ps.executeUpdate();
+    }
+
+    // public static Appointment getAppointmentDetails(int appointmentId) throws SQLException {
+    //     String sql = "SELECT * FROM appointments WHERE Appointment_ID = ?";
+    //     PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+    //     ps.setInt(1, appointmentId);
+    //     ResultSet rs = ps.executeQuery();
+    //
+    //     Appointment apptDetails = null;
+    //
+    //     while (rs.next()) {
+    //         int apptId = rs.getInt("Appointment_ID");
+    //         String title = rs.getString("Title");
+    //         String desc = rs.getString("Description");
+    //         String loca = rs.getString("Location");
+    //         String type = rs.getString("Type");
+    //         LocalDateTime start = rs.getTimestamp("Start").toLocalDateTime();
+    //         LocalDateTime end = rs.getTimestamp("End").toLocalDateTime();
+    //         int customerId = rs.getInt("Customer_ID");
+    //         int userId = rs.getInt("User_ID");
+    //         int contactId = rs.getInt("Contact_ID");
+    //         String contactName = rs.getString("Contact_Name");
+    //
+    //         apptDetails = new Appointment(apptId, title, desc, loca, type, start, end, customerId, userId,
+    //                 contactId, contactName);
+    //     }
+    //     return apptDetails;
+    // }
 }

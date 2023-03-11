@@ -17,6 +17,7 @@ import javafx.scene.control.TableView;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 /**
  * Utility class which manages the changing of views between screens
@@ -63,14 +64,15 @@ public class ChangeView {
 
     /**
      * changeViewToModify method to change view to specified screen
-     * facilitates passing of appointment/customer data to text fields
+     * facilitates passing of appointment/customer data to populate form fields
      *
      * @param event Modify [Appointment or Customer] Button clicked
      * @param view  View screen to be redirected to
      * @param table TableView Object used to find the selected appointment/customer to be modified
      * @throws IOException Signals that an Input/Output exception has occurred
+     * @throws SQLException Signals that an SQLException exception has occurred
      */
-    public void changeViewToModify(ActionEvent event, String view, TableView table) throws IOException {
+    public void changeViewToModify(ActionEvent event, String view, TableView table) throws IOException, SQLException {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("/View/" + view.replaceAll("\\s", "") + ".fxml"));
         loader.load();
@@ -78,7 +80,7 @@ public class ChangeView {
         if (view.equals("Modify Appointment ")) {
             ModifyAppointment mpc = loader.getController();
             // casting the selected object from the table to a Appointment object
-            mpc.sendAppt((Appointment) table.getSelectionModel().getSelectedItem(), event);
+            mpc.sendAppt((Appointment) table.getSelectionModel().getSelectedItem());
         } else if (view.equals("Modify Customer ")) {
             ModifyCustomer mpc = loader.getController();
             // casting the selected object from the table to a Customer object

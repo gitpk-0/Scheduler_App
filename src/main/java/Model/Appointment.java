@@ -29,34 +29,35 @@ public class Appointment {
     private String endTime;
     private DateTimeFormatter date = DateTimeFormatter.ofPattern("MM-dd-yyyy");
     private DateTimeFormatter time = DateTimeFormatter.ofPattern("HH:mm");
+    private DateTimeFormatter timeAlt = DateTimeFormatter.ofPattern("H:mm");
 
-    /**
-     * Creates a new appointment object with the provided arguments
-     *
-     * @param apptId      The id of the appointment
-     * @param title       The title of the appointment
-     * @param description The description of the appointment
-     * @param location    The location of the appointment
-     * @param type        The type of the appointment
-     * @param start       The start time of the appointment
-     * @param end         The end time of the appointment
-     * @param customerId  The customer id of the appointment
-     * @param userId      The user id of the appointment
-     * @param contactId   The contact id of the appointment
-     */
-    public Appointment(int apptId, String title, String description, String location, String type, LocalDateTime start,
-                       LocalDateTime end, int customerId, int userId, int contactId) {
-        this.apptId = apptId;
-        this.title = title;
-        this.description = description;
-        this.location = location;
-        this.type = type;
-        this.start = start;
-        this.end = end;
-        this.customerId = customerId;
-        this.userId = userId;
-        this.contactId = contactId;
-    }
+    // /**
+    //  * Creates a new appointment object with the provided arguments
+    //  *
+    //  * @param apptId      The id of the appointment
+    //  * @param title       The title of the appointment
+    //  * @param description The description of the appointment
+    //  * @param location    The location of the appointment
+    //  * @param type        The type of the appointment
+    //  * @param start       The start time of the appointment
+    //  * @param end         The end time of the appointment
+    //  * @param customerId  The customer id of the appointment
+    //  * @param userId      The user id of the appointment
+    //  * @param contactId   The contact id of the appointment
+    //  */
+    // public Appointment(int apptId, String title, String description, String location, String type, LocalDateTime start,
+    //                    LocalDateTime end, int customerId, int userId, int contactId) {
+    //     this.apptId = apptId;
+    //     this.title = title;
+    //     this.description = description;
+    //     this.location = location;
+    //     this.type = type;
+    //     this.start = start;
+    //     this.end = end;
+    //     this.customerId = customerId;
+    //     this.userId = userId;
+    //     this.contactId = contactId;
+    // }
 
     /**
      * Creates a new appointment object with the provided arguments

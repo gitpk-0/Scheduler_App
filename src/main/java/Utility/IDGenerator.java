@@ -5,29 +5,19 @@ package Utility;
  */
 
 import Database.DBAppointments;
-import Model.Appointment;
 
 import java.util.List;
 import java.util.Random;
 
 /**
- * IdGenerator class which manages the creation of unique IDs for Parts and Products
- * <p>
- * FUTURE ENHANCEMENT: Presently the application is only capable of creating 9,999 unique IDs. The program could
- * be improved by making the creation capacity of unique IDs a dynamic number based on the needs of the user.
- * <p>
- * RUNTIME ERROR: InvocationTargetException: cannot be cast to class java.util.ArrayList (partIDs, productIDs)
- * I attempted to use the .toList() method to collect the stream of partIDs when the collect(Collectors.toList())
- * method should have been used. However, to simplify the collecting of IDs, I replaced the ArrayList with the
- * List interface. This resolved the runtime error and prevented the need to cast the List object to an ArrayList
- * object.
+ * IdGenerator class which manages the creation of unique IDs for Appointments
  */
 public class IDGenerator {
 
     /**
-     * IdGenerator class for Parts
+     * IdGenerator class for Appointments
      *
-     * @return A unique ID for the Part
+     * @return A unique ID for the Appointment
      */
     public static int appointmentIDGenerator() {
         Random random = new Random(); // random number generator object
@@ -41,26 +31,6 @@ public class IDGenerator {
             uniqueID = random.nextInt(9999); // change it to a new random number
         }
         return uniqueID; // return the uniqueID of the part
-    }
-
-    /**
-     * IdGenerator class for Products
-     *
-     * @return A unique ID for the Product
-     */
-    public static int productIdGenerator() {
-        // Random random = new Random(); // random number generator object
-        // List<Integer> productIDs = Inventory.getAllProducts()
-        //         .stream() // stream through each product in the inventory
-        //         .map(Product::getId) // map out each product's ID
-        //         .toList();
-        //
-        // int uniqueID = 1; // initialize the id field to 1
-        // while (productIDs.contains(uniqueID)) { // if the previous id is already taken
-        //     uniqueID = random.nextInt(9999); // change it to a new random number
-        // }
-        // return uniqueID; // return the uniqueID of the product
-        return 0;
     }
 }
 
