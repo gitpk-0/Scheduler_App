@@ -161,7 +161,7 @@ public class DBAppointments {
         ps.setTimestamp(8, Timestamp.valueOf(LocalDateTime.now())); // Create_Date
         ps.setString(9, DBUsers.currentUser); // Created_By
         ps.setTimestamp(10, Timestamp.valueOf(LocalDateTime.now())); // Last_Update
-        ps.setString(11, "user"); // Last_Updated_By
+        ps.setString(11, DBUsers.currentUser); // Last_Updated_By
         ps.setInt(12, customerId); // Customer_ID
         ps.setInt(13, userId); // User_ID
         ps.setInt(14, contactId); // Contact_ID

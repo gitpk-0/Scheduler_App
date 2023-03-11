@@ -38,7 +38,6 @@ public class DBUsers {
         while (rs.next()) {
             String storedPassword = rs.getString("Password");
             currentUser = rs.getString("User_Name");
-            System.out.println("User: " + currentUser);
             return password.equals(storedPassword);
         }
 

@@ -9,6 +9,8 @@ import javafx.collections.ObservableList;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 /**
  * @author Patrick Kell
@@ -54,5 +56,22 @@ public class DBCustomers {
         ps.setInt(1, customer.getCustomerId());
         int rowsAffected = ps.executeUpdate();
         return rowsAffected == 1;
+    }
+
+    public static void addCustomer(int id, String name, String phone, String address,
+                                   String postal, String country, int divisionId) throws SQLException {
+        String sql = "INSERT INTO customers VALUES (?,?,?,?,?,?,?,?,?,?)";
+        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+        ps.setInt(1, id); // Customer_ID
+        ps.setString(2, name); // Customer_Name
+        ps.setString(3, address); // Address
+        ps.setString(4, postal); // Postal Code
+        ps.setString(5, phone); // Phone
+        ps.setTimestamp(6, Timestamp.valueOf(LocalDateTime.now())); // Create_Date
+        ps.setString(7, DBUsers.currentUser); // Created_By
+        ps.setTimestamp(8, Timestamp.valueOf(LocalDateTime.now())); // Last_Update
+        ps.setString(9, DBUsers.currentUser); // Last_Updated_By
+        ps.setInt(10, divisionId); // Division_ID
+        ps.executeUpdate();
     }
 }

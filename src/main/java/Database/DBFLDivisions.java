@@ -37,4 +37,28 @@ public class DBFLDivisions {
 
         return divisions;
     }
+
+    public static FLDivision getDivisionByName(String division) {
+
+        FLDivision flDivision = null;
+
+        try {
+            String sql = "SELECT * FROM first_level_divisions WHERE Division = ?";
+            PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+            ps.setString(1, division);
+            ResultSet rs = ps.executeQuery(); // creates a result set, two-dimensional list
+
+            while (rs.next()) {
+                int divisionId = rs.getInt("Division_ID");
+                String divisionName = rs.getString("Division");
+                int countryId = rs.getInt("Country_ID");
+
+                flDivision = new FLDivision(divisionId, divisionName, countryId);
+            }
+        } catch (SQLException e) {
+            System.out.println("DBFLDivisions.getDivisionByName Error: " + e.getMessage());
+        }
+
+        return flDivision;
+    }
 }

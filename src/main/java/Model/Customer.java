@@ -21,24 +21,24 @@ public class Customer {
     private String country;
     private String division;
 
-    /**
-     * Creates a new customer object with the provided arguments
-     *
-     * @param customerId The id of the customer
-     * @param name       The name of the customer
-     * @param address    The address of the customer
-     * @param postal     The postal code of the customer
-     * @param phone      The phone number of the customer
-     * @param divisionId The division id of the customer
-     */
-    public Customer(int customerId, String name, String address, String postal, String phone, int divisionId) {
-        this.customerId = customerId;
-        this.name = name;
-        this.address = address;
-        this.postal = postal;
-        this.phone = phone;
-        this.divisionId = divisionId;
-    }
+    // /**
+    //  * Creates a new customer object with the provided arguments
+    //  *
+    //  * @param customerId The id of the customer
+    //  * @param name       The name of the customer
+    //  * @param address    The address of the customer
+    //  * @param postal     The postal code of the customer
+    //  * @param phone      The phone number of the customer
+    //  * @param divisionId The division id of the customer
+    //  */
+    // public Customer(int customerId, String name, String address, String postal, String phone, int divisionId) {
+    //     this.customerId = customerId;
+    //     this.name = name;
+    //     this.address = address;
+    //     this.postal = postal;
+    //     this.phone = phone;
+    //     this.divisionId = divisionId;
+    // }
 
 
     /**
