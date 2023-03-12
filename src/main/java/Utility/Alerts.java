@@ -73,7 +73,7 @@ public class Alerts {
     /**
      * Null Selection method which alerts the user of a null selection error
      *
-     * @param type   A Part or Product
+     * @param type
      * @param action Delete or Modify
      */
     public void nullSelection(String type, String action) {
@@ -81,6 +81,17 @@ public class Alerts {
         alert.setTitle("No " + type + " Selected"); // set the title
         alert.setHeaderText("Null Selection Error"); // set the header text
         alert.setContentText("No " + type + " is selected. " + "Please select a " + type + " to " + action + ".");
+        alert.showAndWait(); // display the alert and wait for a response from the user
+    }
+
+    /**
+     * Null Selection Reports method which alerts the user of a null selection error
+     */
+    public void nullSelectionReports() {
+        Alert alert = new Alert(Alert.AlertType.ERROR); // creation of Alert Object
+        alert.setTitle("Null Selection Error"); // set the title
+        alert.setHeaderText("Please Select a Type and Month"); // set the header text
+        alert.setContentText("A Type and a Month must be selected in order to calculate the total.");
         alert.showAndWait(); // display the alert and wait for a response from the user
     }
 }

@@ -238,7 +238,7 @@ public class DBAppointments {
 
     public static ObservableList<String> getAllAppointmentTypes() {
         ObservableList<String> types = FXCollections.observableArrayList();
-        String sql = "SELECT * FROM appointments";
+        String sql = "SELECT DISTINCT Type FROM appointments";
 
         try {
             PreparedStatement ps = JDBC.connection.prepareStatement(sql);
@@ -246,6 +246,7 @@ public class DBAppointments {
 
             while (rs.next()) {
                 String type = rs.getString("Type");
+
                 types.add(type);
             }
         } catch (SQLException e) {
@@ -253,6 +254,28 @@ public class DBAppointments {
         }
 
         return types;
+    }
+
+    public static int getCountApptsByTypeAndMonth(String type, String month) {
+        String sql = "SELECT * FROM appointments WHERE Type = ? " +
+                "AND MONTHNAME(Start) = ?";
+
+        int count = 0;
+        try {
+            PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+            ps.setString(1, type);
+            ps.setString(2, month);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                count++;
+            }
+
+        } catch (SQLException e) {
+            System.out.println("DBAppointments.getCountApptsByTypeAndMonth Error: " + e.getMessage());
+        }
+
+        return count;
     }
 
     // public static Appointment getAppointmentDetails(int appointmentId) throws SQLException {

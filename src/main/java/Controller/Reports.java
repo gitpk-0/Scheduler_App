@@ -13,15 +13,17 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatterBuilder;
+import java.util.Locale;
 import java.util.ResourceBundle;
 
 public class Reports implements Initializable {
@@ -55,6 +57,7 @@ public class Reports implements Initializable {
     public ComboBox<String> monthCB;
     public ComboBox<String> typeCB;
     public Label totalLbl;
+    public Button calculateBtn;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -126,9 +129,17 @@ public class Reports implements Initializable {
         state_tc.setCellValueFactory(new PropertyValueFactory<>("division"));
     }
 
-    @FXML
-    public void updateTotal(ActionEvent event) {
+    public void calculate(ActionEvent actionEvent) {
+        Boolean typeSelected = typeCB.getSelectionModel().isEmpty();
+        Boolean monthSelected = monthCB.getSelectionModel().isEmpty();
+
+        if (!typeSelected && !monthSelected) {
+            String type = typeCB.getValue();
+            String month = monthCB.getValue();
+
+            totalLbl.setText(String.valueOf(DBAppointments.getCountApptsByTypeAndMonth(type, month)));
+        } else {
+            alerts.nullSelectionReports();
+        }
     }
-
-
 }
