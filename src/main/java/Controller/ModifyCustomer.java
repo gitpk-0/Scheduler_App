@@ -43,6 +43,7 @@ public class ModifyCustomer implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        // initialize country combo box with all countries
         ObservableList<String> countries = FXCollections.observableArrayList();
         DBCountries.getAllCountries().stream()
                 .forEach(country -> countries.add(country.getCountryName())); // lambda

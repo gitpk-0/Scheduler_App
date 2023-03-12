@@ -1,9 +1,14 @@
 package Controller;
 
+import Database.DBAppointments;
+import Database.DBContacts;
+import Database.DBCountries;
 import Model.Appointment;
 import Model.Customer;
 import Utility.Alerts;
 import Utility.ChangeView;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -34,7 +39,7 @@ public class Reports implements Initializable {
     public TableColumn<Appointment, String> eDate_tc;
     public TableColumn<Appointment, Integer> custId_tc;
     public TableColumn<Appointment, Integer> userId_tc;
-    public ComboBox<String> contactCombo;
+    public ComboBox<String> contactCB;
     public TableView<Customer> customerTableView;
     public TableColumn<Customer, Integer> customerId_tc;
     public TableColumn<Customer, String> name_tc;
@@ -43,14 +48,35 @@ public class Reports implements Initializable {
     public TableColumn<Customer, String> phone_tc;
     public TableColumn<Customer, String> country_tc;
     public TableColumn<Customer, String> state_tc;
-    public ComboBox<String> countryCombo;
-    public ComboBox<String> monthCombo;
-    public ComboBox<String> typeCombo;
+    public ComboBox<String> countryCB;
+    public ComboBox<String> monthCB;
+    public ComboBox<String> typeCB;
     public Label totalLbl;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        // Initialize contact combo box options
+        ObservableList<String> contacts = FXCollections.observableArrayList();
+        DBContacts.getAllContacts().stream().forEach(contact -> contacts.add(contact.toString())); // lambda
+        contactCB.setItems(contacts);
 
+        // initialize country combo box with all countries
+        ObservableList<String> countries = FXCollections.observableArrayList();
+        DBCountries.getAllCountries().stream()
+                .forEach(country -> countries.add(country.getCountryName())); // lambda
+        countryCB.setItems(countries);
+
+        // initialize type combo box with all appointment types
+        ObservableList<String> types = FXCollections.observableArrayList();
+        DBAppointments.getAllAppointmentTypes().stream()
+                .forEach(type -> types.add(type)); // lambda
+        typeCB.setItems(types);
+
+        // initialize month combo box with all months
+        ObservableList<String> months = FXCollections.observableArrayList();
+        months.addAll("January", "February", "March", "April", "May", "June", "July", "August", "September", "October",
+                "November", "December");
+        monthCB.setItems(months);
     }
 
     public void toMainMenu(ActionEvent event) throws IOException {

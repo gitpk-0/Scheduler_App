@@ -38,7 +38,7 @@
                         <Font name="Cantarell Extra Bold" size="20.0"/>
                     </font>
                 </Label>
-                <ComboBox fx:id="contactCombo" layoutX="14.0" layoutY="27.0" onAction="#filterByContact"
+                <ComboBox fx:id="contactCB" layoutX="14.0" layoutY="27.0" onAction="#filterByContact"
                           prefWidth="150.0" promptText="Select a Contact"/>
             </children>
         </AnchorPane>
@@ -63,7 +63,7 @@
                         <Font name="Cantarell Extra Bold" size="20.0"/>
                     </font>
                 </Label>
-                <ComboBox fx:id="countryCombo" layoutX="14.0" layoutY="20.0" onAction="#filterByCountry"
+                <ComboBox fx:id="countryCB" layoutX="14.0" layoutY="20.0" onAction="#filterByCountry"
                           prefWidth="150.0" promptText="Select a Country"/>
             </children>
         </AnchorPane>
@@ -76,9 +76,9 @@
                         <Font name="Cantarell Extra Bold" size="20.0"/>
                     </font>
                 </Label>
-                <ComboBox fx:id="monthCombo" layoutX="422.0" layoutY="63.0" minWidth="150.0" onAction="#updateTotal"
+                <ComboBox fx:id="monthCB" layoutX="422.0" layoutY="63.0" minWidth="150.0" onAction="#updateTotal"
                           prefWidth="150.0" promptText="Select a Month"/>
-                <ComboBox fx:id="typeCombo" layoutX="248.0" layoutY="63.0" onAction="#updateTotal" prefWidth="150.0"
+                <ComboBox fx:id="typeCB" layoutX="248.0" layoutY="63.0" onAction="#updateTotal" prefWidth="150.0"
                           promptText="Select a Type"/>
                 <Label layoutX="680.0" layoutY="64.0" text="Total Appointments">
                     <font>

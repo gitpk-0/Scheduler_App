@@ -13,6 +13,7 @@ import javafx.collections.ObservableList;
 import java.sql.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  *
@@ -196,6 +197,11 @@ public class DBAppointments {
         ps.setInt(11, contId); // Contact_ID
         ps.setInt(12, id); // Appointment_ID
         ps.executeUpdate();
+    }
+
+    public static ObservableList<String> getAllAppointmentTypes() {
+        ObservableList<String> types = FXCollections.observableArrayList();
+        return types;
     }
 
     // public static Appointment getAppointmentDetails(int appointmentId) throws SQLException {
