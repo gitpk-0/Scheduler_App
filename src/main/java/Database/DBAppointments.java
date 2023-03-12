@@ -201,6 +201,20 @@ public class DBAppointments {
 
     public static ObservableList<String> getAllAppointmentTypes() {
         ObservableList<String> types = FXCollections.observableArrayList();
+        String sql = "SELECT * FROM appointments";
+
+        try {
+            PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                String type = rs.getString("Type");
+                types.add(type);
+            }
+        } catch (SQLException e) {
+            System.out.println("DBAppointments.getAllAppointmentTypes Error: " + e.getMessage());
+        }
+
         return types;
     }
 
