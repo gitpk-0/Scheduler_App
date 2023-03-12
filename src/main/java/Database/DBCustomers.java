@@ -44,7 +44,7 @@ public class DBCustomers {
                 customers.add(newCustomer);
             }
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            System.out.println("DBCustomers.getAllCustomers Error: " + e.getMessage());
         }
 
         return customers;
@@ -98,5 +98,37 @@ public class DBCustomers {
         ps.setInt(7, divisionId);
         ps.setInt(8, id);
         ps.executeUpdate();
+    }
+
+    public static ObservableList<Customer> getCustomersByCountry(String country_name) {
+        ObservableList<Customer> customers = FXCollections.observableArrayList();
+
+        try {
+            String sql = "SELECT * FROM customers " +
+                    "INNER JOIN first_level_divisions ON customers.Division_ID = first_level_divisions.Division_ID " +
+                    "INNER JOIN countries ON countries.Country_ID = first_level_divisions.Country_ID " +
+                    "WHERE countries.Country = ?";
+            PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+            ps.setString(1, country_name);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                int customerId = rs.getInt("Customer_ID");
+                String name = rs.getString("Customer_Name");
+                String address = rs.getString("Address");
+                String postal = rs.getString("Postal_Code");
+                String phone = rs.getString("Phone");
+                int divisionId = rs.getInt("Division_ID");
+                String country = rs.getString("Country");
+                String division = rs.getString("Division");
+
+                Customer customer = new Customer(customerId, name, address, postal, phone, divisionId, country, division);
+                customers.add(customer);
+            }
+        } catch (SQLException e) {
+            System.out.println("DBCustomers.getCustomersByCountry Error: " + e.getMessage());
+        }
+
+        return customers;
     }
 }

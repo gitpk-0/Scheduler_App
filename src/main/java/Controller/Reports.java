@@ -3,6 +3,7 @@ package Controller;
 import Database.DBAppointments;
 import Database.DBContacts;
 import Database.DBCountries;
+import Database.DBCustomers;
 import Model.Appointment;
 import Model.Customer;
 import Utility.Alerts;
@@ -109,6 +110,20 @@ public class Reports implements Initializable {
 
     @FXML
     public void filterByCountry(ActionEvent event) {
+        String country = countryCB.getSelectionModel().getSelectedItem();
+
+        // assigning the getCustomersByCountry Observable list to work with the customerTableView Table
+        customerTableView.setItems(DBCustomers.getCustomersByCountry(country));
+
+        /* assigning the values to populate each column with, each new PropertyValueFactory object calls the
+        getter method for the appropriate Customer object's variable */
+        customerId_tc.setCellValueFactory(new PropertyValueFactory<>("customerId"));
+        name_tc.setCellValueFactory(new PropertyValueFactory<>("name"));
+        address_tc.setCellValueFactory(new PropertyValueFactory<>("address"));
+        postal_tc.setCellValueFactory(new PropertyValueFactory<>("postal"));
+        phone_tc.setCellValueFactory(new PropertyValueFactory<>("phone"));
+        country_tc.setCellValueFactory(new PropertyValueFactory<>("country"));
+        state_tc.setCellValueFactory(new PropertyValueFactory<>("division"));
     }
 
     @FXML
