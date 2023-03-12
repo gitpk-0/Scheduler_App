@@ -74,4 +74,29 @@ public class DBCustomers {
         ps.setInt(10, divisionId); // Division_ID
         ps.executeUpdate();
     }
+
+    public static void updateCustomer(int id, String name, String phone, String address, String postal,
+                                      int divisionId) throws SQLException {
+
+        String sql = "UPDATE customers SET " +
+                "Customer_Name = ?, " + // 1
+                "Address = ?, " +
+                "Postal_Code = ?, " + // 3
+                "Phone = ?, " +
+                "Last_Update = ?, " + // 5
+                "Last_Updated_By = ?, " +
+                "Division_ID = ? " + // 7
+                "WHERE Customer_ID = ?";
+
+        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+        ps.setString(1, name);
+        ps.setString(2, address);
+        ps.setString(3, postal);
+        ps.setString(4, phone);
+        ps.setTimestamp(5, Timestamp.valueOf(LocalDateTime.now()));
+        ps.setString(6, DBUsers.currentUser);
+        ps.setInt(7, divisionId);
+        ps.setInt(8, id);
+        ps.executeUpdate();
+    }
 }

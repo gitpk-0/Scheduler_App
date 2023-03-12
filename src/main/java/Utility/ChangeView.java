@@ -84,7 +84,7 @@ public class ChangeView {
         } else if (view.equals("Modify Customer ")) {
             ModifyCustomer mpc = loader.getController();
             // casting the selected object from the table to a Customer object
-            mpc.sendCustomer((Customer) table.getSelectionModel().getSelectedItem());
+            mpc.sendCustomer((Customer) table.getSelectionModel().getSelectedItem(), event);
         }
 
         // casting the event source to a Button type, then to a Stage type, and assigning it to the stage object

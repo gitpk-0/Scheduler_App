@@ -1,47 +1,57 @@
 package Controller;
 
+import Model.Appointment;
+import Model.Customer;
 import Utility.Alerts;
 import Utility.ChangeView;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
-public class Reports {
+public class Reports implements Initializable {
 
     private ChangeView viewController = new ChangeView(); // manages the changing of views
     private Alerts alerts = new Alerts(); // manages the alerts to the user
 
-    public TableView apptTableView;
-    public TableColumn apptId_tc;
-    public TableColumn title_tc;
-    public TableColumn desc_tc;
-    public TableColumn loc_tc;
-    public TableColumn contId_tc;
-    public TableColumn type_tc;
-    public TableColumn sDate_tc;
-    public TableColumn sTime_tc;
-    public TableColumn eTime_tc;
-    public TableColumn eDate_tc;
-    public TableColumn custId_tc;
-    public TableColumn userId_tc;
-    public ComboBox contactCombo;
-    public TableView customerTableView;
-    public TableColumn customerId_tc;
-    public TableColumn name_tc;
-    public TableColumn address_tc;
-    public TableColumn postal_tc;
-    public TableColumn phone_tc;
-    public TableColumn country_tc;
-    public TableColumn state_tc;
-    public ComboBox countryCombo;
-    public ComboBox monthCombo;
-    public ComboBox typeCombo;
+    public TableView<Appointment> apptTableView;
+    public TableColumn<Appointment, Integer> apptId_tc;
+    public TableColumn<Appointment, String> title_tc;
+    public TableColumn<Appointment, String> desc_tc;
+    public TableColumn<Appointment, String> loc_tc;
+    public TableColumn<Appointment, String> contactName_tc;
+    public TableColumn<Appointment, String> type_tc;
+    public TableColumn<Appointment, String> sDate_tc;
+    public TableColumn<Appointment, String> sTime_tc;
+    public TableColumn<Appointment, String> eTime_tc;
+    public TableColumn<Appointment, String> eDate_tc;
+    public TableColumn<Appointment, Integer> custId_tc;
+    public TableColumn<Appointment, Integer> userId_tc;
+    public ComboBox<String> contactCombo;
+    public TableView<Customer> customerTableView;
+    public TableColumn<Customer, Integer> customerId_tc;
+    public TableColumn<Customer, String> name_tc;
+    public TableColumn<Customer, String> address_tc;
+    public TableColumn<Customer, String> postal_tc;
+    public TableColumn<Customer, String> phone_tc;
+    public TableColumn<Customer, String> country_tc;
+    public TableColumn<Customer, String> state_tc;
+    public ComboBox<String> countryCombo;
+    public ComboBox<String> monthCombo;
+    public ComboBox<String> typeCombo;
     public Label totalLbl;
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+
+    }
 
     public void toMainMenu(ActionEvent event) throws IOException {
         viewController.changeViewToMain(event);
@@ -58,4 +68,6 @@ public class Reports {
     @FXML
     public void updateTotal(ActionEvent event) {
     }
+
+
 }

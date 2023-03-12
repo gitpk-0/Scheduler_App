@@ -26,7 +26,7 @@ public abstract class JDBC {
             connection = DriverManager.getConnection(jdbcUrl, userName, password); // Reference Connection object
             System.out.println("Connection successful!");
         } catch (Exception e) {
-            System.out.println("Error:" + e.getMessage());
+            System.out.println("JDBC openConnection Error:" + e.getMessage());
             System.out.println(e.getCause());
         }
     }
@@ -36,7 +36,7 @@ public abstract class JDBC {
             connection.close();
             System.out.println("Connection closed!");
         } catch (Exception e) {
-            System.out.println("Error:" + e.getMessage());
+            System.out.println("JDBC closeConnection Error:" + e.getMessage());
         }
     }
 

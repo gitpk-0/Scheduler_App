@@ -149,11 +149,11 @@ public class ModifyAppointment implements Initializable {
      * User clicked Modify Button in the Appointment table
      * Sends the information about the Appointment selected to populate the ModifyAppointment text fields
      *
-     * @param selectedAppt Appointment to be modified
+     * @param appointment Appointment to be modified
      */
-    public void sendAppt(Appointment selectedAppt) throws SQLException {
-        String startTime = selectedAppt.getStartTime();
-        String endTime = selectedAppt.getEndTime();
+    public void sendAppt(Appointment appointment) throws SQLException {
+        String startTime = appointment.getStartTime();
+        String endTime = appointment.getEndTime();
         if (startTime.indexOf("0") == 0) {
             startTime = startTime.substring(1);
         }
@@ -161,18 +161,18 @@ public class ModifyAppointment implements Initializable {
             endTime = endTime.substring(1);
         }
 
-        apptIdTF.setText(String.valueOf(selectedAppt.getApptId()));
-        titleTF.setText(selectedAppt.getTitle());
-        descTF.setText(selectedAppt.getDescription());
-        locationTF.setText(selectedAppt.getLocation());
-        startDP.setValue(selectedAppt.getStart().toLocalDate());
-        endDP.setValue(selectedAppt.getStart().toLocalDate());
-        userIdCB.setValue(selectedAppt.getUserId());
-        custIdCB.setValue(selectedAppt.getCustomerId());
-        contactCB.setValue(selectedAppt.getContactId() + ": " + selectedAppt.getContactName());
+        apptIdTF.setText(String.valueOf(appointment.getApptId()));
+        titleTF.setText(appointment.getTitle());
+        descTF.setText(appointment.getDescription());
+        locationTF.setText(appointment.getLocation());
+        startDP.setValue(appointment.getStart().toLocalDate());
+        endDP.setValue(appointment.getStart().toLocalDate());
+        userIdCB.setValue(appointment.getUserId());
+        custIdCB.setValue(appointment.getCustomerId());
+        contactCB.setValue(appointment.getContactId() + ": " + appointment.getContactName());
         startTimeCB.setValue(startTime);
         endTimeCB.setValue(endTime);
-        typeTF.setText(selectedAppt.getType());
+        typeTF.setText(appointment.getType());
     }
 
     public void onCancel(ActionEvent event) throws IOException {
