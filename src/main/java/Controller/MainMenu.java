@@ -6,6 +6,7 @@ package Controller;
 
 import Database.DBAppointments;
 import Database.DBCustomers;
+import Database.DBUsers;
 import Model.Appointment;
 import Model.Customer;
 import Utility.Alerts;
@@ -30,6 +31,7 @@ public class MainMenu implements Initializable {
 
     private ChangeView viewController = new ChangeView(); // manages the changing of views
     private Alerts alerts = new Alerts(); // manages the alerts to the user
+    private boolean login = true;
 
     public TableView<Appointment> apptTableView;
     public TableColumn<Appointment, Integer> apptId_tc;
@@ -94,7 +96,23 @@ public class MainMenu implements Initializable {
         phone_tc.setCellValueFactory(new PropertyValueFactory<>("phone"));
         country_tc.setCellValueFactory(new PropertyValueFactory<>("country"));
         state_tc.setCellValueFactory(new PropertyValueFactory<>("division"));
+
+        if (Login.login) loginAlert();
     }
+
+    public void loginAlert() {
+        int user = DBUsers.currentUserId;
+        Appointment apptNear = DBAppointments.hasAppointmentSoon(user);
+
+        if (apptNear != null) {
+            Login.login = false;
+            alerts.appointmentSoon(apptNear.getApptId(), apptNear.getStartDate(), apptNear.getStartTime());
+        } else {
+            Login.login = false;
+            alerts.noAppointmentSoon();
+        }
+    }
+
 
     /**
      * Redirect the user to the AddAppointment screen
@@ -158,7 +176,7 @@ public class MainMenu implements Initializable {
      * Redirect the user to the Modify Customer screen
      *
      * @param event Modify Customer button clicked
-     * @throws IOException Signals that an Input/Output exception has occurred
+     * @throws IOException  Signals that an Input/Output exception has occurred
      * @throws SQLException Signals that an SQLException exception has occurred
      */
     public void toModifyCustomerView(ActionEvent event) throws IOException, SQLException {

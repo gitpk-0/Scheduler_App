@@ -19,7 +19,8 @@ import java.sql.SQLException;
  */
 public class DBUsers {
 
-    public static String currentUser;
+    public static String currentUserName;
+    public static int currentUserId;
 
     /**
      * Method for validating user login information
@@ -30,14 +31,15 @@ public class DBUsers {
      * @throws SQLException if an SQL error occurs
      */
     public static boolean login(String username, String password) throws SQLException {
-        String sql = "SELECT User_Name, Password FROM users WHERE User_Name = ?";
+        String sql = "SELECT User_ID, User_Name, Password FROM users WHERE User_Name = ?";
         PreparedStatement ps = JDBC.connection.prepareStatement(sql);
         ps.setString(1, username);
         ResultSet rs = ps.executeQuery();
 
         while (rs.next()) {
+            currentUserId = rs.getInt("User_ID");
+            currentUserName = rs.getString("User_Name");
             String storedPassword = rs.getString("Password");
-            currentUser = rs.getString("User_Name");
             return password.equals(storedPassword);
         }
 

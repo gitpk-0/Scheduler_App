@@ -13,7 +13,6 @@ import javafx.collections.ObservableList;
 import java.sql.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 /**
  *
@@ -197,9 +196,9 @@ public class DBAppointments {
         ps.setTimestamp(6, Timestamp.valueOf(start)); // Start
         ps.setTimestamp(7, Timestamp.valueOf(end)); // End
         ps.setTimestamp(8, Timestamp.valueOf(LocalDateTime.now())); // Create_Date
-        ps.setString(9, DBUsers.currentUser); // Created_By
+        ps.setString(9, DBUsers.currentUserName); // Created_By
         ps.setTimestamp(10, Timestamp.valueOf(LocalDateTime.now())); // Last_Update
-        ps.setString(11, DBUsers.currentUser); // Last_Updated_By
+        ps.setString(11, DBUsers.currentUserName); // Last_Updated_By
         ps.setInt(12, customerId); // Customer_ID
         ps.setInt(13, userId); // User_ID
         ps.setInt(14, contactId); // Contact_ID
@@ -228,7 +227,7 @@ public class DBAppointments {
         ps.setTimestamp(5, Timestamp.valueOf(start)); // Start
         ps.setTimestamp(6, Timestamp.valueOf(end)); // End
         ps.setTimestamp(7, Timestamp.valueOf(LocalDateTime.now())); // Last_Update
-        ps.setString(8, DBUsers.currentUser); // Last_Updated_By
+        ps.setString(8, DBUsers.currentUserName); // Last_Updated_By
         ps.setInt(9, custId); // Customer_ID
         ps.setInt(10, uId); // User_ID
         ps.setInt(11, contId); // Contact_ID
@@ -276,6 +275,42 @@ public class DBAppointments {
         }
 
         return count;
+    }
+
+    public static Appointment hasAppointmentSoon(int user) {
+        Appointment appointment = null;
+        String sql = "SELECT * FROM appointments " +
+                "INNER JOIN contacts ON appointments.Contact_ID = contacts.Contact_ID " +
+                "WHERE appointments.Start <= NOW() + INTERVAL 15 Minute AND " +
+                "appointments.Start > Now() AND " +
+                "appointments.User_ID = ?";
+
+        try {
+            PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+            ps.setInt(1, user);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                int apptId = rs.getInt("Appointment_ID");
+                String title = rs.getString("Title");
+                String desc = rs.getString("Description");
+                String loca = rs.getString("Location");
+                String type = rs.getString("Type");
+                LocalDateTime start = rs.getTimestamp("Start").toLocalDateTime();
+                LocalDateTime end = rs.getTimestamp("End").toLocalDateTime();
+                int customerId = rs.getInt("Customer_ID");
+                int userId = rs.getInt("User_ID");
+                int contactId = rs.getInt("Contact_ID");
+                String contactName = rs.getString("Contact_Name");
+
+                appointment = new Appointment(apptId, title, desc, loca, type, start, end, customerId, userId,
+                        contactId, contactName);
+            }
+        } catch (SQLException e) {
+            System.out.println("DBAppointments.hasAppointmentSoon Error: " + e.getMessage());
+        }
+
+        return appointment;
     }
 
     // public static Appointment getAppointmentDetails(int appointmentId) throws SQLException {

@@ -31,6 +31,8 @@ public class Login implements Initializable {
     ZoneId zone = ZoneId.systemDefault();
     ResourceBundle rb = ResourceBundle.getBundle("Nat", Locale.getDefault());
 
+    public static boolean login = true;
+
     public AnchorPane anchor;
     public TextField usernameTF;
     public PasswordField passwordPF;

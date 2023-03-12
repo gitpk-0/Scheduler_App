@@ -68,9 +68,9 @@ public class DBCustomers {
         ps.setString(4, postal); // Postal Code
         ps.setString(5, phone); // Phone
         ps.setTimestamp(6, Timestamp.valueOf(LocalDateTime.now())); // Create_Date
-        ps.setString(7, DBUsers.currentUser); // Created_By
+        ps.setString(7, DBUsers.currentUserName); // Created_By
         ps.setTimestamp(8, Timestamp.valueOf(LocalDateTime.now())); // Last_Update
-        ps.setString(9, DBUsers.currentUser); // Last_Updated_By
+        ps.setString(9, DBUsers.currentUserName); // Last_Updated_By
         ps.setInt(10, divisionId); // Division_ID
         ps.executeUpdate();
     }
@@ -94,7 +94,7 @@ public class DBCustomers {
         ps.setString(3, postal);
         ps.setString(4, phone);
         ps.setTimestamp(5, Timestamp.valueOf(LocalDateTime.now()));
-        ps.setString(6, DBUsers.currentUser);
+        ps.setString(6, DBUsers.currentUserName);
         ps.setInt(7, divisionId);
         ps.setInt(8, id);
         ps.executeUpdate();

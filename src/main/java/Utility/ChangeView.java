@@ -6,6 +6,8 @@ package Utility;
 
 import Controller.ModifyAppointment;
 import Controller.ModifyCustomer;
+import Database.DBAppointments;
+import Database.DBUsers;
 import Model.Appointment;
 import Model.Customer;
 import javafx.event.ActionEvent;
@@ -23,6 +25,7 @@ import java.sql.SQLException;
  * Utility class which manages the changing of views between screens
  */
 public class ChangeView {
+
 
     Stage stage;
     Parent scene;
@@ -69,7 +72,7 @@ public class ChangeView {
      * @param event Modify [Appointment or Customer] Button clicked
      * @param view  View screen to be redirected to
      * @param table TableView Object used to find the selected appointment/customer to be modified
-     * @throws IOException Signals that an Input/Output exception has occurred
+     * @throws IOException  Signals that an Input/Output exception has occurred
      * @throws SQLException Signals that an SQLException exception has occurred
      */
     public void changeViewToModify(ActionEvent event, String view, TableView table) throws IOException, SQLException {
