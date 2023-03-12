@@ -22,11 +22,11 @@
                         <TableColumn fx:id="title_tc" prefWidth="93.0" text="Title"/>
                         <TableColumn fx:id="desc_tc" prefWidth="149.0" text="Description"/>
                         <TableColumn fx:id="loc_tc" prefWidth="135.0" text="Location"/>
-                        <TableColumn fx:id="contId_tc" prefWidth="116.0" text="Contact"/>
+                        <TableColumn fx:id="contactName_tc" prefWidth="116.0" text="Contact"/>
                         <TableColumn fx:id="type_tc" prefWidth="119.0" text="Type"/>
-                        <TableColumn fx:id="sDate_tc" prefWidth="81.0" text="Start Date"/>
                         <TableColumn fx:id="sTime_tc" prefWidth="88.0" text="State Time"/>
                         <TableColumn fx:id="eTime_tc" prefWidth="76.0" text="End Time"/>
+                        <TableColumn fx:id="sDate_tc" prefWidth="81.0" text="Start Date"/>
                         <TableColumn fx:id="eDate_tc" prefWidth="76.0" text="End Date"/>
                         <TableColumn fx:id="custId_tc" prefWidth="86.0" text="Customer ID"/>
                         <TableColumn fx:id="userId_tc" prefWidth="68.0" text="User ID"/>
@@ -38,8 +38,8 @@
                         <Font name="Cantarell Extra Bold" size="20.0"/>
                     </font>
                 </Label>
-                <ComboBox fx:id="contactCB" layoutX="14.0" layoutY="27.0" onAction="#filterByContact"
-                          prefWidth="150.0" promptText="Select a Contact"/>
+                <ComboBox fx:id="contactCB" layoutX="14.0" layoutY="27.0" onAction="#filterByContact" prefWidth="150.0"
+                          promptText="Select a Contact"/>
             </children>
         </AnchorPane>
         <AnchorPane layoutX="31.0" layoutY="359.0" prefHeight="265.0" prefWidth="1175.0"
@@ -63,8 +63,8 @@
                         <Font name="Cantarell Extra Bold" size="20.0"/>
                     </font>
                 </Label>
-                <ComboBox fx:id="countryCB" layoutX="14.0" layoutY="20.0" onAction="#filterByCountry"
-                          prefWidth="150.0" promptText="Select a Country"/>
+                <ComboBox fx:id="countryCB" layoutX="14.0" layoutY="20.0" onAction="#filterByCountry" prefWidth="150.0"
+                          promptText="Select a Country"/>
             </children>
         </AnchorPane>
         <AnchorPane layoutX="31.0" layoutY="656.0" prefHeight="113.0" prefWidth="1175.0"

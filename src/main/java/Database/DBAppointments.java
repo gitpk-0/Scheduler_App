@@ -133,6 +133,43 @@ public class DBAppointments {
         return apptTimes;
     }
 
+    public static ObservableList<Appointment> getAppointmentsByContact(String contact) {
+        ObservableList<Appointment> appointments = FXCollections.observableArrayList();
+        int contact_id = Integer.valueOf(contact.substring(0, 1));
+        String sql = "SELECT * FROM appointments " +
+                "INNER JOIN contacts ON appointments.Contact_ID = contacts.Contact_ID " +
+                "WHERE appointments.Contact_ID = ?";
+
+        try {
+            PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+            ps.setInt(1, contact_id);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                int apptId = rs.getInt("Appointment_ID");
+                String title = rs.getString("Title");
+                String desc = rs.getString("Description");
+                String loca = rs.getString("Location");
+                String type = rs.getString("Type");
+                LocalDateTime start = rs.getTimestamp("Start").toLocalDateTime();
+                LocalDateTime end = rs.getTimestamp("End").toLocalDateTime();
+                int customerId = rs.getInt("Customer_ID");
+                int userId = rs.getInt("User_ID");
+                int contactId = rs.getInt("appointments.Contact_ID");
+                String contactName = rs.getString("Contact_Name");
+
+                Appointment appt = new Appointment(apptId, title, desc, loca, type, start, end, customerId, userId,
+                        contactId, contactName);
+                appointments.add(appt);
+            }
+
+        } catch (SQLException e) {
+            System.out.println("DBAppointments.getAppointmentsByContact Error: " + e.getMessage());
+        }
+
+        return appointments;
+    }
+
     /**
      * @param apptId
      * @param title

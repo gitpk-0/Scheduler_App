@@ -16,6 +16,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.io.IOException;
 import java.net.URL;
@@ -86,6 +87,24 @@ public class Reports implements Initializable {
 
     @FXML
     public void filterByContact(ActionEvent event) {
+        String contact = contactCB.getSelectionModel().getSelectedItem();
+        // assigning the getAppointmentsByContact Observable list to work with the apptsTableView Table
+        apptTableView.setItems(DBAppointments.getAppointmentsByContact(contact));
+
+        /* assigning the values to populate each column with, each new PropertyValueFactory object calls the
+        getter method for the appropriate Appointment object's variable */
+        apptId_tc.setCellValueFactory(new PropertyValueFactory<>("apptId"));
+        title_tc.setCellValueFactory(new PropertyValueFactory<>("title"));
+        desc_tc.setCellValueFactory(new PropertyValueFactory<>("description"));
+        loc_tc.setCellValueFactory(new PropertyValueFactory<>("location"));
+        contactName_tc.setCellValueFactory(new PropertyValueFactory<>("contactName"));
+        type_tc.setCellValueFactory(new PropertyValueFactory<>("type"));
+        sDate_tc.setCellValueFactory(new PropertyValueFactory<>("startDate"));
+        sTime_tc.setCellValueFactory(new PropertyValueFactory<>("startTime"));
+        eTime_tc.setCellValueFactory(new PropertyValueFactory<>("endTime"));
+        eDate_tc.setCellValueFactory(new PropertyValueFactory<>("endDate"));
+        custId_tc.setCellValueFactory(new PropertyValueFactory<>("customerId"));
+        userId_tc.setCellValueFactory(new PropertyValueFactory<>("userId"));
     }
 
     @FXML
