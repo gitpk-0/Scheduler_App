@@ -1,5 +1,9 @@
 package Controller;
 
+/**
+ * @author Patrick Kell
+ */
+
 import Database.DBUsers;
 import Utility.Alerts;
 import Utility.ChangeView;
@@ -12,7 +16,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
-import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
@@ -23,12 +26,12 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 
 /**
- * @author Patrick Kell
+ * The Login controller class which manages the login functionality
  */
 public class Login implements Initializable {
 
-    ChangeView viewHandler = new ChangeView();
-    LoginTracker loginTracker = new LoginTracker();
+    private ChangeView viewController = new ChangeView(); // manages the changing of views
+    private LoginTracker loginTracker = new LoginTracker(); // manages the tracking of login data
 
     ZoneId zone = ZoneId.systemDefault();
     ResourceBundle rb = ResourceBundle.getBundle("Nat", Locale.getDefault());
@@ -45,32 +48,10 @@ public class Login implements Initializable {
     public Label zoneId;
 
     /**
-     * @param event
-     * @throws IOException
-     * @throws SQLException
-     */
-    public void onLogin(ActionEvent event) throws IOException, SQLException {
-        String username = usernameTF.getText();
-        String password = passwordPF.getText();
-        ZonedDateTime dateTime = ZonedDateTime.now(ZoneId.systemDefault());
-
-        if (DBUsers.login(username, password) && !username.isEmpty() && !password.isEmpty()) {
-            viewHandler.changeViewToMain(event);
-            loginTracker.log(username, dateTime, true);
-            // valid username & password entered
-            Alerts.onLogin();
-        } else { // invalid username or password entered
-            loginTracker.log(username, dateTime, false);
-            usernameTF.clear();
-            passwordPF.clear();
-            loginError.setVisible(true);
-        }
-
-    }
-
-    /**
-     * @param url
-     * @param resourceBundle
+     * Initializes the login screen, sets the text to the appropriate language
+     *
+     * @param url            The FXML location used to resolve relative paths for the root object, or null if the location is not known.
+     * @param resourceBundle The resources used to localize the root object, or null if the root object was not localized.
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -81,6 +62,33 @@ public class Login implements Initializable {
         passwordPF.setPromptText(rb.getString("password"));
         loginBtn.setText(rb.getString("login"));
         loginError.setText(rb.getString("error"));
-        zoneId.setText(String.valueOf(zone));
+        zoneId.setText(String.valueOf(zone)); // Zone of the user
+    }
+
+    /**
+     * The onLogin method which manages the login functionality
+     * <p>
+     * Each login attempt is tracked and logged in the login_activity.txt file
+     *
+     * @param event Login button clicked
+     * @throws IOException  Signals an Input/Output exception has occurred
+     * @throws SQLException Signals an SQLException has occurred
+     */
+    public void onLogin(ActionEvent event) throws IOException, SQLException {
+        String username = usernameTF.getText();
+        String password = passwordPF.getText();
+        ZonedDateTime dateTime = ZonedDateTime.now(zone); // ZoneDateTime of user's local zone
+
+        if (DBUsers.login(username, password) && !username.isEmpty() && !password.isEmpty()) {
+            // valid username & password entered
+            loginTracker.log(username, dateTime, true); // log the successful login attempt
+            viewController.changeViewToMain(event); // redirect to the main menu screen
+            Alerts.onLogin(); // alert the user if an appointment is scheduled in 15 minutes or less
+        } else { // invalid username or password entered
+            loginTracker.log(username, dateTime, false); // log the failed login attempt
+            usernameTF.clear(); // clear the username text field
+            passwordPF.clear(); // clear the password text field
+            loginError.setVisible(true); // set the login error message visibility to true
+        }
     }
 }

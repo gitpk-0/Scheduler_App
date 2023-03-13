@@ -1,5 +1,9 @@
 package Controller;
 
+/**
+ * @author Patrick Kell
+ */
+
 import Database.DBAppointments;
 import Database.DBContacts;
 import Database.DBCustomers;
@@ -26,7 +30,7 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 /**
- * @author Patrick Kell
+ * The ModifyAppointment controller class which enables the user to modify an existing appointment
  */
 public class ModifyAppointment implements Initializable {
 
@@ -46,6 +50,16 @@ public class ModifyAppointment implements Initializable {
     public ComboBox<String> endTimeCB;
     public TextField typeTF;
 
+    /**
+     * Initializes the Modify Appointment screen with the data from the appointment the user selected to modify
+     * <p>
+     * This method utilizes three lambda expressions which promote better code readability and reduce the amount of
+     * code required. With each lambda expression utilizing only one line of code, their functionality can be
+     * easily understood.
+     *
+     * @param url            The FXML location used to resolve relative paths for the root object, or null if the location is not known.
+     * @param resourceBundle The resources used to localize the root object, or null if the root object was not localized.
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         // Initialize contact combo box options
@@ -80,21 +94,21 @@ public class ModifyAppointment implements Initializable {
     }
 
     /**
-     * The onSaveAppt method which manages the modification of a new appointment.
+     * The onSaveAppt method which manages the modification of an existing appointment.
      * <p>
      * The user edits information about an existing appointment, which is then compiled and added to the appointments
      * table of the client_schedule database.
      * <p>
-     * This function validates the data and alerts there are problems with the input data.
+     * This method calls the form validation class which validates the data and alerts there are problems with the
+     * input data.
      *
      * @param event Save Appointment button clicked
-     * @throws SQLException Signals that a SQLException exception has occurred
+     * @throws SQLException Signals an SQLException has occurred
      */
     public void onSaveAppt(ActionEvent event) throws SQLException {
         FormValidation validator = new FormValidation(); // creates a new FormValidation object each time Save is clicked
-        // null value checks
         ArrayList<String> errors = validator.nullValueCheck(titleTF, descTF, locationTF, startDP, startTimeCB,
-                typeTF, custIdCB, userIdCB, contactCB, endDP, endTimeCB);
+                typeTF, custIdCB, userIdCB, contactCB, endDP, endTimeCB); // null value checks
 
         try {
             if (errors.isEmpty()) { // no null value errors
@@ -106,7 +120,7 @@ public class ModifyAppointment implements Initializable {
                         errors = validator.addOverlapError(); // an appointment overlap exists
                         throw new Exception(); // redirect to the catch block below
                     }
-                } else { // date/time value errors occurred
+                } else { // date and/or time value errors occurred
                     throw new Exception(); // redirect to the catch block below
                 }
 
@@ -131,7 +145,7 @@ public class ModifyAppointment implements Initializable {
                 LocalDateTime start = LocalDateTime.of(startDate, startTime).withSecond(1);
                 LocalDateTime end = LocalDateTime.of(endDate, endTime);
 
-                // add the appointment to the client_schedule database
+                // update the existing appointment in the client_schedule database
                 DBAppointments.updateAppointment(id, title, desc, loca, type, start, end, custId, uId, contId);
                 viewController.changeViewToMain(event); // redirect the user back to the main menu
             } else { // errors list is not empty
@@ -144,19 +158,20 @@ public class ModifyAppointment implements Initializable {
     }
 
     /**
-     * User clicked Modify Button in the Appointment table
+     * User clicked Modify Appointment Button in the Appointment table
+     * <p>
      * Sends the information about the Appointment selected to populate the ModifyAppointment text fields
      *
      * @param appointment Appointment to be modified
      */
-    public void sendAppt(Appointment appointment) throws SQLException {
+    public void sendAppt(Appointment appointment) {
         String startTime = appointment.getStartTime();
         String endTime = appointment.getEndTime();
-        if (startTime.indexOf("0") == 0) {
-            startTime = startTime.substring(1);
+        if (startTime.indexOf("0") == 0) { // if leading zero is present
+            startTime = startTime.substring(1); // ignore the leading zero
         }
-        if (endTime.indexOf("0") == 0) {
-            endTime = endTime.substring(1);
+        if (endTime.indexOf("0") == 0) { // if leading zero is present
+            endTime = endTime.substring(1); // ignore the leading zero
         }
 
         apptIdTF.setText(String.valueOf(appointment.getApptId()));
@@ -173,9 +188,13 @@ public class ModifyAppointment implements Initializable {
         typeTF.setText(appointment.getType());
     }
 
+    /**
+     * User clicked cancel button, view is changed back to Main Menu
+     *
+     * @param event Cancel button clicked
+     * @throws IOException Signals an Input/Output exception has occurred
+     */
     public void onCancel(ActionEvent event) throws IOException {
         viewController.changeViewToMain(event);
     }
-
-
 }

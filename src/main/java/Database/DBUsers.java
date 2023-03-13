@@ -28,7 +28,7 @@ public class DBUsers {
      * @param username the value the user entered in the username TextField
      * @param password the value the user entered in the password TextField
      * @return if the input password matches the username's password in the database
-     * @throws SQLException if an SQL error occurs
+     * @throws SQLException Signals an SQLException has occurred if an SQL error occurs
      */
     public static boolean login(String username, String password) throws SQLException {
         String sql = "SELECT User_ID, User_Name, Password FROM users WHERE User_Name = ?";

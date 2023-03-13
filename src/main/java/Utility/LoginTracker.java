@@ -35,25 +35,27 @@ public class LoginTracker {
      * @param username the username of the user attempting to log in
      * @param dateTime the datetime of the login event
      * @param valid    the result of the login attempt
-     * @throws IOException if an Input/Output error occurs
+     * @throws IOException Signals an Input/Output exception has occurred if an Input/Output error occurs
      */
-    public void log(String username, ZonedDateTime dateTime, boolean valid) throws IOException {
+    public int log(String username, ZonedDateTime dateTime, boolean valid) throws IOException {
         String result = valid ? "SUCCESSFUL" : "FAILED"; // SUCCESSFUL if valid = true, FAILED if valid = false
         String date = dateTime.toLocalDate().toString(); // the date of the login attempt
         String minute = String.valueOf(dateTime.getMinute());
-        if (Integer.valueOf(minute) < 10) {
+        if (Integer.parseInt(minute) < 10) {
             minute = "0" + dateTime.getMinute();
         }
         String time = String.format(dateTime.getHour() + ":" + minute, timeFormat); // the hours and minutes of the login attempt
 
         // write the following to the login_activity.txt file
         writer.write(result + " LOG IN on " + date + " at " + time + " by user: " + username + "\n");
+        writer.flush(); // flushes the stream
+        return 1;
     }
 
     /**
      * Closes the file that was being written to
      *
-     * @throws IOException if an Input/Output error occurs
+     * @throws IOException Signals an Input/Output exception has occurred if an Input/Output error occurs
      */
     public static void cleanUp() throws IOException {
         writer.close(); // close the file

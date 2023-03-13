@@ -56,6 +56,10 @@ public class AddAppointment implements Initializable {
      * Each of the combo boxes is initialized based on the data received from the client_schedule database
      * <p>
      * The time combo boxes are initialized for open hours between 8am and 10pm
+     * <p>
+     * This method utilizes three lambda expressions which promote better code readability and reduce the amount of
+     * code required. With each lambda expression utilizing only one line of code, their functionality can be
+     * easily understood.
      *
      * @param url            The FXML location used to resolve relative paths for the root object, or null if the location is not known.
      * @param resourceBundle The resources used to localize the root object, or null if the root object was not localized.
@@ -100,16 +104,16 @@ public class AddAppointment implements Initializable {
      * The user enters information about a new appointment, which is then compiled and added to the appointments
      * table of the client_schedule database.
      * <p>
-     * This function validates the data and alerts there are problems with the input data.
+     * This method calls the form validation class which validates the data and alerts there are problems with the
+     * input data.
      *
      * @param event Save Appointment button clicked
-     * @throws SQLException Signals that a SQLException exception has occurred
+     * @throws SQLException Signals an SQLException has occurred
      */
     public void onSaveAppt(ActionEvent event) throws SQLException {
         FormValidation validator = new FormValidation(); // creates a new FormValidation object each time Save is clicked
-        // null value checks
         ArrayList<String> errors = validator.nullValueCheck(titleTF, descTF, locationTF, startDP, startTimeCB,
-                typeTF, custIdCB, userIdCB, contactCB, endDP, endTimeCB);
+                typeTF, custIdCB, userIdCB, contactCB, endDP, endTimeCB); // null value checks
 
         try {
             if (errors.isEmpty()) { // no null value errors
@@ -121,12 +125,12 @@ public class AddAppointment implements Initializable {
                         errors = validator.addOverlapError(); // an appointment overlap exists
                         throw new Exception(); // redirect to the catch block below
                     }
-                } else { // date/time value errors occurred
+                } else { // date and/or time value errors occurred
                     throw new Exception(); // redirect to the catch block below
                 }
 
                 // all input data is valid
-                int id = IDGenerator.appointmentIDGenerator();
+                int id = IDGenerator.appointmentIDGenerator(); // create a unique id
                 String title = titleTF.getText();
                 String desc = descTF.getText();
                 String loca = locationTF.getText();
@@ -153,7 +157,7 @@ public class AddAppointment implements Initializable {
                 throw new Exception(); // redirect to the catch block below
             }
         } catch (Exception e) {
-            System.out.println("AddAppointment Error: " + e.getMessage());
+            // System.out.println("AddAppointment Error: " + e.getMessage());
             alerts.inputError(errors); // display the errors to the user
         }
 
@@ -163,7 +167,7 @@ public class AddAppointment implements Initializable {
      * User clicked cancel button, view is changed back to Main Menu
      *
      * @param event Cancel button clicked
-     * @throws IOException Signals that an Input/Output exception has occurred
+     * @throws IOException Signals an Input/Output exception has occurred
      */
     public void onCancel(ActionEvent event) throws IOException {
         viewController.changeViewToMain(event);

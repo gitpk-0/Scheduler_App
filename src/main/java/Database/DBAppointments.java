@@ -75,7 +75,7 @@ public class DBAppointments {
     /**
      * @param appt
      * @return
-     * @throws SQLException
+     * @throws SQLException Signals an SQLException has occurred
      */
     public static boolean deleteAppointment(Appointment appt) throws SQLException {
         String sql = "DELETE FROM appointments WHERE Appointment_ID = ?";
@@ -88,7 +88,7 @@ public class DBAppointments {
     /**
      * @param customer
      * @return
-     * @throws SQLException
+     * @throws SQLException Signals an SQLException has occurred
      */
     public static int getApptCountByCustomer(Customer customer) throws SQLException {
         String sql = "SELECT COUNT(Appointment_ID) AS apptCount FROM appointments WHERE Customer_ID = ?";

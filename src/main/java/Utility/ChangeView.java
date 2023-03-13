@@ -36,7 +36,7 @@ public class ChangeView {
      * changeViewToMain method used to redirect the user back to the Main Menu
      *
      * @param event Save or Cancel button clicked
-     * @throws IOException Signals that an Input/Output exception has occurred
+     * @throws IOException Signals an Input/Output exception has occurred
      */
     public void changeViewToMain(ActionEvent event) throws IOException {
         // casting the event source to a Button type, then to a Stage type, and assigning it to the stage object
@@ -54,7 +54,7 @@ public class ChangeView {
      *
      * @param event Add [Appointment or Customer] Button clicked
      * @param view  View screen to be redirected to
-     * @throws IOException Signals that an Input/Output exception has occurred
+     * @throws IOException Signals an Input/Output exception has occurred
      */
     public void changeViewToAdd(ActionEvent event, String view) throws IOException {
         // casting the event source to a Button type, then to a Stage type, and assigning it to the stage object
@@ -75,8 +75,8 @@ public class ChangeView {
      * @param event Modify [Appointment or Customer] Button clicked
      * @param view  View screen to be redirected to
      * @param table TableView Object used to find the selected appointment/customer to be modified
-     * @throws IOException  Signals that an Input/Output exception has occurred
-     * @throws SQLException Signals that an SQLException exception has occurred
+     * @throws IOException Signals an Input/Output exception has occurred  Signals that an Input/Output exception has occurred
+     * @throws SQLException Signals an SQLException has occurred Signals that an SQLException exception has occurred
      */
     public void changeViewToModify(ActionEvent event, String view, TableView table) throws IOException, SQLException {
         FXMLLoader loader = new FXMLLoader();
@@ -106,7 +106,7 @@ public class ChangeView {
      * changeViewToReports method used to redirect the user to the Reports screen
      *
      * @param event View Reports button clicked
-     * @throws IOException Signals that an Input/Output exception has occurred
+     * @throws IOException Signals an Input/Output exception has occurred
      */
     public void changeViewToReports(ActionEvent event) throws IOException {
         // casting the event source to a Button type, then to a Stage type, and assigning it to the stage object

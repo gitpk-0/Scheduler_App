@@ -6,19 +6,16 @@ package Controller;
 
 import Database.DBAppointments;
 import Database.DBCustomers;
-import Database.DBUsers;
 import Model.Appointment;
 import Model.Customer;
 import Utility.Alerts;
 import Utility.ChangeView;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.AnchorPane;
 
 import java.io.IOException;
 import java.net.URL;
@@ -30,7 +27,6 @@ import java.util.ResourceBundle;
  * and Delete Appointments and Customers, redirects to the Reports screen and Exit the application.
  */
 public class MainMenu implements Initializable {
-
 
     private ChangeView viewController = new ChangeView(); // manages the changing of views
     private Alerts alerts = new Alerts(); // manages the alerts to the user
@@ -101,19 +97,18 @@ public class MainMenu implements Initializable {
 
         sTime_tc.setSortType(TableColumn.SortType.ASCENDING); // sort the start times
         apptTableView.getSortOrder().add(sTime_tc);
-        apptTableView.sort();
+        apptTableView.sort(); // sort the appointments by start time
 
-        customerId_tc.setSortType(TableColumn.SortType.ASCENDING);
+        customerId_tc.setSortType(TableColumn.SortType.ASCENDING); // sort the customer ids
         customerTableView.getSortOrder().add(customerId_tc);
-        customerTableView.sort();
+        customerTableView.sort(); // sort the customers by customer ids
     }
-
 
     /**
      * Redirect the user to the AddAppointment screen
      *
-     * @param event Add (Appointment) button clicked
-     * @throws IOException Signals that an Input/Output exception has occurred
+     * @param event Add Appointment button clicked
+     * @throws IOException Signals an Input/Output exception has occurred
      */
     public void toAddApptView(ActionEvent event) throws IOException {
         viewController.changeViewToAdd(event, "Add Appointment ");
@@ -123,8 +118,8 @@ public class MainMenu implements Initializable {
      * Redirect the user to the ModifyAppointment screen
      *
      * @param event Modify Appointment button clicked
-     * @throws IOException Signals that an Input/Output exception has occurred
-     * @throws IOException Signals that an SQLException exception has occurred
+     * @throws IOException Signals an Input/Output exception has occurred
+     * @throws IOException Signals an Input/Output exception has occurred Signals that an SQLException exception has occurred
      */
     public void toModifyApptView(ActionEvent event) throws IOException, SQLException {
         Appointment appt = apptTableView.getSelectionModel().getSelectedItem(); // get the selected appointment
@@ -141,7 +136,7 @@ public class MainMenu implements Initializable {
      * Delete the selected Appointment or alert user no Appointment to be deleted is selected
      *
      * @param event Delete Appointment button clicked
-     * @throws SQLException Signals that a SQLException exception has occurred
+     * @throws SQLException Signals an SQLException has occurred
      */
     public void onDeleteAppt(ActionEvent event) throws SQLException {
         Appointment appt = apptTableView.getSelectionModel().getSelectedItem(); // get the selected appointment
@@ -161,7 +156,7 @@ public class MainMenu implements Initializable {
      * Redirect the user to the Add Customer screen
      *
      * @param event Add Customer button clicked
-     * @throws IOException Signals that an Input/Output exception has occurred
+     * @throws IOException Signals an Input/Output exception has occurred
      */
     public void toAddCustomerView(ActionEvent event) throws IOException {
         viewController.changeViewToAdd(event, "Add Customer ");
@@ -171,8 +166,8 @@ public class MainMenu implements Initializable {
      * Redirect the user to the Modify Customer screen
      *
      * @param event Modify Customer button clicked
-     * @throws IOException  Signals that an Input/Output exception has occurred
-     * @throws SQLException Signals that an SQLException exception has occurred
+     * @throws IOException  Signals an Input/Output exception has occurred  Signals that an Input/Output exception has occurred
+     * @throws SQLException Signals an SQLException has occurred Signals that an SQLException exception has occurred
      */
     public void toModifyCustomerView(ActionEvent event) throws IOException, SQLException {
         Customer customer = customerTableView.getSelectionModel().getSelectedItem(); // get the selected customer
@@ -189,7 +184,7 @@ public class MainMenu implements Initializable {
      * Delete the selected Customer or alert user no Customer to be deleted is selected
      *
      * @param event Delete Customer button clicked
-     * @throws SQLException Signals that a SQLException exception has occurred
+     * @throws SQLException Signals an SQLException has occurred
      */
     public void onDeleteCustomer(ActionEvent event) throws SQLException {
         Customer customer = customerTableView.getSelectionModel().getSelectedItem();
@@ -215,7 +210,7 @@ public class MainMenu implements Initializable {
      * Redirect the user to the Reports screen
      *
      * @param event View Reports button clicked
-     * @throws IOException Signals that an Input/Output exception has occurred
+     * @throws IOException Signals an Input/Output exception has occurred
      */
     public void toReportsView(ActionEvent event) throws IOException {
         viewController.changeViewToReports(event);
