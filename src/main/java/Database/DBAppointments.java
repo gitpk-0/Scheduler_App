@@ -7,6 +7,7 @@ package Database;
 import Model.Appointment;
 import Model.Customer;
 import Utility.JDBC;
+import Utility.TimeConversion;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -52,8 +53,8 @@ public class DBAppointments {
                 String desc = rs.getString("Description");
                 String loca = rs.getString("Location");
                 String type = rs.getString("Type");
-                LocalDateTime start = rs.getTimestamp("Start").toLocalDateTime();
-                LocalDateTime end = rs.getTimestamp("End").toLocalDateTime();
+                LocalDateTime start = TimeConversion.utcToLocal(rs.getTimestamp("Start"));
+                LocalDateTime end = TimeConversion.utcToLocal(rs.getTimestamp("End"));
                 int customerId = rs.getInt("Customer_ID");
                 int userId = rs.getInt("User_ID");
                 int contactId = rs.getInt("Contact_ID");
@@ -118,11 +119,8 @@ public class DBAppointments {
 
         int index = 0;
         while (rs.next()) {
-            Timestamp startTimeStamp = rs.getTimestamp("Start");
-            Timestamp endTimeStamp = rs.getTimestamp("End");
-
-            LocalDateTime start = startTimeStamp.toLocalDateTime();
-            LocalDateTime end = endTimeStamp.toLocalDateTime();
+            LocalDateTime start = TimeConversion.utcToLocal(rs.getTimestamp("Start"));
+            LocalDateTime end = TimeConversion.utcToLocal(rs.getTimestamp("End"));
 
             apptTimes.add(index, start);
             apptTimes.add(index + 1, end);
@@ -150,8 +148,8 @@ public class DBAppointments {
                 String desc = rs.getString("Description");
                 String loca = rs.getString("Location");
                 String type = rs.getString("Type");
-                LocalDateTime start = rs.getTimestamp("Start").toLocalDateTime();
-                LocalDateTime end = rs.getTimestamp("End").toLocalDateTime();
+                LocalDateTime start = TimeConversion.utcToLocal(rs.getTimestamp("Start"));
+                LocalDateTime end = TimeConversion.utcToLocal(rs.getTimestamp("End"));
                 int customerId = rs.getInt("Customer_ID");
                 int userId = rs.getInt("User_ID");
                 int contactId = rs.getInt("appointments.Contact_ID");
@@ -169,23 +167,10 @@ public class DBAppointments {
         return appointments;
     }
 
-    /**
-     * @param apptId
-     * @param title
-     * @param desc
-     * @param loca
-     * @param type
-     * @param start
-     * @param end
-     * @param customerId
-     * @param userId
-     * @param contactId
-     * @param contactName
-     * @throws SQLException
-     */
+
     public static void addAppointment(int apptId, String title, String desc, String loca, String type,
                                       LocalDateTime start, LocalDateTime end, int customerId, int userId,
-                                      int contactId, String contactName) throws SQLException {
+                                      int contactId) throws SQLException {
         String sql = "INSERT INTO appointments VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
         PreparedStatement ps = JDBC.connection.prepareStatement(sql);
         ps.setInt(1, apptId); // Appointment_ID
@@ -193,11 +178,11 @@ public class DBAppointments {
         ps.setString(3, desc); // Description
         ps.setString(4, loca); // Location
         ps.setString(5, type); // Type
-        ps.setTimestamp(6, Timestamp.valueOf(start)); // Start
-        ps.setTimestamp(7, Timestamp.valueOf(end)); // End
-        ps.setTimestamp(8, Timestamp.valueOf(LocalDateTime.now())); // Create_Date
+        ps.setTimestamp(6, TimeConversion.localToUTC(start)); // Start
+        ps.setTimestamp(7, TimeConversion.localToUTC(end)); // End
+        ps.setTimestamp(8, TimeConversion.localToUTC(LocalDateTime.now())); // Create_Date
         ps.setString(9, DBUsers.currentUserName); // Created_By
-        ps.setTimestamp(10, Timestamp.valueOf(LocalDateTime.now())); // Last_Update
+        ps.setTimestamp(10, TimeConversion.localToUTC(LocalDateTime.now())); // Last_Update
         ps.setString(11, DBUsers.currentUserName); // Last_Updated_By
         ps.setInt(12, customerId); // Customer_ID
         ps.setInt(13, userId); // User_ID
@@ -256,7 +241,7 @@ public class DBAppointments {
     }
 
     public static int getCountApptsByTypeAndMonth(String type, String month) {
-        String sql = "SELECT * FROM appointments WHERE Type = ? " +
+        String sql = "SELECT Appointment_ID FROM appointments WHERE Type = ? " +
                 "AND MONTHNAME(Start) = ?";
 
         int count = 0;
@@ -312,31 +297,4 @@ public class DBAppointments {
 
         return appointment;
     }
-
-    // public static Appointment getAppointmentDetails(int appointmentId) throws SQLException {
-    //     String sql = "SELECT * FROM appointments WHERE Appointment_ID = ?";
-    //     PreparedStatement ps = JDBC.connection.prepareStatement(sql);
-    //     ps.setInt(1, appointmentId);
-    //     ResultSet rs = ps.executeQuery();
-    //
-    //     Appointment apptDetails = null;
-    //
-    //     while (rs.next()) {
-    //         int apptId = rs.getInt("Appointment_ID");
-    //         String title = rs.getString("Title");
-    //         String desc = rs.getString("Description");
-    //         String loca = rs.getString("Location");
-    //         String type = rs.getString("Type");
-    //         LocalDateTime start = rs.getTimestamp("Start").toLocalDateTime();
-    //         LocalDateTime end = rs.getTimestamp("End").toLocalDateTime();
-    //         int customerId = rs.getInt("Customer_ID");
-    //         int userId = rs.getInt("User_ID");
-    //         int contactId = rs.getInt("Contact_ID");
-    //         String contactName = rs.getString("Contact_Name");
-    //
-    //         apptDetails = new Appointment(apptId, title, desc, loca, type, start, end, customerId, userId,
-    //                 contactId, contactName);
-    //     }
-    //     return apptDetails;
-    // }
 }

@@ -19,7 +19,7 @@ public class DBContacts {
 
 
         try {
-            String sql = "SELECT * FROM contacts";
+            String sql = "SELECT Contact_ID, Contact_Name, Email FROM contacts";
             PreparedStatement ps = JDBC.connection.prepareStatement(sql);
             ResultSet rs = ps.executeQuery(); // creates a result set, two-dimensional list
 

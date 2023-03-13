@@ -118,8 +118,7 @@ public class ModifyAppointment implements Initializable {
                 String type = typeTF.getText();
                 int custId = custIdCB.getValue();
                 int uId = userIdCB.getValue();
-                String[] contact = contactCB.getSelectionModel().getSelectedItem().split(": ");
-                int contId = Integer.valueOf(contact[0]);
+                int contId = Integer.valueOf(contactCB.getSelectionModel().getSelectedItem().substring(0, 1));
 
                 String[] startT = startTimeCB.getSelectionModel().getSelectedItem().split(":"); // split time between hour and minutes
                 String[] endT = endTimeCB.getSelectionModel().getSelectedItem().split(":"); // split time between hour and minutes

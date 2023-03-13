@@ -131,9 +131,7 @@ public class AddAppointment implements Initializable {
                 String type = typeTF.getText();
                 int custId = custIdCB.getValue();
                 int uId = userIdCB.getValue();
-                String[] contact = contactCB.getSelectionModel().getSelectedItem().split(": ");
-                int contId = Integer.valueOf(contact[0]);
-                String contName = contact[1];
+                int contId = Integer.valueOf(contactCB.getSelectionModel().getSelectedItem().substring(0, 1));
 
                 String[] startT = startTimeCB.getSelectionModel().getSelectedItem().split(":"); // split time between hour and minutes
                 String[] endT = endTimeCB.getSelectionModel().getSelectedItem().split(":"); // split time between hour and minutes
@@ -147,7 +145,7 @@ public class AddAppointment implements Initializable {
                 LocalDateTime end = LocalDateTime.of(endDate, endTime);
 
                 // add the appointment to the client_schedule database
-                DBAppointments.addAppointment(id, title, desc, loca, type, start, end, custId, uId, contId, contName);
+                DBAppointments.addAppointment(id, title, desc, loca, type, start, end, custId, uId, contId);
                 viewController.changeViewToMain(event); // redirect the user back to the main menu
             } else { // errors list is not empty
                 throw new Exception(); // redirect to the catch block below

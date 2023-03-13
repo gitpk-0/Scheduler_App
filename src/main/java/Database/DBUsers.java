@@ -50,7 +50,7 @@ public class DBUsers {
         ObservableList<Integer> users = FXCollections.observableArrayList();
 
         try {
-            String sql = "SELECT * FROM users";
+            String sql = "SELECT User_ID FROM users";
             PreparedStatement ps = JDBC.connection.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
 

@@ -20,7 +20,7 @@ public class DBCountries {
         ObservableList<Country> countries = FXCollections.observableArrayList();
 
         try {
-            String sql = "SELECT * FROM countries";
+            String sql = "SELECT Country_ID, Country FROM countries";
             PreparedStatement ps = JDBC.connection.prepareStatement(sql);
             ResultSet rs = ps.executeQuery(); // creates a result set, two-dimensional list
 
@@ -42,7 +42,7 @@ public class DBCountries {
         Country country = null;
 
         try {
-            String sql = "SELECT * FROM countries WHERE Country = ?";
+            String sql = "SELECT Country_ID, Country FROM countries WHERE Country = ?";
             PreparedStatement ps = JDBC.connection.prepareStatement(sql);
             ps.setString(1, countryName);
             ResultSet rs = ps.executeQuery(); // creates a result set, two-dimensional list

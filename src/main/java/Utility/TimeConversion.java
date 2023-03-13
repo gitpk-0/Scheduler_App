@@ -34,7 +34,7 @@ public class TimeConversion {
     }
 
     public static LocalDateTime utcToLocal(Timestamp utcTime) {
-        // coming out of the database to the user
+        // utc time received from database, convert to user local time
         LocalDateTime utc = utcTime.toLocalDateTime();
         ZoneId zoneId = ZoneId.systemDefault(); // users local zone id
         ZonedDateTime local = ZonedDateTime.of(utc, zoneId);
