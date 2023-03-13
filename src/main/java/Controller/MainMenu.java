@@ -102,6 +102,10 @@ public class MainMenu implements Initializable {
         sTime_tc.setSortType(TableColumn.SortType.ASCENDING); // sort the start times
         apptTableView.getSortOrder().add(sTime_tc);
         apptTableView.sort();
+
+        customerId_tc.setSortType(TableColumn.SortType.ASCENDING);
+        customerTableView.getSortOrder().add(customerId_tc);
+        customerTableView.sort();
     }
 
 

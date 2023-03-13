@@ -10,10 +10,6 @@ import java.time.*;
 
 public class TimeConversion {
 
-    // UTC - stored in database
-    // EST - appointment times
-    //
-
     public static LocalDateTime localToEST(LocalDateTime ldt) {
         // received from user, convert to est to verify time selection is within working hours
         // time selection files = add,modify appointments

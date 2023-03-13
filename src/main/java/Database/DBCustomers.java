@@ -3,6 +3,7 @@ package Database;
 import Model.Appointment;
 import Model.Customer;
 import Utility.JDBC;
+import Utility.TimeConversion;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -19,7 +20,6 @@ public class DBCustomers {
 
     public static ObservableList<Customer> getAllCustomers() {
         ObservableList<Customer> customers = FXCollections.observableArrayList();
-        ObservableList<Appointment> appointments = FXCollections.observableArrayList();
 
         try {
             String sql = "SELECT * FROM customers " +
@@ -27,7 +27,6 @@ public class DBCustomers {
                     "INNER JOIN countries ON countries.Country_ID = first_level_divisions.Country_ID ";
             PreparedStatement ps = JDBC.connection.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
-
 
             while (rs.next()) {
                 int customerId = rs.getInt("Customer_ID");
@@ -40,13 +39,11 @@ public class DBCustomers {
                 String division = rs.getString("Division");
 
                 Customer newCustomer = new Customer(customerId, name, address, postal, phone, divisionId, country, division);
-
                 customers.add(newCustomer);
             }
         } catch (SQLException e) {
             System.out.println("DBCustomers.getAllCustomers Error: " + e.getMessage());
         }
-
         return customers;
     }
 
@@ -67,9 +64,9 @@ public class DBCustomers {
         ps.setString(3, address); // Address
         ps.setString(4, postal); // Postal Code
         ps.setString(5, phone); // Phone
-        ps.setTimestamp(6, Timestamp.valueOf(LocalDateTime.now())); // Create_Date
+        ps.setTimestamp(6, TimeConversion.localToUTC(LocalDateTime.now())); // Create_Date
         ps.setString(7, DBUsers.currentUserName); // Created_By
-        ps.setTimestamp(8, Timestamp.valueOf(LocalDateTime.now())); // Last_Update
+        ps.setTimestamp(8, TimeConversion.localToUTC(LocalDateTime.now())); // Last_Update
         ps.setString(9, DBUsers.currentUserName); // Last_Updated_By
         ps.setInt(10, divisionId); // Division_ID
         ps.executeUpdate();
@@ -93,7 +90,7 @@ public class DBCustomers {
         ps.setString(2, address);
         ps.setString(3, postal);
         ps.setString(4, phone);
-        ps.setTimestamp(5, Timestamp.valueOf(LocalDateTime.now()));
+        ps.setTimestamp(5, TimeConversion.localToUTC(LocalDateTime.now()));
         ps.setString(6, DBUsers.currentUserName);
         ps.setInt(7, divisionId);
         ps.setInt(8, id);
@@ -128,7 +125,6 @@ public class DBCustomers {
         } catch (SQLException e) {
             System.out.println("DBCustomers.getCustomersByCountry Error: " + e.getMessage());
         }
-
         return customers;
     }
 }

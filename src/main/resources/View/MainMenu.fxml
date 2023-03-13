@@ -51,13 +51,13 @@
             <children>
                 <TableView fx:id="customerTableView" layoutX="13.0" layoutY="55.0" prefHeight="228.0" prefWidth="1151.0">
                     <columns>
-                        <TableColumn fx:id="customerId_tc" prefWidth="92.0" text="Customer ID" />
-                        <TableColumn fx:id="name_tc" prefWidth="160.0" text="Name" />
-                        <TableColumn fx:id="address_tc" prefWidth="193.0" text="Address" />
-                        <TableColumn fx:id="postal_tc" prefWidth="125.0" text="Postal Code" />
-                        <TableColumn fx:id="phone_tc" prefWidth="201.0" text="Phone Number" />
-                        <TableColumn fx:id="country_tc" prefWidth="135.0" text="Country" />
-                        <TableColumn fx:id="state_tc" minWidth="0.0" prefWidth="244.0" text="State/Province" />
+                        <TableColumn fx:id="customerId_tc" prefWidth="129.0" text="Customer ID" />
+                        <TableColumn fx:id="name_tc" prefWidth="164.0" text="Name" />
+                        <TableColumn fx:id="address_tc" prefWidth="218.0" text="Address" />
+                        <TableColumn fx:id="postal_tc" prefWidth="102.0" text="Postal Code" />
+                        <TableColumn fx:id="phone_tc" prefWidth="180.0" text="Phone Number" />
+                        <TableColumn fx:id="country_tc" prefWidth="152.0" text="Country" />
+                        <TableColumn fx:id="state_tc" minWidth="0.0" prefWidth="205.0" text="State/Province" />
                     </columns>
                 </TableView>
                 <Button layoutX="680.0" layoutY="298.0" mnemonicParsing="false" onAction="#toAddCustomerView" text="Add Customer" />

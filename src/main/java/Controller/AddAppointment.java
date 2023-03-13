@@ -54,6 +54,8 @@ public class AddAppointment implements Initializable {
      * Initialize method which initializes the AddAppointment controller class.
      * <p>
      * Each of the combo boxes is initialized based on the data received from the client_schedule database
+     * <p>
+     * The time combo boxes are initialized for open hours between 8am and 10pm
      *
      * @param url            The FXML location used to resolve relative paths for the root object, or null if the location is not known.
      * @param resourceBundle The resources used to localize the root object, or null if the root object was not localized.
@@ -77,7 +79,7 @@ public class AddAppointment implements Initializable {
 
         // Initialize start and end time combo box options
         ObservableList<String> times = FXCollections.observableArrayList();
-        int currentHour = 8;
+        int currentHour = 8; // starting hour
 
         while (currentHour < 22) {
             times.add(currentHour + ":00");

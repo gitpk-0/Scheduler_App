@@ -40,7 +40,11 @@ public class LoginTracker {
     public void log(String username, ZonedDateTime dateTime, boolean valid) throws IOException {
         String result = valid ? "SUCCESSFUL" : "FAILED"; // SUCCESSFUL if valid = true, FAILED if valid = false
         String date = dateTime.toLocalDate().toString(); // the date of the login attempt
-        String time = String.format(dateTime.getHour() + ":" + dateTime.getMinute(), timeFormat); // the hours and minutes of the login attempt
+        String minute = String.valueOf(dateTime.getMinute());
+        if (Integer.valueOf(minute) < 10) {
+            minute = "0" + dateTime.getMinute();
+        }
+        String time = String.format(dateTime.getHour() + ":" + minute, timeFormat); // the hours and minutes of the login attempt
 
         // write the following to the login_activity.txt file
         writer.write(result + " LOG IN on " + date + " at " + time + " by user: " + username + "\n");

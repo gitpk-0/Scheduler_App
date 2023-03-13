@@ -20,6 +20,30 @@ import java.util.Optional;
  */
 public class Alerts {
 
+    public static void onLogin() {
+        int user = DBUsers.currentUserId; // get the current user's id
+        Appointment apptNear = DBAppointments.hasAppointmentSoon(user); // appointment within next 15 minutes
+
+        if (Login.login) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION); // creation of Alert Object
+            alert.setTitle("Login Successful"); // set the title
+            alert.setHeaderText("Welcome"); // set the header text
+
+
+            if (apptNear != null) {
+                alert.setContentText("You have an appointment starting in " + apptNear.getMinutesToStart() +
+                        " minutes. Appointment " + apptNear.getApptId() +
+                        " scheduled for " + apptNear.getStartTime() +
+                        " " + apptNear.getStartDate());
+                Login.login = false; // set the Login.login variable to false to only show alert once (on login)
+            } else {
+                alert.setContentText("You do not have any appointments scheduled in the next 15 minutes");
+                Login.login = false; // set the Login.login variable to false to only show alert once (on login)
+            }
+            alert.showAndWait(); // display the alert and wait for a response from the user
+        }
+    }
+
     /**
      * Input Error method which alerts the user of an input error(s)
      *
@@ -98,47 +122,5 @@ public class Alerts {
         alert.setHeaderText("Please Select a Type and Month"); // set the header text
         alert.setContentText("A Type and a Month must be selected in order to calculate the total.");
         alert.showAndWait(); // display the alert and wait for a response from the user
-    }
-
-    public void appointmentSoon(int apptId, String date, String time) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION); // creation of Alert Object
-        alert.setTitle("Login Successful"); // set the title
-        alert.setHeaderText("Upcoming Appointment"); // set the header text
-        alert.setContentText("You have an appointment starting soon. " +
-                "Appointment " + apptId + " scheduled for " + time + " " + date);
-        alert.showAndWait(); // display the alert and wait for a response from the user
-    }
-
-    public static void onLogin() {
-        int user = DBUsers.currentUserId;
-        Appointment apptNear = DBAppointments.hasAppointmentSoon(user);
-
-        if (Login.login) {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION); // creation of Alert Object
-            alert.setTitle("Login Successful"); // set the title
-            alert.setHeaderText("Welcome"); // set the header text
-
-
-            if (apptNear != null) {
-                alert.setContentText("You have an appointment starting in " + apptNear.getMinutesToStart() +
-                        " minutes. Appointment " + apptNear.getApptId() +
-                        " scheduled for " + apptNear.getStartTime() +
-                        " " + apptNear.getStartDate());
-                Login.login = false;
-            } else {
-                alert.setContentText("You do no have any appointments scheduled in the next 15 minutes");
-                Login.login = false;
-            }
-            alert.showAndWait(); // display the alert and wait for a response from the user
-        }
-    }
-
-    public void noAppointmentSoon() {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION); // creation of Alert Object
-        alert.setTitle("Login Successful"); // set the title
-        alert.setHeaderText("Welcome"); // set the header text
-        alert.setContentText("You do no have any appointments scheduled in the next 15 minutes");
-        // alert.showAndWait(); // display the alert and wait for a response from the user
-        alert.show();
     }
 }

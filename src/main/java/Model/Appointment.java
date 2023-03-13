@@ -273,7 +273,17 @@ public class Appointment {
         this.contactName = contactName;
     }
 
+    /**
+     * @return the number of minutes until the appointments start time
+     */
     public int getMinutesToStart() {
-        return start.getMinute() - LocalDateTime.now().getMinute();
+        int startMinute = start.getMinute();
+        int currentMinute = LocalDateTime.now().getMinute();
+
+        if (startMinute == 0) {
+            startMinute = 60;
+        }
+
+        return startMinute - currentMinute;
     }
 }
