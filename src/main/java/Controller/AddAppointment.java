@@ -112,7 +112,7 @@ public class AddAppointment implements Initializable {
         try {
             if (errors.isEmpty()) { // no null value errors
                 // date and time checks
-                errors = validator.dateChecks(startDP, startTimeCB, endDP, endTimeCB);
+                errors = validator.dateTimeChecks(startDP, startTimeCB, endDP, endTimeCB);
                 if (errors.isEmpty()) { // no date/time value errors
                     // date and time overlaps checks
                     if (validator.apptOverlapExists(null, custIdCB, startDP, startTimeCB, endDP, endTimeCB)) {

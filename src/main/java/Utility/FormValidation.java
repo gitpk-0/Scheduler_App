@@ -12,12 +12,12 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 
 import java.sql.SQLException;
+import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Locale;
 
 /**
  * Form Validation class to validate data input by the user
@@ -49,7 +49,7 @@ public class FormValidation {
         inputErrors.add("No End Date selected"); // 10 - End Date Error
         inputErrors.add("Improper Start Date format"); // 11 - Start Date Format Error
         inputErrors.add("Improper End Date format"); // 12 - End Date Format Error
-        inputErrors.add("Start Date must be before End Date"); // 13 - Date Selection Error
+        inputErrors.add("Start and End Dates must be the same"); // 13 - Date Selection Error
         inputErrors.add("Start Time must be before End Time"); // 14 - Time Selection Error
         inputErrors.add("This customer already has an appointment scheduled during the " +
                 "selected times."); // 15 - Time Selection Error
@@ -59,6 +59,9 @@ public class FormValidation {
         inputErrors.add("No data in Postal Code field"); // 19 - Postal Code Error
         inputErrors.add("No Country selected"); // 20 - Country Error
         inputErrors.add("No Division selected"); // 21 - Division Error
+        inputErrors.add("Start time selection must be between the hours of 8AM and 10PM EST"); // 22 - Start Time Error
+        inputErrors.add("End time selection must be between the hours of 8AM and 10PM EST"); // 23 - End Time Error
+        // inputErrors.add(""); // 24 -
     }
 
 
@@ -127,8 +130,8 @@ public class FormValidation {
     }
 
 
-    public ArrayList<String> dateChecks(DatePicker startDatePick, ComboBox<String> startTimeCombo,
-                                        DatePicker endDatePick, ComboBox<String> endTimeCombo) {
+    public ArrayList<String> dateTimeChecks(DatePicker startDatePick, ComboBox<String> startTimeCombo,
+                                            DatePicker endDatePick, ComboBox<String> endTimeCombo) {
 
         // validate Start Date picker format
         try {
@@ -144,11 +147,12 @@ public class FormValidation {
             outputErrorMessages.add(inputErrors.get(12));
         }
 
-        // validate Start Date before End Date
+        // validate Start Date and End Date selections
         try {
             LocalDate startDate = startDatePick.getValue();
             LocalDate endDate = endDatePick.getValue();
-            if (startDate.isAfter(endDate)) {
+
+            if (!startDate.equals(endDate)) {
                 outputErrorMessages.add(inputErrors.get(13));
             }
         } catch (Exception ignore) {
@@ -169,6 +173,21 @@ public class FormValidation {
         // validate Start Date Time before End Date Time
         if (startDateTime.isAfter(endDateTime) || startDateTime.equals(endDateTime)) {
             outputErrorMessages.add(inputErrors.get(14));
+        }
+
+        // convert local times to EST
+        int startHourEST = TimeConversion.localToEST(startDateTime).getHour();
+        int endHourEST = TimeConversion.localToEST(endDateTime).getHour();
+        int endMinEST = TimeConversion.localToEST(endDateTime).getMinute();
+
+        // validate start time
+        if (startHourEST < 8 || startHourEST > 22) {
+            outputErrorMessages.add(inputErrors.get(22));
+        }
+
+        // validate end time
+        if (endHourEST < 8 || endHourEST > 22 || (endHourEST == 22 && endMinEST > 0)) {
+            outputErrorMessages.add(inputErrors.get(23));
         }
 
         return outputErrorMessages;

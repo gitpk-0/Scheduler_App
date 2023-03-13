@@ -8,7 +8,7 @@ Create a README.txt file that includes the following information:
 •  a description of the additional report of your choice you ran in part A3f
 •  the MySQL Connector driver version number, including the update number (e.g., mysql-connector-java-8.1.23)
 
-
+---------------------------------------------------
 • Title: Appointment Scheduler
 • Author: Patrick Kell
 • Contact: pkell@wgu.edu
