@@ -4,6 +4,11 @@ package Utility;
  * @author Patrick Kell
  */
 
+import Controller.Login;
+import Database.DBAppointments;
+import Database.DBUsers;
+import Model.Appointment;
+import com.mysql.cj.log.Log;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 
@@ -104,11 +109,33 @@ public class Alerts {
         alert.showAndWait(); // display the alert and wait for a response from the user
     }
 
+    public static void onLogin() {
+        int user = DBUsers.currentUserId;
+        Appointment apptNear = DBAppointments.hasAppointmentSoon(user);
+
+        if (Login.login) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION); // creation of Alert Object
+            alert.setTitle("Login Successful"); // set the title
+            alert.setHeaderText("Welcome"); // set the header text
+
+            if (apptNear != null) {
+                alert.setContentText("You have an appointment starting soon. Appointment " + apptNear.getApptId() +
+                        " scheduled for " + apptNear.getStartTime() + " " + apptNear.getStartDate());
+                Login.login = false;
+            } else {
+                alert.setContentText("You do no have any appointments scheduled in the next 15 minutes");
+                Login.login = false;
+            }
+            alert.showAndWait(); // display the alert and wait for a response from the user
+        }
+    }
+
     public void noAppointmentSoon() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION); // creation of Alert Object
         alert.setTitle("Login Successful"); // set the title
         alert.setHeaderText("Welcome"); // set the header text
         alert.setContentText("You do no have any appointments scheduled in the next 15 minutes");
-        alert.showAndWait(); // display the alert and wait for a response from the user
+        // alert.showAndWait(); // display the alert and wait for a response from the user
+        alert.show();
     }
 }

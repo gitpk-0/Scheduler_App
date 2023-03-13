@@ -1,6 +1,7 @@
 package Controller;
 
 import Database.DBUsers;
+import Utility.Alerts;
 import Utility.ChangeView;
 import Utility.LoginTracker;
 import javafx.application.Platform;
@@ -11,6 +12,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
@@ -53,9 +55,10 @@ public class Login implements Initializable {
         ZonedDateTime dateTime = ZonedDateTime.now(ZoneId.systemDefault());
 
         if (DBUsers.login(username, password) && !username.isEmpty() && !password.isEmpty()) {
-            // valid username & password entered
-            loginTracker.log(username, dateTime, true);
             viewHandler.changeViewToMain(event);
+            loginTracker.log(username, dateTime, true);
+            // valid username & password entered
+            Alerts.onLogin();
         } else { // invalid username or password entered
             loginTracker.log(username, dateTime, false);
             usernameTF.clear();

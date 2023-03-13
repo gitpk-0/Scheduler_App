@@ -13,10 +13,12 @@ import Utility.Alerts;
 import Utility.ChangeView;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.AnchorPane;
 
 import java.io.IOException;
 import java.net.URL;
@@ -29,9 +31,9 @@ import java.util.ResourceBundle;
  */
 public class MainMenu implements Initializable {
 
+
     private ChangeView viewController = new ChangeView(); // manages the changing of views
     private Alerts alerts = new Alerts(); // manages the alerts to the user
-    private boolean login = true;
 
     public TableView<Appointment> apptTableView;
     public TableColumn<Appointment, Integer> apptId_tc;
@@ -97,20 +99,7 @@ public class MainMenu implements Initializable {
         country_tc.setCellValueFactory(new PropertyValueFactory<>("country"));
         state_tc.setCellValueFactory(new PropertyValueFactory<>("division"));
 
-        if (Login.login) loginAlert();
-    }
 
-    public void loginAlert() {
-        int user = DBUsers.currentUserId;
-        Appointment apptNear = DBAppointments.hasAppointmentSoon(user);
-
-        if (apptNear != null) {
-            Login.login = false;
-            alerts.appointmentSoon(apptNear.getApptId(), apptNear.getStartDate(), apptNear.getStartTime());
-        } else {
-            Login.login = false;
-            alerts.noAppointmentSoon();
-        }
     }
 
 
@@ -262,5 +251,4 @@ public class MainMenu implements Initializable {
     public void onActionExit(ActionEvent event) {
         System.exit(0); // close the application
     }
-
 }

@@ -4,12 +4,15 @@ package Utility;
  * @author Patrick Kell
  */
 
+import Controller.Login;
+import Controller.MainMenu;
 import Controller.ModifyAppointment;
 import Controller.ModifyCustomer;
 import Database.DBAppointments;
 import Database.DBUsers;
 import Model.Appointment;
 import Model.Customer;
+import com.mysql.cj.log.Log;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -26,7 +29,6 @@ import java.sql.SQLException;
  */
 public class ChangeView {
 
-
     Stage stage;
     Parent scene;
 
@@ -39,8 +41,9 @@ public class ChangeView {
     public void changeViewToMain(ActionEvent event) throws IOException {
         // casting the event source to a Button type, then to a Stage type, and assigning it to the stage object
         stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
+        if (Login.login) stage.close(); // closes the login window to allow the login alert to show up on main menu screen
         scene = FXMLLoader.load(getClass().getResource("/View/MainMenu.fxml"));
-        stage.setScene(new Scene(scene));
+        stage.setScene(new Scene(scene, 1234, 841));
         stage.setTitle("Appointment Scheduling System");
         stage.centerOnScreen(); // center the stage to the users screen
         stage.show();
