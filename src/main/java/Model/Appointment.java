@@ -273,4 +273,7 @@ public class Appointment {
         this.contactName = contactName;
     }
 
+    public int getMinutesToStart() {
+        return start.getMinute() - LocalDateTime.now().getMinute();
+    }
 }

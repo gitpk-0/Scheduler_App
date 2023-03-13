@@ -17,11 +17,11 @@
                     <columns>
                         <TableColumn fx:id="apptId_tc" prefWidth="63.0" text="Appt ID" />
                         <TableColumn fx:id="title_tc" prefWidth="93.0" text="Title" />
-                        <TableColumn fx:id="desc_tc" prefWidth="149.0" text="Description" />
-                        <TableColumn fx:id="loc_tc" prefWidth="135.0" text="Location" />
-                        <TableColumn fx:id="contactName_tc" prefWidth="116.0" text="Contact" />
-                        <TableColumn fx:id="type_tc" prefWidth="119.0" text="Type" />
-                        <TableColumn fx:id="sTime_tc" prefWidth="88.0" text="Start Time" />
+                        <TableColumn fx:id="desc_tc" prefWidth="139.0" text="Description" />
+                        <TableColumn fx:id="loc_tc" prefWidth="134.0" text="Location" />
+                        <TableColumn fx:id="contactName_tc" prefWidth="108.0" text="Contact" />
+                        <TableColumn fx:id="type_tc" prefWidth="125.0" text="Type" />
+                        <TableColumn fx:id="sTime_tc" prefWidth="101.0" text="Start Time" />
                         <TableColumn fx:id="eTime_tc" prefWidth="76.0" text="End Time" />
                         <TableColumn fx:id="sDate_tc" prefWidth="81.0" text="Start Date" />
                         <TableColumn fx:id="eDate_tc" prefWidth="76.0" text="End Date" />
@@ -65,8 +65,8 @@
                         <Font name="Cantarell Extra Bold" size="20.0" />
                     </font>
                 </Label>
-                <ComboBox fx:id="monthCB" layoutX="438.0" layoutY="63.0" minWidth="150.0" prefWidth="150.0" promptText="Select a Month" />
-                <ComboBox fx:id="typeCB" layoutX="159.0" layoutY="63.0" prefHeight="26.0" prefWidth="239.0" promptText="Select an Appointment Type" />
+                <ComboBox fx:id="monthCB" layoutX="438.0" layoutY="63.0" minWidth="150.0" onAction="#selectMonth" prefWidth="150.0" promptText="Select a Month" />
+                <ComboBox fx:id="typeCB" layoutX="159.0" layoutY="63.0" onAction="#selectAppt" prefHeight="26.0" prefWidth="239.0" promptText="Select an Appointment Type" />
                 <Label fx:id="totalLbl" layoutX="860.0" layoutY="60.0">
                     <font>
                         <Font name="Cantarell Extra Bold" size="24.0" />

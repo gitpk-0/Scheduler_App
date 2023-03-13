@@ -241,25 +241,23 @@ public class DBAppointments {
     }
 
     public static int getCountApptsByTypeAndMonth(String type, String month) {
-        String sql = "SELECT Appointment_ID FROM appointments WHERE Type = ? " +
+        String sql = "SELECT COUNT(Appointment_ID) as total FROM appointments WHERE Type = ? " +
                 "AND MONTHNAME(Start) = ?";
 
-        int count = 0;
         try {
             PreparedStatement ps = JDBC.connection.prepareStatement(sql);
             ps.setString(1, type);
             ps.setString(2, month);
             ResultSet rs = ps.executeQuery();
 
-            while (rs.next()) {
-                count++;
-            }
+            rs.next();
+            return rs.getInt("total");
 
         } catch (SQLException e) {
             System.out.println("DBAppointments.getCountApptsByTypeAndMonth Error: " + e.getMessage());
         }
 
-        return count;
+        return 0;
     }
 
     public static Appointment hasAppointmentSoon(int user) {
@@ -281,8 +279,8 @@ public class DBAppointments {
                 String desc = rs.getString("Description");
                 String loca = rs.getString("Location");
                 String type = rs.getString("Type");
-                LocalDateTime start = rs.getTimestamp("Start").toLocalDateTime();
-                LocalDateTime end = rs.getTimestamp("End").toLocalDateTime();
+                LocalDateTime start = TimeConversion.utcToLocal(rs.getTimestamp("Start"));
+                LocalDateTime end = TimeConversion.utcToLocal(rs.getTimestamp("End"));
                 int customerId = rs.getInt("Customer_ID");
                 int userId = rs.getInt("User_ID");
                 int contactId = rs.getInt("Contact_ID");

@@ -118,9 +118,12 @@ public class Alerts {
             alert.setTitle("Login Successful"); // set the title
             alert.setHeaderText("Welcome"); // set the header text
 
+
             if (apptNear != null) {
-                alert.setContentText("You have an appointment starting soon. Appointment " + apptNear.getApptId() +
-                        " scheduled for " + apptNear.getStartTime() + " " + apptNear.getStartDate());
+                alert.setContentText("You have an appointment starting in " + apptNear.getMinutesToStart() +
+                        " minutes. Appointment " + apptNear.getApptId() +
+                        " scheduled for " + apptNear.getStartTime() +
+                        " " + apptNear.getStartDate());
                 Login.login = false;
             } else {
                 alert.setContentText("You do no have any appointments scheduled in the next 15 minutes");

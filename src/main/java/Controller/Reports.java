@@ -142,4 +142,12 @@ public class Reports implements Initializable {
             alerts.nullSelectionReports();
         }
     }
+
+    public void selectAppt(ActionEvent actionEvent) {
+        totalLbl.setText("");
+    }
+
+    public void selectMonth(ActionEvent actionEvent) {
+        totalLbl.setText("");
+    }
 }

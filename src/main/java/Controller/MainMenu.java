@@ -99,7 +99,9 @@ public class MainMenu implements Initializable {
         country_tc.setCellValueFactory(new PropertyValueFactory<>("country"));
         state_tc.setCellValueFactory(new PropertyValueFactory<>("division"));
 
-
+        sTime_tc.setSortType(TableColumn.SortType.ASCENDING); // sort the start times
+        apptTableView.getSortOrder().add(sTime_tc);
+        apptTableView.sort();
     }
 
 

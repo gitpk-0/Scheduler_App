@@ -18,11 +18,11 @@
                     <columns>
                         <TableColumn fx:id="apptId_tc" prefWidth="63.0" text="Appt ID" />
                         <TableColumn fx:id="title_tc" prefWidth="107.0" text="Title" />
-                        <TableColumn fx:id="desc_tc" prefWidth="181.0" text="Description" />
-                        <TableColumn fx:id="loc_tc" prefWidth="112.0" text="Location" />
-                        <TableColumn fx:id="contactName_tc" prefWidth="104.0" text="Contact" />
-                        <TableColumn fx:id="type_tc" prefWidth="120.0" text="Type" />
-                        <TableColumn fx:id="sTime_tc" prefWidth="75.0" text="Start Time" />
+                        <TableColumn fx:id="desc_tc" prefWidth="149.0" text="Description" />
+                        <TableColumn fx:id="loc_tc" prefWidth="115.0" text="Location" />
+                        <TableColumn fx:id="contactName_tc" prefWidth="115.0" text="Contact" />
+                        <TableColumn fx:id="type_tc" prefWidth="112.0" text="Type" />
+                        <TableColumn fx:id="sTime_tc" prefWidth="101.0" text="Start Time" />
                         <TableColumn fx:id="eTime_tc" prefWidth="75.0" text="End Time" />
                         <TableColumn fx:id="sDate_tc" prefWidth="85.0" text="Start Date" />
                         <TableColumn fx:id="eDate_tc" prefWidth="85.0" text="End Date" />
