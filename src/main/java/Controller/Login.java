@@ -33,7 +33,8 @@ public class Login implements Initializable {
     private ChangeView viewController = new ChangeView(); // manages the changing of views
     private LoginTracker loginTracker = new LoginTracker(); // manages the tracking of login data
 
-    ZoneId zone = ZoneId.systemDefault();
+    ZoneId zone = ZoneId.of("Asia/Tokyo");
+    // ZoneId zone = ZoneId.systemDefault();
     ResourceBundle rb = ResourceBundle.getBundle("Nat", Locale.getDefault());
 
     public static boolean login = true;

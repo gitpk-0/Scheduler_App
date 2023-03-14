@@ -12,30 +12,29 @@ public class TimeConversion {
 
     public static LocalDateTime localToEST(LocalDateTime ldt) {
         // received from user, convert to est to verify time selection is within working hours
-        // time selection files = add,modify appointments
-        ZoneId zoneId = ZoneId.systemDefault(); // users local zone id
-        ZonedDateTime zdt = ZonedDateTime.of(ldt, zoneId); // ZonedDateTime of users local zone
-        ZonedDateTime est = zdt.withZoneSameInstant(ZoneId.of("America/New_York")); // ZonedDateTime of local zone converted to ETC
+
+        // Convert user's LocalDateTime to ZonedDateTime
+        ZonedDateTime localZdt = ZonedDateTime.of(ldt, ZoneId.systemDefault());
+        // Converts localZdt to UTC (toInstant), then converts UTC to EST (ofInstant)
+        ZonedDateTime est = ZonedDateTime.ofInstant(localZdt.toInstant(), ZoneId.of("America/New_York")); // ZonedDateTime of local zone converted to ETC
 
         return est.toLocalDateTime();
     }
 
     public static Timestamp localToUTC(LocalDateTime ldt) {
-        // received from the user, convert to utc for database entry
-        ZoneId zoneId = ZoneId.systemDefault(); // users local zone id
-        ZonedDateTime zdt = ZonedDateTime.of(ldt, zoneId); // ZonedDateTime of users local zone
-        ZonedDateTime utc = zdt.withZoneSameInstant(ZoneId.of("UTC")); // ZonedDateTime of local zone converted to UTC
+        ZonedDateTime zdt = ZonedDateTime.of(ldt, ZoneId.systemDefault()); // ZonedDateTime of users local zone
+        ZonedDateTime utc = ZonedDateTime.ofInstant(zdt.toInstant(), ZoneId.of("UTC"));
 
         return Timestamp.valueOf(utc.toLocalDateTime());
     }
 
     public static LocalDateTime utcToLocal(Timestamp utcTime) {
-        // utc time received from database, convert to user local time
-        LocalDateTime utc = utcTime.toLocalDateTime();
-        ZoneId zoneId = ZoneId.systemDefault(); // users local zone id
-        ZonedDateTime local = ZonedDateTime.of(utc, zoneId);
+        // Convert the UTC time received from the database into the user's local time
+        LocalDateTime utcT = utcTime.toLocalDateTime(); // UTC local date time
+        ZonedDateTime utcZdt = ZonedDateTime.of(utcT, ZoneId.of("UTC")); // UTC zoned date time
+        ZonedDateTime localZdt = ZonedDateTime.ofInstant(utcZdt.toInstant(), ZoneId.systemDefault());
 
-        return local.toLocalDateTime();
+        return localZdt.toLocalDateTime();
     }
 
 

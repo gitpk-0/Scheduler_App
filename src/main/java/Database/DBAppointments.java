@@ -20,6 +20,28 @@ import java.util.ArrayList;
  */
 public class DBAppointments {
 
+    public static void addAppointment(int apptId, String title, String desc, String loca, String type,
+                                      LocalDateTime start, LocalDateTime end, int customerId, int userId,
+                                      int contactId) throws SQLException {
+        String sql = "INSERT INTO appointments VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+        ps.setInt(1, apptId); // Appointment_ID
+        ps.setString(2, title); // Title
+        ps.setString(3, desc); // Description
+        ps.setString(4, loca); // Location
+        ps.setString(5, type); // Type
+        ps.setTimestamp(6, TimeConversion.localToUTC(start)); // Start
+        ps.setTimestamp(7, TimeConversion.localToUTC(end)); // End
+        ps.setTimestamp(8, TimeConversion.localToUTC(LocalDateTime.now())); // Create_Date
+        ps.setString(9, DBUsers.currentUserName); // Created_By
+        ps.setTimestamp(10, TimeConversion.localToUTC(LocalDateTime.now())); // Last_Update
+        ps.setString(11, DBUsers.currentUserName); // Last_Updated_By
+        ps.setInt(12, customerId); // Customer_ID
+        ps.setInt(13, userId); // User_ID
+        ps.setInt(14, contactId); // Contact_ID
+        ps.executeUpdate();
+    }
+
     /**
      * @param filter
      * @return
@@ -165,29 +187,6 @@ public class DBAppointments {
         }
 
         return appointments;
-    }
-
-
-    public static void addAppointment(int apptId, String title, String desc, String loca, String type,
-                                      LocalDateTime start, LocalDateTime end, int customerId, int userId,
-                                      int contactId) throws SQLException {
-        String sql = "INSERT INTO appointments VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
-        ps.setInt(1, apptId); // Appointment_ID
-        ps.setString(2, title); // Title
-        ps.setString(3, desc); // Description
-        ps.setString(4, loca); // Location
-        ps.setString(5, type); // Type
-        ps.setTimestamp(6, TimeConversion.localToUTC(start)); // Start
-        ps.setTimestamp(7, TimeConversion.localToUTC(end)); // End
-        ps.setTimestamp(8, TimeConversion.localToUTC(LocalDateTime.now())); // Create_Date
-        ps.setString(9, DBUsers.currentUserName); // Created_By
-        ps.setTimestamp(10, TimeConversion.localToUTC(LocalDateTime.now())); // Last_Update
-        ps.setString(11, DBUsers.currentUserName); // Last_Updated_By
-        ps.setInt(12, customerId); // Customer_ID
-        ps.setInt(13, userId); // User_ID
-        ps.setInt(14, contactId); // Contact_ID
-        ps.executeUpdate();
     }
 
     public static void updateAppointment(int id, String title, String desc, String loca, String type,
