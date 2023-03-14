@@ -16,9 +16,9 @@ public class FLDivision {
     /**
      * Creates a new first-level division object with the provided arguments
      *
-     * @param divisionId The division id of the first-level division
-     * @param divisionName       The name of the first-level division
-     * @param countryId  The country id of the first-level division
+     * @param divisionId   The division id of the first-level division
+     * @param divisionName The name of the first-level division
+     * @param countryId    The country id of the first-level division
      */
     public FLDivision(int divisionId, String divisionName, int countryId) {
         this.divisionId = divisionId;
@@ -75,5 +75,4 @@ public class FLDivision {
     public String toString() {
         return this.divisionId + " " + this.divisionName;
     }
-
 }

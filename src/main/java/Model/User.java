@@ -16,7 +16,7 @@ public class User {
     /**
      * Creates a new user object with the provided arguments
      *
-     * @param userId       The id of the user
+     * @param userId   The id of the user
      * @param username The username of the user
      * @param password The password of the user
      */
