@@ -375,7 +375,8 @@ public class DBAppointments {
                 LocalDateTime now = LocalDateTime.now(); // current time
                 LocalDateTime plus15 = now.plusMinutes(15); // current time plus 15 minutes
 
-                if ((apptStart.isBefore(plus15) || apptStart.isEqual(plus15) && apptStart.isAfter(now))) {
+                if ((apptStart.isBefore(plus15) || apptStart.isEqual(plus15)) && apptStart.isAfter(now)) {
+                    System.out.println("made it here");
                     appointment = appt;
                     break;
                 }
