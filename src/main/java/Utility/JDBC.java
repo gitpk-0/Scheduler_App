@@ -1,10 +1,14 @@
 package Utility;
 
+/**
+ * @author Patrick Kell
+ */
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 
 /**
- * @author Patrick Kell
+ * JDBC utility class which manages the connection to the database
  */
 public abstract class JDBC {
 
@@ -19,7 +23,9 @@ public abstract class JDBC {
     public static Connection connection;  // Connection Interface
 
 
-
+    /**
+     * OpenConnection method which opens the connection to the MySQL database
+     */
     public static void openConnection() {
         try {
             Class.forName(driver); // Locate Driver
@@ -31,6 +37,9 @@ public abstract class JDBC {
         }
     }
 
+    /**
+     * Close Connection method which closes the connection to the MySQL database
+     */
     public static void closeConnection() {
         try {
             connection.close();
@@ -39,6 +48,4 @@ public abstract class JDBC {
             System.out.println("JDBC closeConnection Error:" + e.getMessage());
         }
     }
-
-
 }

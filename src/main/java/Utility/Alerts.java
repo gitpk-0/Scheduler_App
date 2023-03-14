@@ -8,7 +8,6 @@ import Controller.Login;
 import Database.DBAppointments;
 import Database.DBUsers;
 import Model.Appointment;
-import com.mysql.cj.log.Log;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 
@@ -16,10 +15,13 @@ import java.util.ArrayList;
 import java.util.Optional;
 
 /**
- * Alert class which manages the alert messages to the user
+ * Alert utility class which manages the alert messages to the user
  */
 public class Alerts {
 
+    /**
+     * OnLogin method which manages the alert upon a successful user login
+     */
     public static void onLogin() {
         int user = DBUsers.currentUserId; // get the current user's id
         Appointment apptNear = DBAppointments.hasAppointmentSoon(user); // appointment within next 15 minutes
@@ -29,14 +31,13 @@ public class Alerts {
             alert.setTitle("Login Successful"); // set the title
             alert.setHeaderText("Welcome"); // set the header text
 
-
-            if (apptNear != null) {
+            if (apptNear != null) { // appointment is starting soon
                 alert.setContentText("You have an appointment starting in " + apptNear.getMinutesToStart() +
                         " minute(s). Appointment " + apptNear.getApptId() +
                         " scheduled for " + apptNear.getStartTime() +
                         " " + apptNear.getStartDate());
                 Login.login = false; // set the Login.login variable to false to only show alert once (on login)
-            } else {
+            } else { // no appointment starting soon
                 alert.setContentText("You do not have any appointments scheduled in the next 15 minutes");
                 Login.login = false; // set the Login.login variable to false to only show alert once (on login)
             }
@@ -46,6 +47,9 @@ public class Alerts {
 
     /**
      * Input Error method which alerts the user of an input error(s)
+     * <p>
+     * This method features a lambda expression used to append error messages and new lines to the errorMessage
+     * StringBuilder object. This greatly simplifies the code readability.
      *
      * @param errors A list of errors that have occurred
      */
@@ -66,8 +70,8 @@ public class Alerts {
     /**
      * Confirm delete method which asks the user to confirm the deletion
      *
-     * @param type An Appointment or Customer
-     * @return Whether the OK was pressed or not
+     * @param type The object type to be deleted (Appointment or Customer)
+     * @return A boolean value indicating that the OK button was pressed
      */
     public boolean confirmDelete(String type) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION); // creation of Alert Object
@@ -102,7 +106,7 @@ public class Alerts {
     /**
      * Null Selection method which alerts the user of a null selection error
      *
-     * @param type
+     * @param type   Type of object that needs to be selected (Appointment or Customer)
      * @param action Delete or Modify
      */
     public void nullSelection(String type, String action) {
@@ -124,6 +128,13 @@ public class Alerts {
         alert.showAndWait(); // display the alert and wait for a response from the user
     }
 
+    /**
+     * InformOfDeletion method which informs the user that a deletion has been made
+     *
+     * @param id     ID of the deleted object (Appointment or Customer)
+     * @param object String value of the deleted object type
+     * @param type   Type of the deleted appointment (null if Customer)
+     */
     public void informOfDeletion(int id, String object, String type) {
         Alert alert = new Alert(Alert.AlertType.ERROR); // creation of Alert Object
         alert.setTitle(object + " Deleted"); // set the title

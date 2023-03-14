@@ -5,14 +5,10 @@ package Utility;
  */
 
 import Controller.Login;
-import Controller.MainMenu;
 import Controller.ModifyAppointment;
 import Controller.ModifyCustomer;
-import Database.DBAppointments;
-import Database.DBUsers;
 import Model.Appointment;
 import Model.Customer;
-import com.mysql.cj.log.Log;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -25,7 +21,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 /**
- * Utility class which manages the changing of views between screens
+ * ChangeView utility class which manages the changing of views between screens
  */
 public class ChangeView {
 

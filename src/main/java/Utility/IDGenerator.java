@@ -10,12 +10,16 @@ import Database.DBCustomers;
 import java.util.List;
 
 /**
- * IdGenerator class which manages the creation of unique IDs for Appointments
+ * IdGenerator utility class which manages the creation of unique IDs for Appointments
  */
 public class IDGenerator {
 
     /**
      * IdGenerator class for Appointments
+     * <p>
+     * This method utilizes a lambda expression which promotes better code readability and reduces the amount of
+     * code required. With the lambda expression utilizing only one line of code, the functionality can be
+     * easily understood.
      *
      * @return A unique ID for the Appointment
      */
@@ -30,6 +34,10 @@ public class IDGenerator {
 
     /**
      * IdGenerator class for Customers
+     * <p>
+     * This method utilizes a lambda expression which promotes better code readability and reduces the amount of
+     * code required. With the lambda expression utilizing only one line of code, the functionality can be
+     * easily understood.
      *
      * @return A unique ID for the Customer
      */
@@ -43,7 +51,7 @@ public class IDGenerator {
     }
 
     /**
-     * uniqueIdGenerator class which contains the logic of creating a unique id
+     * UniqueIdGenerator class which contains the logic of creating a unique id
      *
      * @param existingIds A list of existing ids
      * @return A unique ID
@@ -56,4 +64,3 @@ public class IDGenerator {
         return uniqueID; // return the uniqueID of the customer
     }
 }
-

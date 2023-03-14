@@ -12,7 +12,6 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 
 import java.sql.SQLException;
-import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -20,7 +19,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 /**
- * Form Validation class to validate data input by the user
+ * Form Validation utility class to validate data input by the user
  */
 public class FormValidation {
 
@@ -65,11 +64,27 @@ public class FormValidation {
     }
 
 
-    public ArrayList<String> nullValueCheck(TextField titleTF, TextField descTF, TextField locationTF,
-                                            DatePicker startDatePick, ComboBox<String> startTimeCombo, TextField typeTF,
-                                            ComboBox<Integer> custIdCombo, ComboBox<Integer> userIdCombo,
-                                            ComboBox<String> contactCombo, DatePicker endDatePick,
-                                            ComboBox<String> endTimeCombo) {
+    /**
+     * NullValueCheckAppt method which checks for null values when an appointment is created or modified
+     *
+     * @param titleTF        The title text field from the add or modify appointment screen
+     * @param descTF         The description text field from the add or modify appointment screen
+     * @param locationTF     The location text field from the add or modify appointment screen
+     * @param startDatePick  The start date picker from the add or modify appointment screen
+     * @param startTimeCombo The start time combo box from the add or modify appointment screen
+     * @param typeTF         The type text field from the add or modify appointment screen
+     * @param custIdCombo    The customer id combo box from the add or modify appointment screen
+     * @param userIdCombo    The user id combo box from the add or modify appointment screen
+     * @param contactCombo   The contact combo box from the add or modify appointment screen
+     * @param endDatePick    The end date picker from the add or modify appointment screen
+     * @param endTimeCombo   The end time combo box from the add or modify appointment screen
+     * @return A list of errors the user needs to rectify
+     */
+    public ArrayList<String> nullValueCheckAppt(TextField titleTF, TextField descTF, TextField locationTF,
+                                                DatePicker startDatePick, ComboBox<String> startTimeCombo, TextField typeTF,
+                                                ComboBox<Integer> custIdCombo, ComboBox<Integer> userIdCombo,
+                                                ComboBox<String> contactCombo, DatePicker endDatePick,
+                                                ComboBox<String> endTimeCombo) {
 
         // validate Title field
         if (titleTF.getText().isEmpty()) {
@@ -130,6 +145,15 @@ public class FormValidation {
     }
 
 
+    /**
+     * DateTimeChecks method which checks the user selected valid dates and times
+     *
+     * @param startDatePick  The start date picker from the add or modify appointment screen
+     * @param startTimeCombo The start time combo box from the add or modify appointment screen
+     * @param endDatePick    The end date picker from the add or modify appointment screen
+     * @param endTimeCombo   The end time combo box from the add or modify appointment screen
+     * @return A list of errors the user needs to rectify
+     */
     public ArrayList<String> dateTimeChecks(DatePicker startDatePick, ComboBox<String> startTimeCombo,
                                             DatePicker endDatePick, ComboBox<String> endTimeCombo) {
 
@@ -193,6 +217,19 @@ public class FormValidation {
         return outputErrorMessages;
     }
 
+    /**
+     * ApptOverlapExists (Appointment Overlap Exists) method which checks for an appointment overlap based on the
+     * customer the user selected
+     *
+     * @param apptIdTF       The appointment id text field from the add or modify appointment screen
+     * @param custIdCombo    The customer id combo box from the add or modify appointment screen
+     * @param startDatePick  The start date picker from the add or modify appointment screen
+     * @param startTimeCombo The start time combo box from the add or modify appointment screen
+     * @param endDatePick    The end date picker from the add or modify appointment screen
+     * @param endTimeCombo   The end time combo box from the add or modify appointment screen
+     * @return A boolean value indicating the existence of an appointment overlap
+     * @throws SQLException Signals an SQLException has occurred
+     */
     public boolean apptOverlapExists(TextField apptIdTF, ComboBox<Integer> custIdCombo, DatePicker startDatePick,
                                      ComboBox<String> startTimeCombo,
                                      DatePicker endDatePick, ComboBox<String> endTimeCombo) throws SQLException {
@@ -245,11 +282,27 @@ public class FormValidation {
     }
 
 
+    /**
+     * AddOverlapError method which adds the overlap error message to the outputErrorMessages (to the user)
+     *
+     * @return A list of errors the user needs to rectify
+     */
     public ArrayList<String> addOverlapError() {
         outputErrorMessages.add(inputErrors.get(15));
         return outputErrorMessages;
     }
 
+    /**
+     * nullValueCheckCustomer method which checks for null values when a customer is created or modified
+     *
+     * @param nameTF     The name text field from the add or modify customer screen
+     * @param phoneTF    The phone number text field from the add or modify customer screen
+     * @param addressTF  The address text field from the add or modify customer screen
+     * @param postalTF   The postal code text field from the add or modify customer screen
+     * @param countryCB  The country combo box from the add or modify customer screen
+     * @param divisionCB The division combo box from the add or modify customer screen
+     * @return A list of errors the user needs to rectify
+     */
     public ArrayList<String> nullValueCheckCustomer(TextField nameTF, TextField phoneTF, TextField addressTF,
                                                     TextField postalTF, ComboBox<String> countryCB,
                                                     ComboBox<String> divisionCB) {

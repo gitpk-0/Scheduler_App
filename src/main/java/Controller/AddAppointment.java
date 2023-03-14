@@ -112,7 +112,7 @@ public class AddAppointment implements Initializable {
      */
     public void onSaveAppt(ActionEvent event) throws SQLException {
         FormValidation validator = new FormValidation(); // creates a new FormValidation object each time Save is clicked
-        ArrayList<String> errors = validator.nullValueCheck(titleTF, descTF, locationTF, startDP, startTimeCB,
+        ArrayList<String> errors = validator.nullValueCheckAppt(titleTF, descTF, locationTF, startDP, startTimeCB,
                 typeTF, custIdCB, userIdCB, contactCB, endDP, endTimeCB); // null value checks
 
         try {

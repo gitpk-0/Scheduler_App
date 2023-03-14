@@ -10,7 +10,7 @@ import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 
 /**
- * Utility class for managing the logging of all login attempts
+ * LoginTracker utility class for managing the logging of all login attempts
  */
 public class LoginTracker {
 
