@@ -13,6 +13,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.Locale;
 
 /**
  * MainProgram class of the application which inherits the Application class which sets the stage for the application.
