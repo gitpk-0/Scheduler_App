@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 /**
- *
+ * The DBAppointments Class which handles queries to the appointments table of the client_schedule database
  */
 public class DBAppointments {
 

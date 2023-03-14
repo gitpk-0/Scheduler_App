@@ -123,4 +123,17 @@ public class Alerts {
         alert.setContentText("A Type and a Month must be selected in order to calculate the total.");
         alert.showAndWait(); // display the alert and wait for a response from the user
     }
+
+    public void informOfDeletion(int id, String object, String type) {
+        Alert alert = new Alert(Alert.AlertType.ERROR); // creation of Alert Object
+        alert.setTitle(object + " Deleted"); // set the title
+        alert.setHeaderText(object + " Deleted"); // set the header text
+        if (object.equals("Customer")) {
+            alert.setContentText(object + " with the ID: " + id + " has successfully been deleted.");
+        } else if (object.equals("Appointment")) {
+            alert.setContentText(object + " with the ID: " + id + " and type of: " + type +
+                    " has successfully been deleted.");
+        }
+        alert.showAndWait(); // display the alert and wait for a response from the user
+    }
 }

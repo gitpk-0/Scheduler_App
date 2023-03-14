@@ -148,6 +148,7 @@ public class MainMenu implements Initializable {
         if (alerts.confirmDelete("Appointment")) { // if Ok button clicked
             if (DBAppointments.deleteAppointment(appt)) { // if appointment was deleted
                 apptTableView.setItems(DBAppointments.getAppointments("all")); // reset the table view
+                alerts.informOfDeletion(appt.getApptId(), "Appointment", appt.getType());
             }
         }
     }
@@ -201,6 +202,7 @@ public class MainMenu implements Initializable {
         if (alerts.confirmDelete("Customer")) { // if Ok button clicked
             if (DBCustomers.deleteCustomer(customer)) { // if Customer was deleted
                 customerTableView.setItems(DBCustomers.getAllCustomers()); // reset the table view
+                alerts.informOfDeletion(customer.getCustomerId(), "Customer", null);
             }
         }
 
