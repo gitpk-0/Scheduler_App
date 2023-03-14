@@ -32,7 +32,7 @@ public class Alerts {
 
             if (apptNear != null) {
                 alert.setContentText("You have an appointment starting in " + apptNear.getMinutesToStart() +
-                        " minutes. Appointment " + apptNear.getApptId() +
+                        " minute(s). Appointment " + apptNear.getApptId() +
                         " scheduled for " + apptNear.getStartTime() +
                         " " + apptNear.getStartDate());
                 Login.login = false; // set the Login.login variable to false to only show alert once (on login)

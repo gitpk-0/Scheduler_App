@@ -42,6 +42,36 @@ public class DBAppointments {
         ps.executeUpdate();
     }
 
+    public static void updateAppointment(int id, String title, String desc, String loca, String type,
+                                         LocalDateTime start, LocalDateTime end, int custId, int uId,
+                                         int contId) throws SQLException {
+        String sql = "UPDATE appointments SET Title = ?, " +
+                "Description = ?, " + // 2
+                "Location = ?, " +
+                "Type = ?, " +
+                "Start = ?, " + // 5
+                "End = ?, " +
+                "Last_Update = ?, " +
+                "Last_Updated_By = ?, " +
+                "Customer_ID = ?, " + // 9
+                "User_ID = ?, " +
+                "Contact_ID = ? WHERE Appointment_ID = ?";
+        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+        ps.setString(1, title); // Title
+        ps.setString(2, desc); // Description
+        ps.setString(3, loca); // Location
+        ps.setString(4, type); // Type
+        ps.setTimestamp(5, TimeConversion.localToUTC(start)); // Start
+        ps.setTimestamp(6, TimeConversion.localToUTC(end)); // End
+        ps.setTimestamp(7, TimeConversion.localToUTC(LocalDateTime.now())); // Last_Update
+        ps.setString(8, DBUsers.currentUserName); // Last_Updated_By
+        ps.setInt(9, custId); // Customer_ID
+        ps.setInt(10, uId); // User_ID
+        ps.setInt(11, contId); // Contact_ID
+        ps.setInt(12, id); // Appointment_ID
+        ps.executeUpdate();
+    }
+
     /**
      * @param filter
      * @return
@@ -189,36 +219,6 @@ public class DBAppointments {
         return appointments;
     }
 
-    public static void updateAppointment(int id, String title, String desc, String loca, String type,
-                                         LocalDateTime start, LocalDateTime end, int custId, int uId,
-                                         int contId) throws SQLException {
-        String sql = "UPDATE appointments SET Title = ?, " +
-                "Description = ?, " + // 2
-                "Location = ?, " +
-                "Type = ?, " +
-                "Start = ?, " + // 5
-                "End = ?, " +
-                "Last_Update = ?, " +
-                "Last_Updated_By = ?, " +
-                "Customer_ID = ?, " + // 9
-                "User_ID = ?, " +
-                "Contact_ID = ? WHERE Appointment_ID = ?";
-        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
-        ps.setString(1, title); // Title
-        ps.setString(2, desc); // Description
-        ps.setString(3, loca); // Location
-        ps.setString(4, type); // Type
-        ps.setTimestamp(5, Timestamp.valueOf(start)); // Start
-        ps.setTimestamp(6, Timestamp.valueOf(end)); // End
-        ps.setTimestamp(7, Timestamp.valueOf(LocalDateTime.now())); // Last_Update
-        ps.setString(8, DBUsers.currentUserName); // Last_Updated_By
-        ps.setInt(9, custId); // Customer_ID
-        ps.setInt(10, uId); // User_ID
-        ps.setInt(11, contId); // Contact_ID
-        ps.setInt(12, id); // Appointment_ID
-        ps.executeUpdate();
-    }
-
     public static ObservableList<String> getAllAppointmentTypes() {
         ObservableList<String> types = FXCollections.observableArrayList();
         String sql = "SELECT DISTINCT Type FROM appointments";
@@ -263,9 +263,9 @@ public class DBAppointments {
         Appointment appointment = null;
         String sql = "SELECT * FROM appointments " +
                 "INNER JOIN contacts ON appointments.Contact_ID = contacts.Contact_ID " +
-                "WHERE appointments.Start <= NOW() + INTERVAL 15 Minute AND " +
-                "appointments.Start > Now() AND " +
-                "appointments.User_ID = ?";
+                "WHERE appointments.User_ID = ? ";
+
+        ArrayList<Appointment> appointments = new ArrayList<>();
 
         try {
             PreparedStatement ps = JDBC.connection.prepareStatement(sql);
@@ -287,9 +287,24 @@ public class DBAppointments {
 
                 appointment = new Appointment(apptId, title, desc, loca, type, start, end, customerId, userId,
                         contactId, contactName);
+                appointments.add(appointment);
             }
         } catch (SQLException e) {
             System.out.println("DBAppointments.hasAppointmentSoon Error: " + e.getMessage());
+        }
+
+        for (Appointment appt : appointments) {
+            // if user has an appointment within the next 15 minutes return the appointment
+            if (appt.getUserId() == user) {
+                LocalDateTime apptStart = appt.getStart();
+                LocalDateTime now = LocalDateTime.now();
+                LocalDateTime plus15 = now.plusMinutes(15);
+
+                if ((apptStart.isBefore(plus15) || apptStart.isEqual(plus15) && apptStart.isAfter(now))) {
+                    appointment = appt;
+                    break;
+                }
+            }
         }
 
         return appointment;
