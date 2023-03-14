@@ -1,6 +1,9 @@
 package Database;
 
-import Model.Contact;
+/**
+ * @author Patrick Kell
+ */
+
 import Model.Country;
 import Utility.JDBC;
 import javafx.collections.FXCollections;
@@ -9,13 +12,17 @@ import javafx.collections.ObservableList;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Arrays;
 
 /**
- * @author Patrick Kell
+ * The DBCountries Class which handles queries to the countries table of the client_schedule database
  */
 public class DBCountries {
 
+    /**
+     * GetAllCountries method which manages the retrieval of all countries from the database
+     *
+     * @return A list of all countries
+     */
     public static ObservableList<Country> getAllCountries() {
         ObservableList<Country> countries = FXCollections.observableArrayList();
 
@@ -32,12 +39,18 @@ public class DBCountries {
                 countries.add(newCountry);
             }
         } catch (SQLException e) {
-            System.out.println("DBCountries.getAllCountries Error: " + e.getMessage());
+            // System.out.println("DBCountries.getAllCountries Error: " + e.getMessage());
         }
 
         return countries;
     }
 
+    /**
+     * GetCountryByName method which manages the retrieval of a country given a country name
+     *
+     * @param countryName The name of the country to be returned
+     * @return The country with the given name
+     */
     public static Country getCountryByName(String countryName) {
         Country country = null;
 
@@ -54,7 +67,7 @@ public class DBCountries {
                 country = new Country(countryId, country_name);
             }
         } catch (SQLException e) {
-            System.out.println("DBCountries.getCountryByName Error: " + e.getMessage());
+            // System.out.println("DBCountries.getCountryByName Error: " + e.getMessage());
         }
 
         return country;

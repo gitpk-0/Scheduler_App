@@ -360,9 +360,9 @@ public class DBAppointments {
                 int contactId = rs.getInt("Contact_ID");
                 String contactName = rs.getString("Contact_Name");
 
-                appointment = new Appointment(apptId, title, desc, loca, type, start, end, customerId, uId,
+                Appointment foundAppt = new Appointment(apptId, title, desc, loca, type, start, end, customerId, uId,
                         contactId, contactName);
-                appointments.add(appointment);
+                appointments.add(foundAppt);
             }
         } catch (SQLException e) {
             // System.out.println("DBAppointments.hasAppointmentSoon Error: " + e.getMessage());

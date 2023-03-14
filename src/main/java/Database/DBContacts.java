@@ -1,7 +1,10 @@
 package Database;
 
+/**
+ * @author Patrick Kell
+ */
+
 import Model.Contact;
-import Model.Customer;
 import Utility.JDBC;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -11,12 +14,17 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
- * @author Patrick Kell
+ * The DBContacts Class which handles queries to the contacts table of the client_schedule database
  */
 public class DBContacts {
+
+    /**
+     * GetAllContacts method which manages the retrieval of all contacts from the database
+     *
+     * @return A list of all contacts
+     */
     public static ObservableList<Contact> getAllContacts() {
         ObservableList<Contact> contacts = FXCollections.observableArrayList();
-
 
         try {
             String sql = "SELECT Contact_ID, Contact_Name, Email FROM contacts";
@@ -32,7 +40,7 @@ public class DBContacts {
                 contacts.add(newCustomer);
             }
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            // System.out.println("DBContacts.getAllContacts Error: " + e.getMessage());
         }
 
         return contacts;

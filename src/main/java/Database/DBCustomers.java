@@ -1,6 +1,9 @@
 package Database;
 
-import Model.Appointment;
+/**
+ * @author Patrick Kell
+ */
+
 import Model.Customer;
 import Utility.JDBC;
 import Utility.TimeConversion;
@@ -10,14 +13,18 @@ import javafx.collections.ObservableList;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 /**
- * @author Patrick Kell
+ * The DBCustomers Class which handles queries to the customers table of the client_schedule database
  */
 public class DBCustomers {
 
+    /**
+     * GetAllCustomers class which manages the retrieval of all customers from the database
+     *
+     * @return A list of all customers
+     */
     public static ObservableList<Customer> getAllCustomers() {
         ObservableList<Customer> customers = FXCollections.observableArrayList();
 
@@ -42,11 +49,18 @@ public class DBCustomers {
                 customers.add(newCustomer);
             }
         } catch (SQLException e) {
-            System.out.println("DBCustomers.getAllCustomers Error: " + e.getMessage());
+            // System.out.println("DBCustomers.getAllCustomers Error: " + e.getMessage());
         }
         return customers;
     }
 
+    /**
+     * DeleteCustomer class which manages the deletion of a given customer from the database
+     *
+     * @param customer Customer to be deleted
+     * @return A boolean value indicating the success of the deletion
+     * @throws SQLException Signals an SQLException has occurred
+     */
     public static boolean deleteCustomer(Customer customer) throws SQLException {
         String sql = "DELETE FROM customers WHERE Customer_ID = ?";
         PreparedStatement ps = JDBC.connection.prepareStatement(sql);
@@ -55,6 +69,18 @@ public class DBCustomers {
         return rowsAffected == 1;
     }
 
+    /**
+     * AddCustomer method which manages the creation of a new customer in the database
+     *
+     * @param id         The id of the customer
+     * @param name       The name of the customer
+     * @param phone      The phone number of the customer
+     * @param address    The address of the customer
+     * @param postal     The postal code of the customer
+     * @param country    The country of the customer
+     * @param divisionId The division id  of the customer
+     * @throws SQLException Signals an SQLException has occurred
+     */
     public static void addCustomer(int id, String name, String phone, String address,
                                    String postal, String country, int divisionId) throws SQLException {
         String sql = "INSERT INTO customers VALUES (?,?,?,?,?,?,?,?,?,?)";
@@ -72,6 +98,17 @@ public class DBCustomers {
         ps.executeUpdate();
     }
 
+    /**
+     * UpdateCustomer method which manages the modification of an existing customer in the database
+     *
+     * @param id         The id of the customer
+     * @param name       The name of the customer
+     * @param phone      The phone number of the customer
+     * @param address    The address of the customer
+     * @param postal     The postal code of the customer
+     * @param divisionId The division id of the customer
+     * @throws SQLException Signals an SQLException has occurred
+     */
     public static void updateCustomer(int id, String name, String phone, String address, String postal,
                                       int divisionId) throws SQLException {
 
@@ -97,6 +134,12 @@ public class DBCustomers {
         ps.executeUpdate();
     }
 
+    /**
+     * GetCustomerByCountry method which manages the retrieval of customers given a country name from the database
+     *
+     * @param country_name Country to filter the customers by
+     * @return A list of customer from the given country name
+     */
     public static ObservableList<Customer> getCustomersByCountry(String country_name) {
         ObservableList<Customer> customers = FXCollections.observableArrayList();
 
@@ -123,7 +166,7 @@ public class DBCustomers {
                 customers.add(customer);
             }
         } catch (SQLException e) {
-            System.out.println("DBCustomers.getCustomersByCountry Error: " + e.getMessage());
+            // System.out.println("DBCustomers.getCustomersByCountry Error: " + e.getMessage());
         }
         return customers;
     }
